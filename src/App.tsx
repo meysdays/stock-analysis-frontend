@@ -1,213 +1,171 @@
-import { useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
-// import {faker} from '@faker-js/faker'
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
-
-import type { ChartData } from "chart.js";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  Legend,
-);
-
-// interface Stock {
-//   date: string;
-//   open: string;
-//   high: string;
-//   low: string;
-//   close: string;
-//   volume: string;
-//   stock_name: string;
-//   id: number;
-// }
-
-interface StockApiData {
-  date: string;
-  open: string;
-  high: string;
-  low: string;
-  close: string;
-  volume: string;
-  stock_name: string;
-}
-
-interface stockName {
-  stock_name: string;
-}
-
-// interface userResponse {
-//   customer: User[];
-// }
+import { useEffect, useState, useMemo } from "react";
+import Sidebar from "./components/Sidebar";
+import StatsCard from "./components/StatsCard";
+import StockList from "./components/StockList";
+import StockChart from "./components/StockChart";
+import ChatModal from "./components/ChatModal";
+import { getStocks, getStockDetails, getSignal, type StockName, type StockApiData, type SignalApiData } from "./api";
 
 const App = () => {
-  const [stocks, setstocks] = useState<stockName[]>([]);
+  const [stocks, setStocks] = useState<StockName[]>([]);
   const [allStocks, setAllStocks] = useState<StockApiData[]>([]);
+  const [signal, setSignal] = useState<SignalApiData | null>(null);
   const [stockName, setStockName] = useState<string>("");
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const fetchData = async (): Promise<void> => {
+
+  const fetchStocks = async (): Promise<void> => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/stocks/stocks_name");
-      if (!response.ok) {
-        throw new Error("Failed to fetch stocks");
+      const data = await getStocks();
+      setStocks(data);
+      if (data.length > 0 && !stockName) {
+        setStockName(data[0].stock_name);
       }
-      const data: stockName[] = await response.json();
-      setstocks(data);
-      console.log(data);
-      setLoading(false);
     } catch (e) {
-      if (e instanceof Error) {
-        setError(e);
-        // throw new Error(e?.message);
-      }
-    } finally {
-      setLoading(false);
+      if (e instanceof Error) setError(e);
     }
   };
 
-  const fetchAllData = async (name: string): Promise<void> => {
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/stocks/name/${encodeURIComponent(name)}`,
-      );
-      // console.log(response);
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch stocks");
-      }
-      const data: StockApiData[] = await response.json();
-      setAllStocks(data);
-      console.log(data);
-
-      setLoading(false);
-    } catch (e) {
-      if (e instanceof Error) {
-        setError(e);
-        // throw new Error(e?.message);
-      }
-    } finally {
-      setLoading(false);
-    }
+  const handleChat = () => {
+    setIsChatOpen(true);
   };
 
-  const sortedStocks = [...allStocks].sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-  );
 
-  const monthlyData: StockApiData[] = Object.values(
-    sortedStocks.reduce(
-      (acc, item) => {
-        const month = new Date(item.date).toISOString().slice(0, 7); // YYYY-MM
+  const fetchStockData = async (name: string): Promise<void> => {
+    try {
 
-        acc[month] = item; // keep last trading day of the month
-        return acc;
-      },
-      {} as Record<string, StockApiData>,
-    ),
-  );
+      const [detailsData, signalData] = await Promise.all([
+        getStockDetails(name),
+        getSignal(name)
+      ]);
 
-  const labels = monthlyData.map((item) =>
-    new Date(item.date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-    }),
-  );
-
-  const closePrices = monthlyData.map((item) => Number(item.close));
-
-  const handleClick = (name: string) => {
-    console.log(name);
-    setStockName(name);
-    fetchAllData(name);
+      setAllStocks(detailsData);
+      setSignal(signalData);
+    } catch (e) {
+      if (e instanceof Error) setError(e);
+    }
   };
 
   useEffect(() => {
-    fetchData();
+    fetchStocks();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error </p>;
+  useEffect(() => {
+    if (stockName) {
+      fetchStockData(stockName);
+    }
+  }, [stockName]);
 
-  // const data = {
-  //   labels,
-  //   datasets: [
-  //     {
-  //      label: 'Dataset 1',
-  //     data: labels.map(() => faker.number.int({ min: -1000, max: 1000 })),
-  //     borderColor: 'rgb(255, 99, 132)',
-  //     backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  //     // label: stockName,
-  //     // data: allStocks.map((item) => item.close),
-  //     // borderColor: 'rgb(255, 99, 132)',
-  //     // backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  //   },
-  //   ]
-  // }
+  // Process data for chart and stats
+  const { chartData, latestData } = useMemo(() => {
+    if (!allStocks.length) return { chartData: { labels: [], prices: [] }, latestData: null };
 
-  const data: ChartData<"line", number[], string> = {
-    labels,
-    datasets: [
-      {
-        label: stockName,
-        data: closePrices,
-        borderColor: "rgb(75, 192, 192)",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        tension: 0.3,
-        pointRadius: 4,
-      },
-    ],
-  };
+    const sorted = [...allStocks].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    );
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top" as const,
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          maxTicksLimit: 12, // show ~12 labels max
-        },
-      },
-    },
-  };
+    const monthlyData = Object.values(
+      sorted.reduce((acc, item) => {
+        const month = new Date(item.date).toISOString().slice(0, 7);
+        acc[month] = item;
+        return acc;
+      }, {} as Record<string, StockApiData>)
+    );
+
+    const labels = monthlyData.map((item) =>
+      new Date(item.date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+      })
+    );
+    const prices = monthlyData.map((item) => parseFloat(item.close));
+
+    return {
+      chartData: { labels, prices },
+      latestData: sorted[sorted.length - 1],
+    };
+  }, [allStocks]);
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-50 text-red-500">
+        <p>Error loading data: {error.message}. Is the backend running?</p>
+      </div>
+    )
+  }
 
   return (
-    <div className=" bg-[#FFF7E8]">
-      <div className=" w-[98%] p-12 m-auto flex flex-row justify-between">
-        <div className="w-1/4 rounded-2xl bg-white p-12 h-screen overflow-y-auto scrollbar-non">
-          {stocks.map((stock, index) => (
-            <ul key={index}>
-              <li
-                onClick={() => {
-                  handleClick(stock.stock_name);
-                }}
-                className="px-4 py-2 cursor-pointer hover:bg-[#FFF7E8] rounded-2xl"
-              >
-                {stock.stock_name}
-              </li>
-            </ul>
-          ))}
+    <div className="flex min-h-screen bg-[#FDFDFD] font-sans">
+      <Sidebar />
+
+      <main className="flex-1 ml-64 p-8">
+        <header className="flex justify-between items-center mb-8">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Overview</h2>
+            <p className="text-gray-400 text-sm">Welcome back, here's what's happening.</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden">
+              <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User" />
+            </div>
+          </div>
+        </header>
+
+        {/* Top Stats Row */}
+        <div className="flex flex-wrap gap-6 mb-8">
+          <StatsCard
+            title="Signal"
+            value={signal ? signal.signal : "---"}
+            description={signal ? `Score: ${signal.score}` : "Loading..."}
+            trend={signal && signal.score >= 0 ? "up" : "down"}
+            percentage={signal ? `${signal.score}` : "0"}
+          />
+          <StatsCard
+            title="Volume"
+            value={latestData ? parseInt(latestData.volume).toLocaleString() : "---"}
+            description="Traded today"
+            trend="down"
+            percentage="0.8%"
+          />
+          {
+            isChatOpen ? (
+              <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+            ) : (
+              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex-1 min-w-[200px] flex flex-col justify-between">
+                <div>
+                  <h3 className="text-gray-900 font-bold text-lg mb-2">AI Chat Bot</h3>
+                  <p className="text-gray-400 text-sm">Ask our AI assistant about market trends and analysis.</p>
+                </div>
+                <button className="mt-4" onClick={handleChat}>
+                  <button className="w-full bg-orange-500 text-white font-medium py-2 rounded-xl hover:bg-orange-600 transition-colors flex items-center justify-center gap-2" onClick={handleChat}>
+                    <span className="text-lg">✨</span> Start Chat
+                  </button>
+
+
+                </button>
+              </div>
+            )
+          }
+
         </div>
-        <div className="w-2/3 rounded-2xl bg-white p-12">
-          <Line data={data} options={options} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-[600px]">
+
+          <div className="lg:col-span-2 h-full">
+            <StockChart data={chartData} />
+          </div>
+          <div className="lg:col-span-1 h-full">
+            <StockList
+              stocks={stocks}
+              selectedStock={stockName}
+              onSelect={setStockName}
+            />
+          </div>
         </div>
-      </div>
+      </main>
+
+      <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>
   );
 };
