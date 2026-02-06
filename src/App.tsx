@@ -105,9 +105,18 @@ const App = () => {
 
   return (
     <div className="flex min-h-screen bg-[#FDFDFD] font-sans">
-      <Sidebar />
+      <Sidebar
+        stock_name={stockName}
+        volume={latestData?.volume || "0"}
+        open={latestData?.open || ""}
+        close={latestData?.close || ""}
+        high={latestData?.high || ""}
+        low={latestData?.low || ""}
+        signal={signal?.signal || ""}
+        score={signal?.score || 0}
+      />
 
-      <main className="flex-1 ml-64 p-8">
+      <main className="flex-1 ml-74 p-8">
         <header className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Overview</h2>
