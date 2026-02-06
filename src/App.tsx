@@ -47,10 +47,6 @@ interface stockName {
   stock_name: string;
 }
 
-// interface userResponse {
-//   customer: User[];
-// }
-
 const App = () => {
   const [stocks, setstocks] = useState<stockName[]>([]);
   const [allStocks, setAllStocks] = useState<StockApiData[]>([]);
