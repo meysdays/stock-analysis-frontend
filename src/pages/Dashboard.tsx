@@ -1,6 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import Sidebar from "../components/Sidebar";
-import ChatModal from "../components/ChatModal";
+import SidePanel from "../components/SidePanel";
+// import ChatModal from "../components/ChatModal";
+import { stockTabs } from "../utils/utils";
 import {
     getStocks,
     getStockDetails,
@@ -9,17 +11,13 @@ import {
     type StockApiData,
     type SignalApiData,
 } from "../api";
+import Tab from "../components/Tab";
 
-const tabs = [
-    { label: "Chart", href: "#Charts" },
-    { label: "Markets", href: "#Markets" },
-    { label: "News", href: "#News" },
-    { label: "About", href: "#About" },
-];
+
 
 const Dashboard = () => {
     const [stocks, setStocks] = useState<StockName[]>([]);
-    const [activeTab, setActiveTab] = useState<string>(tabs[0].label);
+    const [activeTab, setActiveTab] = useState<string>(stockTabs[0].label);
     const [allStocks, setAllStocks] = useState<StockApiData[]>([]);
     const [signal, setSignal] = useState<SignalApiData | null>(null);
     const [stockName, setStockName] = useState<string>("");
@@ -109,31 +107,11 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="flex min-h-screen overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] bg-[#FDFDFD] font-sans">
-            <Sidebar
-                stock_name={stockName}
-                volume={latestData?.volume || "0"}
-                open={latestData?.open || ""}
-                close={latestData?.close || ""}
-                high={latestData?.high || ""}
-                low={latestData?.low || ""}
-                signal={signal?.signal || ""}
-                score={signal?.score || 0}
-            />
+        <div className="flex h-[calc(100vh-80px)] overflow-hidden bg-[#FDFDFD] font-sans">
+            <SidePanel />
 
-            <main className="flex-1 ml-64 p-8">
-                <header className="flex justify-between items-center mb-8">
-                    {tabs.map((tab) => (
-                        <a
-                            key={tab.label}
-                            href={tab.href}
-                            onClick={() => setActiveTab(tab.label)}
-                            className={`text-gray-600 hover:text-gray-800 transition-colors ${activeTab === tab.label ? "border-b-2 border-orange-500" : ""}`}
-                        >
-                            {tab.label}
-                        </a>
-                    ))}
-                </header>
+            <main className="flex-1 overflow-y-auto p-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                <Tab tabProps={stockTabs} />
 
                 {/* {
                     isChatOpen ? (
@@ -153,8 +131,6 @@ const Dashboard = () => {
                     )
                 } */}
             </main >
-
-            {/* <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} /> */}
 
             <Sidebar
                 stock_name={stockName}

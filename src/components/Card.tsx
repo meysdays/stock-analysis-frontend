@@ -1,22 +1,24 @@
+import type { ReactNode } from "react";
+
 interface CardProps {
+  children: ReactNode;
   title?: string;
-  value?: string | number;
-  toolTip?: string;
+  className?: string;
+  action?: ReactNode;
 }
 
-const SideBarCard = ({ title, value }: CardProps) => {
+const Card = ({ children, title, className = "", action }: CardProps) => {
   return (
-    <div className="flex-1 bg-white p-2 rounded-lg  border border-gray-300 flex flex-col justify-center items-center mb-2">
-      <div className="flex  ">
-        <h3 className="text-[12px] text-gray-500 font-bold">{title}</h3>
-        {/* <span className="text-gray-400 text-sm" title={toolTip}>
-          ?
-        </span> */}
-      </div>
-
-      <p className="text-xl  font-bold ">{value}</p>
+    <div className={`bg-white rounded-xl p-6 shadow-sm border border-gray-100 ${className}`}>
+      {(title || action) && (
+        <div className="flex justify-between items-center mb-4">
+          {title && <h3 className="text-gray-900 font-bold text-base">{title}</h3>}
+          {action && <div>{action}</div>}
+        </div>
+      )}
+      <div>{children}</div>
     </div>
   );
 };
 
-export default SideBarCard;
+export default Card;
