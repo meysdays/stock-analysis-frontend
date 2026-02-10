@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getStocks, getStockDetails } from "../api";
 import SparklineChart from "./SparklineChart";
 import { NavLink } from "react-router-dom";
+import Table from "./Table";
+import type { TableHeader } from "./Table";
 
 /**
  * MarketItem interface represents a single market/stock entry with pricing,
@@ -29,6 +31,7 @@ interface Props {
   fetchUrl?: string; // Optional URL to fetch market data from
   fetcher?: () => Promise<MarketItem[]>; // Optional custom function to fetch market items
   data?: MarketItem[]; // Optional pre-loaded market data (bypasses all fetching)
+  headers?: TableHeader<MarketItem>[]; // Optional custom headers
 }
 
 /**
@@ -44,6 +47,83 @@ const fmt = (v: number) =>
  */
 const fmtLarge = (v: number) =>
   new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(v);
+
+// Default table headers for MarketTable (can be overridden via props)
+const defaultHeaders: TableHeader<MarketItem>[] = [
+  {
+    key: "name",
+    label: "Name",
+    align: "left",
+    render: (r) => (
+      <NavLink to={`/stocks/${r.name}`} className="hover:text-orange-600">
+        {r.name}
+      </NavLink>
+    ),
+  },
+  {
+    key: "price",
+    label: "Price",
+    align: "right",
+    render: (r) => <>${fmt(r.price)}</>,
+  },
+  {
+    key: "percent1h",
+    label: "1h %",
+    align: "right",
+    render: (r) => (
+      <span className={r.percent1h >= 0 ? "text-green-600" : "text-red-600"}>
+        {r.percent1h >= 0 ? "+" : ""}
+        {fmt(r.percent1h)}%
+      </span>
+    ),
+  },
+  {
+    key: "percent24h",
+    label: "24h %",
+    align: "right",
+    render: (r) => (
+      <span className={r.percent24h >= 0 ? "text-green-600" : "text-red-600"}>
+        {r.percent24h >= 0 ? "+" : ""}
+        {fmt(r.percent24h)}%
+      </span>
+    ),
+  },
+  {
+    key: "percent7d",
+    label: "7d %",
+    align: "right",
+    render: (r) => (
+      <span className={r.percent7d >= 0 ? "text-green-600" : "text-red-600"}>
+        {r.percent7d >= 0 ? "+" : ""}
+        {fmt(r.percent7d)}%
+      </span>
+    ),
+  },
+  {
+    key: "marketCap",
+    label: "Market Cap",
+    align: "right",
+    render: (r) => <>${fmtLarge(r.marketCap)}</>,
+  },
+  {
+    key: "volume24h",
+    label: "Volume(24h)",
+    align: "right",
+    render: (r) => <>${fmtLarge(r.volume24h)}</>,
+  },
+  {
+    key: "circulatingSupply",
+    label: "Circulating Supply",
+    align: "right",
+    render: (r) => <>{fmtLarge(r.circulatingSupply)}</>,
+  },
+  {
+    key: "sparkline7d",
+    label: "Last 7 Days",
+    align: "center",
+    render: (r) => <SparklineChart data={r.sparkline7d} label="7-Day Trend" />,
+  },
+];
 
 /**
  * Sparkline component (DEPRECATED) - replaced by SparklineChart using Chart.js
@@ -62,17 +142,91 @@ export default function MarketTable({
   fetchUrl,
   fetcher,
   data: initialData,
+  headers,
 }: Props) {
   // State: holds the array of market items to display
   const [data, setData] = useState<MarketItem[] | null>(initialData ?? null);
 
-  // State: tracks loading state; initialized true if no initialData and a data source is provided
-  const [loading, setLoading] = useState<boolean>(
-    !initialData && (!!fetchUrl || !!fetcher),
-  );
+  // State: tracks loading state; initialized true if no initialData is provided
+  const [loading, setLoading] = useState<boolean>(!initialData);
 
   // State: holds error message if fetch/processing fails
   const [error, setError] = useState<string | null>(null);
+
+  // Pagination state
+  const [allStocks, setAllStocks] = useState<any[]>([]); // All available stocks
+  const [currentOffset, setCurrentOffset] = useState<number>(0); // Current offset for pagination
+  const [hasMore, setHasMore] = useState<boolean>(false); // Whether more stocks are available
+  const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false); // Loading state for "See More" button
+  const ITEMS_PER_PAGE = 10;
+
+  /**
+   * Helper function to fetch and process details for a batch of stocks
+   */
+  const fetchStocksBatch = async (stocks: any[]): Promise<MarketItem[]> => {
+    const items: MarketItem[] = [];
+    
+    for (const s of stocks) {
+      try {
+        const details = await getStockDetails(s.stock_name);
+        if (!details || details.length === 0) continue;
+
+        const sorted = details
+          .slice()
+          .sort(
+            (a, b) =>
+              new Date(a.date).getTime() - new Date(b.date).getTime(),
+          );
+
+        const last = sorted[sorted.length - 1];
+        const lastClose = Number(last.close);
+        const prev1 = sorted[sorted.length - 2];
+        const prev7 = sorted[sorted.length - 8] || sorted[0];
+
+        const pct24 = prev1
+          ? ((lastClose - Number(prev1.close)) / Number(prev1.close)) * 100
+          : 0;
+
+        const pct7 = prev7
+          ? ((lastClose - Number(prev7.close)) / Number(prev7.close)) * 100
+          : 0;
+
+        const pct1h = pct24 / 24;
+        const volume24h = Number(last.volume || 0);
+        const marketCap = lastClose * 1000000;
+        const circulatingSupply = marketCap / (lastClose || 1);
+        const sparkline = sorted.slice(-7).map((d) => Number(d.close));
+
+        items.push({
+          id: s.stock_name, // Full name with "Stock\" for navigation
+          name: s.stock_name.replace(/^Stock\\/, ""), // Display name without "Stock\"
+          price: lastClose,
+          percent1h: Number(pct1h.toFixed(2)),
+          percent24h: Number(pct24.toFixed(2)),
+          percent7d: Number(pct7.toFixed(2)),
+          marketCap: Math.round(marketCap),
+          volume24h: Math.round(volume24h),
+          circulatingSupply: Math.round(circulatingSupply),
+          sparkline7d: sparkline,
+        });
+        console.debug(
+          "MarketTable: added item",
+          s.stock_name,
+          Math.round(lastClose),
+        );
+      } catch (e: Error | unknown) {
+        const errMsg = e instanceof Error ? e.message : String(e);
+        console.debug(
+          "MarketTable: skipped stock due to error",
+          s.stock_name,
+          errMsg,
+        );
+        continue;
+      }
+    }
+    
+    return items;
+  };
 
   /**
    * Effect hook: Fetches market data on component mount if not already provided.
@@ -112,102 +266,36 @@ export default function MarketTable({
           res = await r.json();
         } else {
           // Default adapter: Use backend stock endpoints to build market table
-          const stocks = await getStocks(); // Fetch list of available stocks
+          const stocks = await getStocks(); // Fetch list of all available stocks
           console.debug(
             "MarketTable: getStocks returned",
             Array.isArray(stocks) ? stocks.length : stocks,
             Array.isArray(stocks) ? stocks.slice(0, 5) : stocks,
           );
-          const items: MarketItem[] = []; // Accumulate processed items
 
-          // Process first 50 stocks, gracefully skip any that fail
-          for (const s of stocks.slice(0, 50)) {
-            try {
-              // Fetch historical price details for this stock
-              const details = await getStockDetails(s.stock_name);
-              if (!details || details.length === 0) continue;
+          // Store all stocks for pagination
+          if (mounted) setAllStocks(stocks);
 
-              // Sort by date ascending to ensure correct chronological order
-              const sorted = details
-                .slice()
-                .sort(
-                  (a, b) =>
-                    new Date(a.date).getTime() - new Date(b.date).getTime(),
-                );
+          // Fetch details for first batch
+          const firstBatchStocks = stocks.slice(0, ITEMS_PER_PAGE);
+          const items = await fetchStocksBatch(firstBatchStocks);
 
-              // Get most recent closing price (last entry)
-              const last = sorted[sorted.length - 1];
-              const lastClose = Number(last.close);
-
-              // Get previous day's closing price for 24h change calculation
-              const prev1 = sorted[sorted.length - 2];
-
-              // Get price from 7 days ago, or first available if < 7 days of data
-              const prev7 = sorted[sorted.length - 8] || sorted[0];
-
-              // Calculate 24-hour percentage change: ((current - prev) / prev) * 100
-              const pct24 = prev1
-                ? ((lastClose - Number(prev1.close)) / Number(prev1.close)) *
-                  100
-                : 0;
-
-              // Calculate 7-day percentage change
-              const pct7 = prev7
-                ? ((lastClose - Number(prev7.close)) / Number(prev7.close)) *
-                  100
-                : 0;
-
-              // Approximate 1-hour change as 1/24 of daily change
-              const pct1h = pct24 / 24;
-
-              // Extract volume from most recent entry
-              const volume24h = Number(last.volume || 0);
-
-              // Calculate naive market cap (placeholder calculation)
-              const marketCap = lastClose * 1000000;
-
-              // Calculate circulating supply based on market cap and price
-              const circulatingSupply = marketCap / (lastClose || 1);
-
-              // Extract last 7 closing prices for sparkline visualization
-              const sparkline = sorted.slice(-7).map((d) => Number(d.close));
-
-              // Construct MarketItem with all processed data
-              items.push({
-                name: s.stock_name,
-                price: lastClose,
-                percent1h: Number(pct1h.toFixed(2)),
-                percent24h: Number(pct24.toFixed(2)),
-                percent7d: Number(pct7.toFixed(2)),
-                marketCap: Math.round(marketCap),
-                volume24h: Math.round(volume24h),
-                circulatingSupply: Math.round(circulatingSupply),
-                sparkline7d: sparkline,
-              });
-              console.debug(
-                "MarketTable: added item",
-                s.stock_name,
-                Math.round(lastClose),
-              );
-            } catch (e: any) {
-              // Log and skip stocks that fail to fetch/process
-              console.debug(
-                "MarketTable: skipped stock due to error",
-                s.stock_name,
-                e?.message || e,
-              );
-              continue;
-            }
+          // Update state
+          if (mounted) {
+            setData(items);
+            setHasMore(stocks.length > ITEMS_PER_PAGE);
+            setCurrentOffset(ITEMS_PER_PAGE);
           }
           res = items;
         }
 
         // Update state only if component is still mounted
         if (mounted) setData(res);
-      } catch (err: any) {
+      } catch (err: Error | unknown) {
         // Log and display error message
+        const errMsg = err instanceof Error ? err.message : "Failed to load";
         console.error("MarketTable: load error", err);
-        if (mounted) setError(err.message || "Failed to load");
+        if (mounted) setError(errMsg);
       } finally {
         // Always stop loading spinner when done
         if (mounted) setLoading(false);
@@ -221,11 +309,69 @@ export default function MarketTable({
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [initialData, fetchUrl, fetcher]);
+
+  /**
+   * Load more stocks handler - fetches the next batch of stocks
+   */
+  const loadMore = async () => {
+    if (isLoadingMore || !hasMore || allStocks.length === 0) return;
+
+    setIsLoadingMore(true);
+    try {
+      const nextBatchStocks = allStocks.slice(
+        currentOffset,
+        currentOffset + ITEMS_PER_PAGE,
+      );
+      const newItems = await fetchStocksBatch(nextBatchStocks);
+
+      // Append new items to existing data
+      setData((prevData) =>
+        prevData ? [...prevData, ...newItems] : newItems,
+      );
+
+      const newOffset = currentOffset + ITEMS_PER_PAGE;
+      setCurrentOffset(newOffset);
+      setHasMore(newOffset < allStocks.length);
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : "Failed to load";
+      console.error("MarketTable: loadMore error", err);
+      setError(errMsg);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  };
+
+  /**
+   * Load all remaining stocks handler - fetches all remaining stocks at once
+   */
+  const loadAll = async () => {
+    if (isLoadingMore || !hasMore || allStocks.length === 0) return;
+
+    setIsLoadingMore(true);
+    try {
+      const remainingStocks = allStocks.slice(currentOffset);
+      const newItems = await fetchStocksBatch(remainingStocks);
+
+      // Append all remaining items to existing data
+      setData((prevData) =>
+        prevData ? [...prevData, ...newItems] : newItems,
+      );
+
+      setCurrentOffset(allStocks.length);
+      setHasMore(false);
+    } catch (err) {
+      const errMsg = err instanceof Error ? err.message : "Failed to load";
+      console.error("MarketTable: loadAll error", err);
+      setError(errMsg);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  };
 
   // Loading state: show loading message while fetching
   if (loading)
-    return <div className="p-4 text-center">Loading market data…</div>;
+    return <div className="p-4 text-center text-gray-600">Loading market data…</div>;
 
   // Error state: show error message in red if fetch fails
   if (error)
@@ -239,112 +385,70 @@ export default function MarketTable({
       </div>
     );
 
-  // Render: Main table with horizontal scroll for small screens
+  // Render using the reusable Table component with customizable headers
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse">
-        {/* Table header with column titles */}
-        <thead>
-          <tr>
-            <th className="px-2 py-2 text-left text-sm font-semibold border-b">
-              Name
-            </th>
-            <th className="px-2 py-2 text-right text-sm font-semibold border-b">
-              Price
-            </th>
-            <th className="px-2 py-2 text-right text-sm font-semibold border-b">
-              1h %
-            </th>
-            <th className="px-2 py-2 text-right text-sm font-semibold border-b">
-              24h %
-            </th>
-            <th className="px-2 py-2 text-right text-sm font-semibold border-b">
-              7d %
-            </th>
-            <th className="px-2 py-2 text-right text-sm font-semibold border-b">
-              Market Cap
-            </th>
-            <th className="px-2 py-2 text-right text-sm font-semibold border-b">
-              Volume(24h)
-            </th>
-            <th className="px-2 py-2 text-right text-sm font-semibold border-b">
-              Circulating Supply
-            </th>
-            <th className="px-2 py-2 text-center text-sm font-semibold border-b">
-              Last 7 Days
-            </th>
-          </tr>
-        </thead>
-        {/* Table body: render one row per market item */}
-        <tbody>
-          {data.map((row, idx) => (
-            <tr
-              key={row.id ?? row.name + idx}
-              className=" hover:bg-gray-100 cursor-pointer"
-            >
-              {/* Stock name column */}
-              <td className="px-2 py-2 text-sm">
-                <NavLink to={`/stock/${row.id}`}><a href="" className="hover:text-orange-600 transition-colors cursor-pointer group">{row.name}</a></NavLink>
-              </td>
+    <div>
+      <Table
+        headers={headers ?? defaultHeaders}
+        data={data}
+        rowKey={(r, idx) => r.id ?? `${r.name}${idx}`}
+      />
 
-              {/* Current price column */}
-              <td className="px-2 py-2 text-right text-sm">
-                ${fmt(row.price)}
-              </td>
+      {hasMore && (
+        <div className="flex items-center justify-center gap-4 py-10 px-5">
+          <button
+            onClick={loadMore}
+            disabled={isLoadingMore}
+            className={`border-0 bg-transparent text-base font-semibold uppercase transition-all duration-300 ${
+              isLoadingMore
+                ? "opacity-50 cursor-not-allowed"
+                : "text-orange-600 hover:text-orange-500 cursor-pointer"
+            }`}
+            style={{
+              letterSpacing: "0.5px",
+            }}
+            onMouseEnter={(e) => {
+              if (!isLoadingMore) {
+                (e.target as HTMLButtonElement).style.letterSpacing = "1px";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isLoadingMore) {
+                (e.target as HTMLButtonElement).style.letterSpacing = "0.5px";
+              }
+            }}
+          >
+            {isLoadingMore ? "Loading..." : "See More"}
+          </button>
 
-              {/* 1-hour percentage change: green if positive, red if negative */}
-              <td
-                className={`px-2 py-2 text-right text-sm ${
-                  row.percent1h >= 0 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {row.percent1h >= 0 ? "+" : ""}
-                {fmt(row.percent1h)}%
-              </td>
+          <span className="text-gray-300">|</span>
 
-              {/* 24-hour percentage change: green if positive, red if negative */}
-              <td
-                className={`px-2 py-2 text-right text-sm ${
-                  row.percent24h >= 0 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {row.percent24h >= 0 ? "+" : ""}
-                {fmt(row.percent24h)}%
-              </td>
-
-              {/* 7-day percentage change: green if positive, red if negative */}
-              <td
-                className={`px-2 py-2 text-right text-sm ${
-                  row.percent7d >= 0 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {row.percent7d >= 0 ? "+" : ""}
-                {fmt(row.percent7d)}%
-              </td>
-
-              {/* Market capitalization in dollars */}
-              <td className="px-2 py-2 text-right text-sm">
-                ${fmtLarge(row.marketCap)}
-              </td>
-
-              {/* 24-hour trading volume in dollars */}
-              <td className="px-2 py-2 text-right text-sm">
-                ${fmtLarge(row.volume24h)}
-              </td>
-
-              {/* Circulating supply amount */}
-              <td className="px-2 py-2 text-right text-sm">
-                {fmtLarge(row.circulatingSupply)}
-              </td>
-
-              {/* Sparkline chart: mini 7-day price trend visualization using Chart.js */}
-              <td className="px-2 py-2 text-center">
-                <SparklineChart data={row.sparkline7d} label="7-Day Trend" />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          <button
+            onClick={loadAll}
+            disabled={isLoadingMore}
+            className={`border-0 bg-transparent text-base font-semibold uppercase transition-all duration-300 ${
+              isLoadingMore
+                ? "opacity-50 cursor-not-allowed"
+                : "text-orange-600 hover:text-orange-500 cursor-pointer"
+            }`}
+            style={{
+              letterSpacing: "0.5px",
+            }}
+            onMouseEnter={(e) => {
+              if (!isLoadingMore) {
+                (e.target as HTMLButtonElement).style.letterSpacing = "1px";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isLoadingMore) {
+                (e.target as HTMLButtonElement).style.letterSpacing = "0.5px";
+              }
+            }}
+          >
+            See All
+          </button>
+        </div>
+      )}
     </div>
   );
 }

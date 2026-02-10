@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import ChatModal from "../components/ChatModal";
 import {
@@ -18,25 +19,14 @@ const tabs = [
 ];
 
 const Dashboard = () => {
-    const [stocks, setStocks] = useState<StockName[]>([]);
+    const { id: urlStockId } = useParams<{ id: string }>();
     const [activeTab, setActiveTab] = useState<string>(tabs[0].label);
     const [allStocks, setAllStocks] = useState<StockApiData[]>([]);
     const [signal, setSignal] = useState<SignalApiData | null>(null);
-    const [stockName, setStockName] = useState<string>("");
+    const [stockName, setStockName] = useState<string>(urlStockId ?? "");
     const [error, setError] = useState<Error | null>(null);
     const [isChatOpen, setIsChatOpen] = useState(false);
-
-    const fetchStocks = async (): Promise<void> => {
-        try {
-            const data = await getStocks();
-            setStocks(data);
-            if (data.length > 0 && !stockName) {
-                setStockName(data[0].stock_name);
-            }
-        } catch (e) {
-            if (e instanceof Error) setError(e);
-        }
-    };
+    const [loading, setLoading] = useState<boolean>(true);
 
     const handleChat = () => {
         setIsChatOpen(true);
@@ -44,6 +34,7 @@ const Dashboard = () => {
 
     const fetchStockData = async (name: string): Promise<void> => {
         try {
+            setLoading(true);
             const [detailsData, signalData] = await Promise.all([
                 getStockDetails(name),
                 getSignal(name),
@@ -53,18 +44,39 @@ const Dashboard = () => {
             setSignal(signalData);
         } catch (e) {
             if (e instanceof Error) setError(e);
+        } finally {
+            setLoading(false);
         }
     };
 
+    // Effect: Load stock data on mount or when URL ID changes
     useEffect(() => {
-        fetchStocks();
-    }, []);
-
-    useEffect(() => {
-        if (stockName) {
-            fetchStockData(stockName);
+        if (urlStockId) {
+            // User clicked from MarketTable - fetch specific stock
+            const stockWithPrefix = `Stock\\${urlStockId}`;
+            console.log(stockWithPrefix);
+            
+            setStockName(stockWithPrefix);
+            fetchStockData(stockWithPrefix);
+        } else {
+            // Normal dashboard access - load first stock if available
+            const loadDefaultStock = async () => {
+                try {
+                    setLoading(true);
+                    const stocks = await getStocks();
+                    if (stocks.length > 0) {
+                        setStockName(stocks[0].stock_name);
+                        await fetchStockData(stocks[0].stock_name);
+                    }
+                } catch (e) {
+                    if (e instanceof Error) setError(e);
+                } finally {
+                    setLoading(false);
+                }
+            };
+            loadDefaultStock();
         }
-    }, [stockName]);
+    }, [urlStockId]);
 
     // Process data for chart and stats
     const { chartData, latestData } = useMemo(() => {
@@ -104,6 +116,14 @@ const Dashboard = () => {
         return (
             <div className="flex items-center justify-center h-screen bg-gray-50 text-red-500">
                 <p>Error loading data: {error.message}. Is the backend running?</p>
+            </div>
+        );
+    }
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-screen bg-gray-50 text-gray-600">
+                <p>Loading stock data...</p>
             </div>
         );
     }
@@ -152,20 +172,9 @@ const Dashboard = () => {
                         </div>
                     )
                 } */}
-            </main >
+            </main>
 
             {/* <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} /> */}
-
-            <Sidebar
-                stock_name={stockName}
-                volume={latestData?.volume || "0"}
-                open={latestData?.open || ""}
-                close={latestData?.close || ""}
-                high={latestData?.high || ""}
-                low={latestData?.low || ""}
-                signal={signal?.signal || ""}
-                score={signal?.score || 0}
-            />
         </div >
     );
 };

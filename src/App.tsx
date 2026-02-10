@@ -6,12 +6,16 @@ import Home from "./pages/Home";
 const App = () => {
   return (
     <Router>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-
-      </Routes>
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <NavBar />
+        <main style={{ flex: 1, overflow: "auto" }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/stocks/:id" element={<Dashboard />} />
+          </Routes>
+        </main>
+      </div>
     </Router>
   );
 };
