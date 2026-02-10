@@ -1,7 +1,12 @@
 @import "tailwindcss";
 
+/**
+ * Global styles for HTML and body elements.
+ * Allows natural page scrolling by removing overflow constraints.
+ */
 html,
 body {
-    height: 100%;
-    overflow: hidden;
+    height: auto; /* Allow body to grow with content */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scroll from margins */
 }
