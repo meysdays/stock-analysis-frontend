@@ -57,9 +57,9 @@ export const dashboardLinks: NavOption = {
             title: "Indicators",
             icon: Gauge,
             links: [
-                { href: "#", label: "Fear and Greed Index", icon: Gauge, iconClass: "text-green-600 bg-green-50" },
-                { href: "/indicators/sp20", label: "StockPred 20 Index", icon: TrendingUp, iconClass: "text-orange-600 bg-orange-50" },
-                { href: "#", label: "StockPred 100 Index", icon: ChartNoAxesCombined, iconClass: "text-purple-600 bg-purple-50" },
+                { href: "/indicators/fear-greed", label: "Fear and Greed Index", icon: Gauge, iconClass: "text-green-600 bg-green-50" },
+                { href: "/indicators/sp20", label: "StockPred 10 Index", icon: TrendingUp, iconClass: "text-orange-600 bg-orange-50" },
+                { href: "#", label: "StockPred 30 Index", icon: ChartNoAxesCombined, iconClass: "text-purple-600 bg-purple-50" },
                 { href: "#", label: "Market Cycle Indicators", icon: RefreshCw, iconClass: "text-pink-600 bg-pink-50" },
             ],
         },
@@ -76,9 +76,9 @@ export const dashboardLinks: NavOption = {
 }
 
 export const indicatorTabs: TabItem[] = [
-    { label: "Fear & Greed", href: "#fear-greed" },
-    { label: "SP20", href: "#sp20" },
-    { label: "SP100", href: "#sp100" },
+    { label: "Fear & Greed", href: "/indicators/fear-greed" },
+    { label: "SP10", href: "/indicators/sp10" },
+    { label: "SP30", href: "/indicators/sp30" },
     { label: "Cycle Indicators", href: "#cycle-indicators" },
 ]
 

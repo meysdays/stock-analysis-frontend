@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import type { TabItem } from "../lib/definitions";
 
 interface TabProps {
@@ -6,23 +6,29 @@ interface TabProps {
 }
 
 const Tab = ({ tabProps }: TabProps) => {
-  const [activeTab, setActiveTab] = useState<string>("");
+  const location = useLocation();
 
   return (
     <header className="flex justify-between items-center mb-8 border-b-2 border-gray-200 px-4 ">
-      {tabProps.map((tab) => (
-        <a
-          key={tab.label}
-          href={tab.href}
-          onClick={() => setActiveTab(tab.label)}
-          className={`text-gray-600 hover:text-gray-800 text-2xl font-semibold transition-colors transition-all duration-300 ease-in-out ${activeTab === tab.label
-            ? "border-b-3 px-4 py-2 border-orange-500"
-            : ""
-            }`}
-        >
-          {tab.label}
-        </a>
-      ))}
+      {tabProps.map((tab) => {
+
+        const isActive = tab.href.startsWith("#")
+          ? false
+          : location.pathname === tab.href;
+
+        return (
+          <Link
+            key={tab.label}
+            to={tab.href}
+            className={`text-gray-600 hover:text-gray-800 text-2xl font-semibold transition-colors transition-all duration-300 ease-in-out ${isActive
+              ? "border-b-3 px-4 py-2 border-orange-500"
+              : ""
+              }`}
+          >
+            {tab.label}
+          </Link>
+        );
+      })}
     </header>
   );
 };

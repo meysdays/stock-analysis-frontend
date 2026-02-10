@@ -7,7 +7,7 @@ const SidePanel = () => {
     const sections = dashboardLinks["Dashboards"] || [];
 
     return (
-        <aside className="w-72 h-full bg-white border-r border-gray-100 flex flex-col py-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <aside className="w-72 h-full bg-white border-r border-gray-100 flex flex-col py-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] sticky top-0">
             <div className="px-6 space-y-10">
                 {sections.map((section) => (
                     <div key={section.title} className="group/section">

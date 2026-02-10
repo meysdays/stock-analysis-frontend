@@ -7,7 +7,7 @@ import { navLinks } from "../utils/utils";
 const NavBar = () => {
     const [dropDown, setDropDown] = useState<string>("");
     return (
-        <div className="h-20 w-screen bg-white border-b border-gray-100 flex items-center px-6 relative z-50">
+        <div className="h-20 w-screen bg-white border-b border-gray-300 flex items-center px-6 sticky -top-[78px] z-50">
             <div className="flex items-center gap-12 w-full max-w-7xl mx-auto">
 
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">

@@ -1,12 +1,9 @@
-// Mock data for the CoinMarketCap 100 Index Chart
-// This simulates historical price data for visualization
-
 export interface ChartDataPoint {
     date: string;
     price: number;
 }
 
-// Generate mock data that resembles the CMC100 chart pattern
+// Generate mock data
 export const generateMockChartData = (): ChartDataPoint[] => {
     const data: ChartDataPoint[] = [];
     const startDate = new Date("2024-01-01");
