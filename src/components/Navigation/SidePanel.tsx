@@ -1,4 +1,4 @@
-import { dashboardLinks } from "../utils/utils";
+import { dashboardLinks } from "../../utils/utils";
 import { useLocation, Link } from "react-router-dom";
 
 const SidePanel = () => {

@@ -33,6 +33,7 @@ export interface StockApiData {
 }
 
 export interface StockName {
+    id: number;
     stock_name: string;
 }
 

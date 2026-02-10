@@ -1,6 +1,6 @@
-import SidePanel from "../../components/SidePanel";
+import SidePanel from "../../components/Navigation/SidePanel";
 import { indicatorTabs } from "../../utils/utils";
-import Tab from "../../components/Tab";
+import Tab from "../../components/Navigation/Tab";
 import Card from "../../components/Card";
 import { mockChartData, calculateStats } from "../../lib/data-layer";
 

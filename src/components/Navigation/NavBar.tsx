@@ -1,7 +1,7 @@
 import { useState } from "react";
-import SearchBar from "./SearchBar";
-import { dashboardLinks } from "../utils/utils"
-import { navLinks } from "../utils/utils";
+import SearchBar from "./../SearchBar";
+import { dashboardLinks } from "../../utils/utils"
+import { navLinks } from "../../utils/utils";
 
 
 const NavBar = () => {

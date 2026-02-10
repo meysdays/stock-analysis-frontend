@@ -1,5 +1,5 @@
 import { useLocation, Link } from "react-router-dom";
-import type { TabItem } from "../lib/definitions";
+import type { TabItem } from "../../lib/definitions";
 
 interface TabProps {
   tabProps: TabItem[];

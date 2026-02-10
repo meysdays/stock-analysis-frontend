@@ -2,7 +2,7 @@
  * Home page component displaying the market overview.
  * Provides a responsive container that allows natural page scrolling.
  */
-import MarketTable from '../components/MarketTable';
+import MarketTable from '../components/MarketTable/MarketTable';
 
 const Home = () => {
   return (

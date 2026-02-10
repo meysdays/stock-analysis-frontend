@@ -1,5 +1,5 @@
-import SidePanel from "../components/SidePanel";
-import Tab from "../components/Tab";
+import SidePanel from "../components/Navigation/SidePanel";
+import Tab from "../components/Navigation/Tab";
 import Card from "../components/Card";
 import { indicatorTabs } from "../utils/utils";
 

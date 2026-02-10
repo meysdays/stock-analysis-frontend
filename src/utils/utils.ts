@@ -96,3 +96,14 @@ export const color_zones = [
     { min: 60, max: 79, color: "#22c55e", label: "Greed" },
     { min: 80, max: 100, color: "#16a34a", label: "Extreme Greed" },
 ]
+
+export const dummySidebarData = {
+    stock_name: "Stock\\DUMMY",
+    volume: "1,234,567",
+    close: "150.25",
+    high: "155.00",
+    low: "148.50",
+    open: "149.00",
+    signal: "Buy",
+    score: 85
+};

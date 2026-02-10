@@ -1,6 +1,6 @@
 import { Info } from "lucide-react";
-import SidePanel from "../../components/SidePanel";
-import Tab from "../../components/Tab";
+import SidePanel from "../../components/Navigation/SidePanel";
+import Tab from "../../components/Navigation/Tab";
 import Card from "../../components/Card";
 
 const rsiTabs = [

@@ -1,36 +1,20 @@
 import api from "./api";
-import type { StockName, StockApiData, SignalApiData } from "./definitions";
+import type { StockApiData } from "./definitions";
 
-// Helper to Title Case the stock name (backend requires 'Stock\Name' but list returns 'STOCK\NAME')
-const toTitleCase = (str: string) => {
-    return str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
-};
 
-export const getStocks = async (): Promise<StockName[]> => {
-    const { data } = await api.get<StockName[]>("/stocks/stocks_name");
+export const getStockById = async (id: number): Promise<StockApiData[]> => {
+    const { data } = await api.get<StockApiData[]>(`/stocks/${id}`);
     return data;
 };
 
-export const getStockDetails = async (name: string): Promise<StockApiData[]> => {
-    const formattedName = toTitleCase(name);
-    const { data } = await api.get<StockApiData[]>(
-        `/stocks/name/${encodeURIComponent(formattedName)}`
-    );
-    return data;
-};
-
-export const getSignal = async (name: string): Promise<SignalApiData> => {
-    const formattedName = toTitleCase(name);
-    const { data } = await api.get<SignalApiData>(
-        `/stocks/signal?stock_name=${encodeURIComponent(formattedName)}`
-    );
-    return data;
-};
-
-export const fetchStockById = async (id: string) => {
-    const [detailsData, signalData] = await Promise.all([
-        getStockDetails(id),
-        getSignal(id),
+export const fetchStockById = async (id: number) => {
+    const [detailsData] = await Promise.all([
+        getStockById(id),
     ]);
-    return { detailsData, signalData };
+    return { detailsData };
+};
+
+export const getPaginatedMarketData = async (page: number, limit: number): Promise<any[]> => {
+    const { data } = await api.get<any[]>(`/market?page=${page}&limit=${limit}`);
+    return data;
 };

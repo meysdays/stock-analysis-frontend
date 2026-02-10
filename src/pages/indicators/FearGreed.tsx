@@ -1,8 +1,8 @@
-import SidePanel from "../../components/SidePanel";
+import SidePanel from "../../components/Navigation/SidePanel";
 import { indicatorTabs } from "../../utils/utils";
-import Tab from "../../components/Tab";
+import Tab from "../../components/Navigation/Tab";
 import Card from "../../components/Card";
-import ChartCard from "../../components/ChartCard";
+import ChartCard from "../../components/Chart/ChartCard";
 import { mockChartData, formatChartLabels, extractPrices } from "../../lib/data-layer";
 
 const FearGreed = () => {
