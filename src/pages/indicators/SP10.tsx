@@ -38,7 +38,7 @@ const SP20 = () => {
           <div className="space-y-6">
             <Card title="SP10">
               <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold text-gray-900">${stats.currentPrice.toFixed(2)}</span>
+                <span className="text-4xl font-bold text-gray-900">₦{stats.currentPrice.toFixed(2)}</span>
                 <span className={`font-medium text-sm flex items-center ${stats.changePercent24h >= 0 ? "text-green-500" : "text-red-500"}`}>
                   {stats.changePercent24h >= 0 ? "▲" : "▼"} {Math.abs(stats.changePercent24h).toFixed(2)}% (24h)
                 </span>
@@ -46,35 +46,35 @@ const SP20 = () => {
             </Card>
 
             <Card title="Historical Values">
-              <div className="space-y-4">
+              <div className="space-y-1">
                 <div className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
-                  <span className="text-gray-500 font-medium">Yesterday</span>
-                  <span className="text-gray-900 font-bold">${stats.yesterday.toFixed(2)}</span>
+                  <span className="text-gray-500 font-medium text-xs">Yesterday</span>
+                  <span className="text-gray-900 font-bold">₦{stats.yesterday.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
-                  <span className="text-gray-500 font-medium">Last Week</span>
-                  <span className="text-gray-900 font-bold">${stats.lastWeek.toFixed(2)}</span>
+                  <span className="text-gray-500 font-medium text-xs">Last Week</span>
+                  <span className="text-gray-900 font-bold">₦{stats.lastWeek.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
-                  <span className="text-gray-500 font-medium">Last Month</span>
-                  <span className="text-gray-900 font-bold">${stats.lastMonth.toFixed(2)}</span>
+                  <span className="text-gray-500 font-medium text-xs">Last Month</span>
+                  <span className="text-gray-900 font-bold">₦{stats.lastMonth.toFixed(2)}</span>
                 </div>
               </div>
             </Card>
 
             <Card title="Yearly Performance">
-              <div className="space-y-4">
+              <div className="space-y-1">
                 <div className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
-                  <span className="text-gray-500 font-medium">
+                  <span className="text-gray-500 font-medium text-xs">
                     Yearly High <span className="text-gray-400 text-xs">({formatDate(stats.yearlyHighDate)})</span>
                   </span>
-                  <span className="text-gray-900 font-bold">${stats.yearlyHigh.toFixed(2)}</span>
+                  <span className="text-gray-900 font-bold">₦{stats.yearlyHigh.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
-                  <span className="text-gray-500 font-medium">
+                  <span className="text-gray-500 font-medium text-xs">
                     Yearly Low <span className="text-gray-400 text-xs">({formatDate(stats.yearlyLowDate)})</span>
                   </span>
-                  <span className="text-gray-900 font-bold">${stats.yearlyLow.toFixed(2)}</span>
+                  <span className="text-gray-900 font-bold">₦{stats.yearlyLow.toFixed(2)}</span>
                 </div>
               </div>
             </Card>

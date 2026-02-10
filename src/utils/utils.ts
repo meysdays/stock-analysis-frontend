@@ -50,7 +50,7 @@ export const dashboardLinks: NavOption = {
             icon: Globe,
             links: [
                 { href: "#", label: "Market Overview", icon: Globe, iconClass: "text-blue-600 bg-blue-50" },
-                { href: "#", label: "No. of Stocks", icon: LayoutGrid, iconClass: "text-indigo-600 bg-indigo-50" },
+                { href: "/indicators/no-of-stocks", label: "No. of Stocks", icon: LayoutGrid, iconClass: "text-indigo-600 bg-indigo-50" },
             ],
         },
         {
@@ -58,8 +58,8 @@ export const dashboardLinks: NavOption = {
             icon: Gauge,
             links: [
                 { href: "/indicators/fear-greed", label: "Fear and Greed Index", icon: Gauge, iconClass: "text-green-600 bg-green-50" },
-                { href: "/indicators/sp20", label: "StockPred 10 Index", icon: TrendingUp, iconClass: "text-orange-600 bg-orange-50" },
-                { href: "#", label: "StockPred 30 Index", icon: ChartNoAxesCombined, iconClass: "text-purple-600 bg-purple-50" },
+                { href: "/indicators/sp10", label: "StockPred 10 Index", icon: TrendingUp, iconClass: "text-orange-600 bg-orange-50" },
+                { href: "/indicators/sp30", label: "StockPred 30 Index", icon: ChartNoAxesCombined, iconClass: "text-purple-600 bg-purple-50" },
                 { href: "#", label: "Market Cycle Indicators", icon: RefreshCw, iconClass: "text-pink-600 bg-pink-50" },
             ],
         },
@@ -67,8 +67,8 @@ export const dashboardLinks: NavOption = {
             title: "Technical Analysis",
             icon: Activity,
             links: [
-                { href: "#", label: "RSI", icon: Activity, iconClass: "text-cyan-600 bg-cyan-50" },
-                { href: "#", label: "MACD", icon: ChartColumn, iconClass: "text-emerald-600 bg-emerald-50" },
+                { href: "/technical/rsi", label: "RSI", icon: Activity, iconClass: "text-cyan-600 bg-cyan-50" },
+                { href: "/technical/macd", label: "MACD", icon: ChartColumn, iconClass: "text-emerald-600 bg-emerald-50" },
             ],
         },
     ]
@@ -87,4 +87,12 @@ export const stockTabs: TabItem[] = [
     { label: "Markets", href: "#markets" },
     { label: "News", href: "#news" },
     { label: "About", href: "#about" },
+]
+
+export const color_zones = [
+    { min: 0, max: 19, color: "#dc2626", label: "Extreme Fear" },
+    { min: 20, max: 39, color: "#f97316", label: "Fear" },
+    { min: 40, max: 59, color: "#eab308", label: "Neutral" },
+    { min: 60, max: 79, color: "#22c55e", label: "Greed" },
+    { min: 80, max: 100, color: "#16a34a", label: "Extreme Greed" },
 ]

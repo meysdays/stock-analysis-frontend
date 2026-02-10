@@ -85,7 +85,7 @@ const LineChart = ({
                 displayColors: false,
                 callbacks: {
                     title: (context) => context[0].label,
-                    label: (context) => `$${context.parsed.y?.toFixed(2) ?? "N/A"}`,
+                    label: (context) => `₦${context.parsed.y?.toFixed(2) ?? "N/A"}`,
                 },
             },
         },
@@ -119,7 +119,7 @@ const LineChart = ({
                     font: {
                         size: 11,
                     },
-                    callback: (value) => `$${value}`,
+                    callback: (value) => `₦${value}`,
                 },
                 border: {
                     display: false,

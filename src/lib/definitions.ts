@@ -21,3 +21,24 @@ export interface TabItem {
     label: string;
     href: string;
 }
+
+export interface StockApiData {
+    date: string;
+    open: string;
+    high: string;
+    low: string;
+    close: string;
+    volume: string;
+    stock_name: string;
+}
+
+export interface StockName {
+    stock_name: string;
+}
+
+export interface SignalApiData {
+    symbol: string;
+    signal: string;
+    score: number;
+    reasons: string[];
+}

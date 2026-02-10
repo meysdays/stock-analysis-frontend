@@ -1,13 +1,14 @@
 import type { ReactNode } from "react";
 
 interface CardProps {
-  children: ReactNode;
+  children?: ReactNode;
   title?: string;
+  value?: string | number;
   className?: string;
   action?: ReactNode;
 }
 
-const Card = ({ children, title, className = "", action }: CardProps) => {
+const Card = ({ children, title, value, className = "", action }: CardProps) => {
   return (
     <div className={`bg-white rounded-xl p-6 shadow-sm border border-gray-100 ${className}`}>
       {(title || action) && (
@@ -16,7 +17,10 @@ const Card = ({ children, title, className = "", action }: CardProps) => {
           {action && <div>{action}</div>}
         </div>
       )}
-      <div>{children}</div>
+      <div>
+        {value && <div className="text-2xl font-bold text-gray-900 mb-2">{value}</div>}
+        {children}
+      </div>
     </div>
   );
 };

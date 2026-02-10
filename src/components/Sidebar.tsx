@@ -1,5 +1,5 @@
 // import { LayoutDashboard } from "lucide-react";
-import { type StockApiData } from "../api";
+import { type StockApiData } from "../lib/api";
 import SideBarCard from "./Card";
 
 interface SidebarProps extends Omit<StockApiData, "date"> {
@@ -19,7 +19,7 @@ const Sidebar = ({
 }: SidebarProps) => {
     const cleaned = stock_name.split("\\").pop();
     return (
-        <div className="w-[20%] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] bg-white border-r border-gray-100 flex flex-col p-6">
+        <div className="w-[16%] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] bg-white border-r border-gray-100 flex flex-col p-6">
 
             <nav className="flex-1 space-y-2">
                 {/* <a

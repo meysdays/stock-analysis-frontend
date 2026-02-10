@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import SidePanel from "../components/SidePanel";
 // import ChatModal from "../components/ChatModal";
@@ -7,15 +8,17 @@ import {
     getStocks,
     getStockDetails,
     getSignal,
+} from "../lib/data";
+import {
     type StockName,
     type StockApiData,
     type SignalApiData,
-} from "../api";
+} from "../lib/definitions";
 import Tab from "../components/Tab";
 
 
 
-const Dashboard = () => {
+const StockPage = () => {
     const [stocks, setStocks] = useState<StockName[]>([]);
     const [activeTab, setActiveTab] = useState<string>(stockTabs[0].label);
     const [allStocks, setAllStocks] = useState<StockApiData[]>([]);
@@ -35,6 +38,8 @@ const Dashboard = () => {
             if (e instanceof Error) setError(e);
         }
     };
+
+    const { id } = useParams();
 
     const handleChat = () => {
         setIsChatOpen(true);
@@ -146,4 +151,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default StockPage;

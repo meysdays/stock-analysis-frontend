@@ -35,7 +35,7 @@ const FearGreed = () => {
 
                 <div className="mb-8">
                     <div className="flex items-center gap-3 mb-2">
-                        <h1 className="text-2xl font-bold text-gray-900">CMC Crypto Fear and Greed Index</h1>
+                        <h1 className="text-2xl font-bold text-gray-900">SP Nigerian Stocks Fear and Greed Index</h1>
                         <button className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors">
                             See API Details
                         </button>
@@ -50,35 +50,25 @@ const FearGreed = () => {
                     <div className="space-y-6">
                         <Card title="CMC Crypto Fear and Greed Index">
                             {/* Meter Placeholder */}
-                            <div className="flex flex-col items-center justify-center py-6">
-                                <div className="relative w-48 h-24 overflow-hidden mb-2">
-                                    <div className="absolute top-0 left-0 w-full h-full rounded-t-full border-[12px] border-gray-100 border-b-0"></div>
-                                    <div className="absolute top-0 left-0 w-full h-full rounded-t-full border-[12px] border-transparent border-t-green-500 border-l-red-500 border-r-green-500 border-b-0 transform rotate-[-45deg] opacity-80"></div>
-                                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-4 h-4 bg-gray-800 rounded-full z-10"></div>
-                                </div>
-                                <div className="text-center mt-2">
-                                    <span className="block text-4xl font-bold text-gray-900">10</span>
-                                    <span className="text-sm font-medium text-gray-500">Extreme Fear</span>
-                                </div>
-                            </div>
+                            <p>meter place holder</p>
                         </Card>
 
                         <Card title="Historical Values">
-                            <div className="space-y-4">
-                                <div className="flex justify-between items-center py-2">
-                                    <span className="text-gray-500 font-medium">Yesterday</span>
+                            <div className="space-y-1">
+                                <div className="flex justify-between items-center py-1">
+                                    <span className="text-gray-500 font-medium text-xs">Yesterday</span>
                                     <span className={`px-3 py-1 rounded-full text-xs font-bold ${getSentimentStyle(9)}`}>
                                         {getSentimentLabel(9)} - 9
                                     </span>
                                 </div>
-                                <div className="flex justify-between items-center py-2">
-                                    <span className="text-gray-500 font-medium">Last Week</span>
+                                <div className="flex justify-between items-center py-1">
+                                    <span className="text-gray-500 font-medium text-xs">Last Week</span>
                                     <span className={`px-3 py-1 rounded-full text-xs font-bold ${getSentimentStyle(17)}`}>
                                         {getSentimentLabel(17)} - 17
                                     </span>
                                 </div>
-                                <div className="flex justify-between items-center py-2">
-                                    <span className="text-gray-500 font-medium">Last Month</span>
+                                <div className="flex justify-between items-center py-1">
+                                    <span className="text-gray-500 font-medium text-xs">Last Month</span>
                                     <span className={`px-3 py-1 rounded-full text-xs font-bold ${getSentimentStyle(40)}`}>
                                         {getSentimentLabel(40)} - 40
                                     </span>
@@ -87,8 +77,8 @@ const FearGreed = () => {
                         </Card>
 
                         <Card title="Yearly High and Low">
-                            <div className="space-y-4">
-                                <div className="flex justify-between items-center py-2">
+                            <div className="space-y-1">
+                                <div className="flex justify-between items-center py-1">
                                     <span className="text-gray-500 font-medium">
                                         Yearly High <span className="text-gray-400 text-xs">(May 23, 2025)</span>
                                     </span>
@@ -96,7 +86,7 @@ const FearGreed = () => {
                                         {getSentimentLabel(76)} - 76
                                     </span>
                                 </div>
-                                <div className="flex justify-between items-center py-2">
+                                <div className="flex justify-between items-center py-1">
                                     <span className="text-gray-500 font-medium">
                                         Yearly Low <span className="text-gray-400 text-xs">(Feb 06, 2026)</span>
                                     </span>

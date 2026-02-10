@@ -15,7 +15,7 @@ const SP30 = () => {
     };
 
     return (
-        <div className="flex bg-[#FDFDFD] overflow-y-auto">
+        <div className="flex h-full bg-[#FDFDFD] overflow-y-auto">
             <SidePanel />
             <main className="flex-1 p-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <Tab tabProps={indicatorTabs} />
@@ -35,7 +35,7 @@ const SP30 = () => {
                     <div className="space-y-6">
                         <Card title="SP30">
                             <div className="flex items-baseline gap-2">
-                                <span className="text-4xl font-bold text-gray-900">${stats.currentPrice.toFixed(2)}</span>
+                                <span className="text-4xl font-bold text-gray-900">₦{stats.currentPrice.toFixed(2)}</span>
                                 <span className={`font-medium text-sm flex items-center ${stats.changePercent24h >= 0 ? "text-green-500" : "text-red-500"}`}>
                                     {stats.changePercent24h >= 0 ? "▲" : "▼"} {Math.abs(stats.changePercent24h).toFixed(2)}% (24h)
                                 </span>
@@ -46,15 +46,15 @@ const SP30 = () => {
                             <div className="space-y-4">
                                 <div className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
                                     <span className="text-gray-500 font-medium">Yesterday</span>
-                                    <span className="text-gray-900 font-bold">${stats.yesterday.toFixed(2)}</span>
+                                    <span className="text-gray-900 font-bold">₦{stats.yesterday.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
                                     <span className="text-gray-500 font-medium">Last Week</span>
-                                    <span className="text-gray-900 font-bold">${stats.lastWeek.toFixed(2)}</span>
+                                    <span className="text-gray-900 font-bold">₦{stats.lastWeek.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
                                     <span className="text-gray-500 font-medium">Last Month</span>
-                                    <span className="text-gray-900 font-bold">${stats.lastMonth.toFixed(2)}</span>
+                                    <span className="text-gray-900 font-bold">₦{stats.lastMonth.toFixed(2)}</span>
                                 </div>
                             </div>
                         </Card>
@@ -65,13 +65,13 @@ const SP30 = () => {
                                     <span className="text-gray-500 font-medium">
                                         Yearly High <span className="text-gray-400 text-xs">({formatDate(stats.yearlyHighDate)})</span>
                                     </span>
-                                    <span className="text-gray-900 font-bold">${stats.yearlyHigh.toFixed(2)}</span>
+                                    <span className="text-gray-900 font-bold">₦{stats.yearlyHigh.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between items-center py-2 border-b border-gray-50 last:border-0">
                                     <span className="text-gray-500 font-medium">
                                         Yearly Low <span className="text-gray-400 text-xs">({formatDate(stats.yearlyLowDate)})</span>
                                     </span>
-                                    <span className="text-gray-900 font-bold">${stats.yearlyLow.toFixed(2)}</span>
+                                    <span className="text-gray-900 font-bold">₦{stats.yearlyLow.toFixed(2)}</span>
                                 </div>
                             </div>
                         </Card>

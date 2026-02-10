@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getStocks, getStockDetails } from "../api";
+import { getStocks, getStockDetails } from "../lib/data";
 import SparklineChart from "./SparklineChart";
 import { NavLink } from "react-router-dom";
 
@@ -148,13 +148,13 @@ export default function MarketTable({
               // Calculate 24-hour percentage change: ((current - prev) / prev) * 100
               const pct24 = prev1
                 ? ((lastClose - Number(prev1.close)) / Number(prev1.close)) *
-                  100
+                100
                 : 0;
 
               // Calculate 7-day percentage change
               const pct7 = prev7
                 ? ((lastClose - Number(prev7.close)) / Number(prev7.close)) *
-                  100
+                100
                 : 0;
 
               // Approximate 1-hour change as 1/24 of daily change
@@ -289,14 +289,13 @@ export default function MarketTable({
 
               {/* Current price column */}
               <td className="px-2 py-2 text-right text-sm">
-                ${fmt(row.price)}
+                ₦{fmt(row.price)}
               </td>
 
               {/* 1-hour percentage change: green if positive, red if negative */}
               <td
-                className={`px-2 py-2 text-right text-sm ${
-                  row.percent1h >= 0 ? "text-green-600" : "text-red-600"
-                }`}
+                className={`px-2 py-2 text-right text-sm ${row.percent1h >= 0 ? "text-green-600" : "text-red-600"
+                  }`}
               >
                 {row.percent1h >= 0 ? "+" : ""}
                 {fmt(row.percent1h)}%
@@ -304,9 +303,8 @@ export default function MarketTable({
 
               {/* 24-hour percentage change: green if positive, red if negative */}
               <td
-                className={`px-2 py-2 text-right text-sm ${
-                  row.percent24h >= 0 ? "text-green-600" : "text-red-600"
-                }`}
+                className={`px-2 py-2 text-right text-sm ${row.percent24h >= 0 ? "text-green-600" : "text-red-600"
+                  }`}
               >
                 {row.percent24h >= 0 ? "+" : ""}
                 {fmt(row.percent24h)}%
@@ -314,9 +312,8 @@ export default function MarketTable({
 
               {/* 7-day percentage change: green if positive, red if negative */}
               <td
-                className={`px-2 py-2 text-right text-sm ${
-                  row.percent7d >= 0 ? "text-green-600" : "text-red-600"
-                }`}
+                className={`px-2 py-2 text-right text-sm ${row.percent7d >= 0 ? "text-green-600" : "text-red-600"
+                  }`}
               >
                 {row.percent7d >= 0 ? "+" : ""}
                 {fmt(row.percent7d)}%
@@ -324,12 +321,12 @@ export default function MarketTable({
 
               {/* Market capitalization in dollars */}
               <td className="px-2 py-2 text-right text-sm">
-                ${fmtLarge(row.marketCap)}
+                ₦{fmtLarge(row.marketCap)}
               </td>
 
               {/* 24-hour trading volume in dollars */}
               <td className="px-2 py-2 text-right text-sm">
-                ${fmtLarge(row.volume24h)}
+                ₦{fmtLarge(row.volume24h)}
               </td>
 
               {/* Circulating supply amount */}
