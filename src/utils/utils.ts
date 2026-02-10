@@ -67,7 +67,7 @@ export const dashboardLinks: NavOption = {
             title: "Technical Analysis",
             icon: Activity,
             links: [
-                { href: "/technical/rsi", label: "RSI", icon: Activity, iconClass: "text-cyan-600 bg-cyan-50" },
+                { href: "/indicators/rsi", label: "RSI", icon: Activity, iconClass: "text-cyan-600 bg-cyan-50" },
                 { href: "/technical/macd", label: "MACD", icon: ChartColumn, iconClass: "text-emerald-600 bg-emerald-50" },
             ],
         },
