@@ -2,6 +2,8 @@ import { Info } from "lucide-react";
 import SidePanel from "../../components/Navigation/SidePanel";
 import Tab from "../../components/Navigation/Tab";
 import Card from "../../components/Card";
+import ChartCard from "../../components/Chart/ChartCard";
+import BubbleChart from "../../components/Chart/BubbleChart";
 
 const rsiTabs = [
     { label: "RSI", href: "/indicators/rsi" },
@@ -9,32 +11,10 @@ const rsiTabs = [
 ];
 
 const AverageRSIGauge = () => {
-    // Determine needle rotation based on value (0-100) -> (-90deg to 90deg)
-    const value = 44.27;
-    const rotation = (value / 100) * 180 - 90;
-
+    // Determine thumb position based on value (0-100)
+    const value = 50;
     return (
         <div className="flex flex-col items-center justify-center py-4">
-            <div className="relative w-48 h-24 overflow-hidden">
-                {/* Dial Background - simple gray arc or gradient */}
-                <div className="absolute top-0 left-0 w-full h-full bg-gray-200 rounded-t-full"></div>
-
-                {/* Colored Zones (Simplified for now, just a bar at bottom or gradient) */}
-                <div className="absolute bottom-0 left-0 w-full h-2 flex">
-                    <div className="h-full bg-red-500 w-[30%]"></div>
-                    <div className="h-full bg-gray-300 w-[40%]"></div>
-                    <div className="h-full bg-green-500 w-[30%]"></div>
-                </div>
-
-                {/* Needle */}
-                <div
-                    className="absolute bottom-0 left-1/2 w-1 h-20 bg-gray-800 origin-bottom transform transition-transform duration-500"
-                    style={{ transform: `translateX(-50%) rotate(${rotation}deg)` }}
-                ></div>
-
-                {/* Center Dot */}
-                <div className="absolute bottom-0 left-1/2 w-4 h-4 bg-white rounded-full border-2 border-gray-800 transform -translate-x-1/2 translate-y-1/2"></div>
-            </div>
 
             <div className="mt-4 text-center">
                 <h2 className="text-4xl font-bold text-gray-900">{value}</h2>
@@ -45,42 +25,60 @@ const AverageRSIGauge = () => {
             </div>
             {/* Slider bar at bottom mimicking the image */}
             <div className="w-full mt-4 h-1.5 bg-gray-200 rounded-full relative">
-                <div className="absolute top-0 left-0 h-full bg-green-500 rounded-l-full w-[30%]"></div>
-                <div className="absolute top-0 right-0 h-full bg-red-500 rounded-r-full w-[30%]"></div>
+
+                <div className="absolute top-0 left-0 h-full bg-[#16c784] w-[16.67%]"></div>
+                <div className="absolute top-0 left-[16.67%] h-full bg-[#0f8b5c] w-[16.67%]"></div>
+                <div className="absolute top-0 left-[33.34%] h-full bg-gray-200 w-[16.67%]"></div>
+                <div className="absolute top-0 left-[50%] h-full bg-gray-200 w-[16.67%]"></div>
+                <div className="absolute top-0 left-[66.67%] h-full bg-[#a4282f] w-[16.67%]"></div>
+                <div className="absolute top-0 left-[83.34%] h-full bg-[#ea3943] w-[16.67%]"></div>
+
                 {/* Thumb */}
-                <div className="absolute top-1/2 left-[44.27%] w-4 h-4 bg-white border border-gray-300 rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-sm"></div>
+                <div className="absolute top-1/2 w-4 h-4 bg-white border border-gray-300 rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-sm" style={{ left: `${value}%` }}></div>
             </div>
         </div>
     )
 }
 
 const OverboughtVsOversold = () => {
+    const value = {
+        "oversold": 2.0,
+        "overbought": 1.3
+    };
     return (
         <div className="space-y-6 pt-2">
-            <div>
-                <div className="flex justify-between items-center mb-1">
-                    <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                        <span className="text-sm font-medium text-gray-600">Oversold</span>
+            <div className="flex justify-start gap-6">
+
+                <div>
+                    <div className="flex justify-between items-center mb-1">
+                        <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                            <span className="text-xs font-medium text-gray-600">Oversold</span>
+                        </div>
                     </div>
+                    <h3 className="text-xl font-bold">2.0%</h3>
+
                 </div>
-                <h3 className="text-2xl font-bold">2.0%</h3>
-                <div className="w-full bg-gray-100 rounded-full h-2 mt-1">
-                    <div className="bg-green-500 h-2 rounded-full" style={{ width: "2%" }}></div>
+
+                <div>
+                    <div className="flex justify-between items-center mb-1">
+                        <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                            <span className="text-xs font-medium text-gray-600">Overbought</span>
+                        </div>
+                    </div>
+                    <h3 className="text-xl font-bold">1.3%</h3>
+
                 </div>
             </div>
-
-            <div>
-                <div className="flex justify-between items-center mb-1">
-                    <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-red-500"></span>
-                        <span className="text-sm font-medium text-gray-600">Overbought</span>
-                    </div>
-                </div>
-                <h3 className="text-2xl font-bold">1.3%</h3>
-                <div className="w-full bg-gray-100 rounded-full h-2 mt-1">
-                    <div className="bg-red-500 h-2 rounded-full" style={{ width: "1.3%" }}></div>
-                </div>
+            <div className="w-full bg-gray-100 rounded-full h-2 mt-1">
+                <div
+                    className="h-2 rounded-full"
+                    style={{
+                        width: "100%",
+                        background: `linear-gradient(to right, #16c784 ${(value.oversold / (value.oversold + value.overbought)) * 100}%, #ea3943 ${(value.oversold / (value.oversold + value.overbought)) * 100}%)`
+                    }}
+                ></div>
             </div>
         </div>
     )
@@ -174,19 +172,9 @@ const RSI = () => {
                             </div>
 
                             {/* Placeholder for Heatmap */}
-                            <div className="flex-1 bg-gray-50 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center relative overflow-hidden">
-                                <div className="absolute inset-0 grid grid-cols-12 grid-rows-6 gap-0.5 opacity-30">
-                                    {Array.from({ length: 72 }).map((_, i) => (
-                                        <div key={i} className={`
-                                    ${i % 3 === 0 ? 'bg-red-200' : i % 3 === 1 ? 'bg-green-200' : 'bg-gray-200'}
-                                `}></div>
-                                    ))}
-                                </div>
-                                <div className="z-10 text-center">
-                                    <p className="text-gray-500 font-medium">RSI Heatmap Placeholder</p>
-                                    <p className="text-xs text-gray-400 mt-1">Chart visualization would go here</p>
-                                </div>
-                            </div>
+                            <ChartCard title="Crypto RSI Heatmap">
+                                <BubbleChart />
+                            </ChartCard>
                         </div>
                     </div>
                 </div>

@@ -11,30 +11,8 @@ const rsiTabs = [
 const AverageRSIGauge = () => {
     // Determine needle rotation based on value (0-100) -> (-90deg to 90deg)
     const value = 44.27;
-    const rotation = (value / 100) * 180 - 90;
-
     return (
         <div className="flex flex-col items-center justify-center py-4">
-            <div className="relative w-48 h-24 overflow-hidden">
-                {/* Dial Background - simple gray arc or gradient */}
-                <div className="absolute top-0 left-0 w-full h-full bg-gray-200 rounded-t-full"></div>
-
-                {/* Colored Zones (Simplified for now, just a bar at bottom or gradient) */}
-                <div className="absolute bottom-0 left-0 w-full h-2 flex">
-                    <div className="h-full bg-red-500 w-[30%]"></div>
-                    <div className="h-full bg-gray-300 w-[40%]"></div>
-                    <div className="h-full bg-green-500 w-[30%]"></div>
-                </div>
-
-                {/* Needle */}
-                <div
-                    className="absolute bottom-0 left-1/2 w-1 h-20 bg-gray-800 origin-bottom transform transition-transform duration-500"
-                    style={{ transform: `translateX(-50%) rotate(${rotation}deg)` }}
-                ></div>
-
-                {/* Center Dot */}
-                <div className="absolute bottom-0 left-1/2 w-4 h-4 bg-white rounded-full border-2 border-gray-800 transform -translate-x-1/2 translate-y-1/2"></div>
-            </div>
 
             <div className="mt-4 text-center">
                 <h2 className="text-4xl font-bold text-gray-900">{value}</h2>

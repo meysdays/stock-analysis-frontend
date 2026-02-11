@@ -39,7 +39,7 @@ const LineChart = ({
     data,
     label = "Price",
     lineColor = "#16c784",
-    fillColor = "rgba(22, 199, 132, 0.1)",
+    fillColor = "#16c7841a",
     showGrid = true,
     height = 400,
 }: LineChartProps) => {

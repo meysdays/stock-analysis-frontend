@@ -58,6 +58,20 @@ export const mockChartData: ChartDataPoint[] = [
     { date: "2025-12-01", price: 134.19 },
 ];
 
+export const mockIndexTenData: number[] = [67.82, 11.92, 4.21, 4.09, 2.33, 1.32, 0.77, 0.52, 0.46, 0.39, 6.17]
+export const mockIndexTenLabels: string[] = [
+    "BUA Foods Plc",
+    "MTN Nigeria Communications Plc",
+    "Dangote Cement Plc",
+    "Airtel Africa Plc",
+    "BUA Cement Plc",
+    "Seplat Energy Plc",
+    "Guaranty Trust Holding Company",
+    "Zenith Bank Plc",
+    "Geregu Power Plc",
+    "Others"
+];
+
 // Format labels for the chart
 export const formatChartLabels = (data: ChartDataPoint[]): string[] => {
     return data.map((point) => {
