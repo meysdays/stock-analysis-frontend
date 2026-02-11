@@ -1,5 +1,5 @@
 
-import type { StockName } from "../api";
+import type { StockName } from "../lib/api";
 
 interface StockListProps {
     stocks: StockName[];

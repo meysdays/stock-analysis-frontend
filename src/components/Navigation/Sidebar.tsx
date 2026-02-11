@@ -1,6 +1,5 @@
-// import { LayoutDashboard } from "lucide-react";
-import { type StockApiData } from "../api";
-import SideBarCard from "./Card";
+import { type StockApiData } from "../../lib/definitions";
+import SideCard from "../MarketTable/SideCard";
 
 interface SidebarProps extends Omit<StockApiData, "date"> {
     signal: string;
@@ -17,9 +16,8 @@ const Sidebar = ({
     signal,
     score
 }: SidebarProps) => {
-    const cleaned = stock_name.split("\\").pop();
     return (
-        <div className="w-[20%] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] bg-white border-r border-gray-100 flex flex-col p-6">
+        <div className="w-[16%] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] bg-white border-r border-gray-100 flex flex-col p-6">
 
             <nav className="flex-1 space-y-2">
                 {/* <a
@@ -31,25 +29,25 @@ const Sidebar = ({
         </a> */}
 
                 <div>
-                    <p className=" text-[18px] font-bold">{cleaned}</p>
+                    <p className=" text-[18px] font-bold">{stock_name}</p>
                     <p>
                         Daily Volume:{" "}
                         <span className=" text-[18px] font-bold">{volume}</span>
                     </p>
                 </div>
-                <SideBarCard title="Close" value={close} />
+                <SideCard title="Close" value={close} />
                 <div className="flex gap-2">
-                    <SideBarCard title="High" value={high} />
-                    <SideBarCard title="Low" value={low} />
+                    <SideCard title="High" value={high} />
+                    <SideCard title="Low" value={low} />
                 </div>
-                <SideBarCard title="Open" value={open} />
+                <SideCard title="Open" value={open} />
                 <div className="flex gap-2">
-                    <SideBarCard title="Signal" value={signal} />
-                    <SideBarCard title="Score" value={score} />
+                    <SideCard title="Signal" value={signal} />
+                    <SideCard title="Score" value={score} />
                 </div>
                 <div className="flex gap-2">
-                    <SideBarCard title="Volume" value={volume} />
-                    <SideBarCard title="Volume" value={volume} />
+                    <SideCard title="Volume" value={volume} />
+                    <SideCard title="Volume" value={volume} />
                 </div>
             </nav>
         </div>

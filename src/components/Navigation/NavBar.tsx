@@ -1,93 +1,13 @@
 import { useState } from "react";
-import SearchBar from "./SearchBar";
-import {
-    Globe,
-    LayoutGrid,
-    Gauge,
-    TrendingUp,
-    ChartNoAxesCombined,
-    RefreshCw,
-    Activity,
-    ChartColumn,
-    Trophy,
-    Layers,
-    ArrowUpDown,
-    Zap,
-    BarChart3,
-    type LucideIcon
-} from "lucide-react";
-
-interface NavLink {
-    href: string;
-    label: string;
-}
-
-const navLinks: NavLink[] = [
-    { href: "#", label: "NSE" },
-    { href: "#", label: "Dashboards" },
-]
-interface DashboardSection {
-    title: string;
-    links: { href: string; label: string; icon: LucideIcon; iconClass: string }[];
-}
-type NavItem = DashboardSection[]
-
-type NavOption = {
-    [key: string]: NavItem
-}
-
-const dashboardLinks: NavOption = {
-    NSE: [
-        {
-            title: "Nigerian Stock Exchange",
-            links: [
-                { href: "#", label: "Ranking", icon: Trophy, iconClass: "text-yellow-600 bg-yellow-50" },
-                { href: "#", label: "Categories", icon: Layers, iconClass: "text-indigo-600 bg-indigo-50" },
-            ],
-        },
-        {
-            title: "Leaderboard",
-            links: [
-                { href: "#", label: "Gainers & Losers", icon: ArrowUpDown, iconClass: "text-emerald-600 bg-emerald-50" },
-                { href: "#", label: "Most Active", icon: Zap, iconClass: "text-orange-600 bg-orange-50" },
-                { href: "#", label: "Most Traded", icon: BarChart3, iconClass: "text-blue-600 bg-blue-50" },
-            ],
-        },
-    ],
-
-    Dashboards: [
-        {
-            title: "Markets",
-            links: [
-                { href: "#", label: "Market Overview", icon: Globe, iconClass: "text-blue-600 bg-blue-50" },
-                { href: "#", label: "No. of Stocks", icon: LayoutGrid, iconClass: "text-indigo-600 bg-indigo-50" },
-            ],
-        },
-        {
-            title: "Indicators",
-            links: [
-                { href: "#", label: "Fear and Greed Index", icon: Gauge, iconClass: "text-green-600 bg-green-50" },
-                { href: "#", label: "StockPred 20 Index", icon: TrendingUp, iconClass: "text-orange-600 bg-orange-50" },
-                { href: "#", label: "StockPred 100 Index", icon: ChartNoAxesCombined, iconClass: "text-purple-600 bg-purple-50" },
-                { href: "#", label: "Market Cycle Indicators", icon: RefreshCw, iconClass: "text-pink-600 bg-pink-50" },
-            ],
-        },
-        {
-            title: "Technical Analysis",
-            links: [
-                { href: "#", label: "RSI", icon: Activity, iconClass: "text-cyan-600 bg-cyan-50" },
-                { href: "#", label: "MACD", icon: ChartColumn, iconClass: "text-emerald-600 bg-emerald-50" },
-            ],
-        },
-    ]
-
-}
+import SearchBar from "./../SearchBar";
+import { dashboardLinks } from "../../utils/utils"
+import { navLinks } from "../../utils/utils";
 
 
 const NavBar = () => {
     const [dropDown, setDropDown] = useState<string>("");
     return (
-        <div className="h-20 w-screen bg-white border-b border-gray-100 flex items-center px-6 relative z-50">
+        <div className="h-20 w-screen bg-white border-b border-gray-300 flex items-center px-6 sticky -top-[78px] z-50">
             <div className="flex items-center gap-12 w-full max-w-7xl mx-auto">
 
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">

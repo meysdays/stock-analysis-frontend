@@ -90,7 +90,7 @@ const StockChart = ({ data }: ChartProps) => {
                 ticks: {
                     color: "#9ca3af",
                     font: { size: 11 },
-                    callback: (value: any) => '$' + value,
+                    callback: (value: any) => '₦' + value,
                 },
                 border: {
                     display: false,
