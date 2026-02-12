@@ -1,24 +1,17 @@
 import type { ReactNode } from "react";
-import LineChart from "./LineChart";
 
 interface ChartCardProps {
     title: string;
-    labels: string[];
-    data: number[];
     className?: string;
     actions?: ReactNode;
-    lineColor?: string;
-    fillColor?: string;
+    children: ReactNode;
 }
 
 const ChartCard = ({
     title,
-    labels,
-    data,
+    children,
     className = "",
     actions,
-    lineColor = "#16c784",
-    fillColor = "rgba(22, 199, 132, 0.1)",
 }: ChartCardProps) => {
     return (
         <div className={`bg-white rounded-2xl p-6 shadow-sm border border-gray-100 ${className}`}>
@@ -27,13 +20,7 @@ const ChartCard = ({
                 {actions && <div className="flex items-center gap-2">{actions}</div>}
             </div>
             <div className="w-full">
-                <LineChart
-                    labels={labels}
-                    data={data}
-                    lineColor={lineColor}
-                    fillColor={fillColor}
-                    height={350}
-                />
+                {children}
             </div>
         </div>
     );

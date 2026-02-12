@@ -7,16 +7,16 @@ const SidePanel = ({ name }: { name: string }) => {
     const sections = dashboardLinks[name] || [];
 
     return (
-        <aside className="w-72 h-full bg-white border-r border-gray-100 flex flex-col py-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] sticky top-0">
-            <div className="px-6 space-y-10">
+        <aside className="w-56 h-full bg-white border-r border-gray-100 flex flex-col py-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] sticky top-0">
+            <div className="px-4 space-y-10">
                 {sections.map((section) => (
                     <div key={section.title} className="group/section">
-                        <div className="flex items-center gap-3 text-gray-400 mb-4 px-2 hover:text-gray-600 transition-colors cursor-default">
+                        <div className="flex items-center gap-3 text-gray-400 mb-4 px-1 hover:text-gray-600 transition-colors cursor-default">
                             <section.icon className="w-5 h-5" />
-                            <h3 className="font-bold text-sm uppercase tracking-wider">{section.title}</h3>
+                            <h3 className="font-bold text-xs uppercase tracking-wider">{section.title}</h3>
                         </div>
 
-                        <div className="relative ml-4 pl-6 border-l-2 border-gray-50 space-y-2 group-hover/section:border-gray-100 transition-colors">
+                        <div className="relative ml-2 pl-4 border-l-2 border-gray-50 space-y-2 group-hover/section:border-gray-100 transition-colors">
                             {section.links.map((link) => {
                                 const isActive = activePath === link.href;
                                 return (
