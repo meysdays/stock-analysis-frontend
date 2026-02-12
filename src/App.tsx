@@ -7,6 +7,7 @@ import SP10 from "./pages/indicators/SP10";
 import FearGreed from "./pages/indicators/FearGreed";
 import NoOfStocks from "./pages/NoOfStocks";
 import RSI from "./pages/technical/RSI";
+import RankingPage from "./pages/nse/ranking";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/indicators/fear-greed" element={<FearGreed />} />
         <Route path="/indicators/no-of-stocks" element={<NoOfStocks />} />
         <Route path="/indicators/rsi" element={<RSI />} />
+        <Route path="/indicators/ranking" element={<RankingPage/>} />
 
       </Routes>
 

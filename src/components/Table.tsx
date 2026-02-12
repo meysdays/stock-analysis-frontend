@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 export type TableHeader<T> = {
   key: string;
@@ -18,6 +18,31 @@ export default function Table<T extends Record<string, any>>({
   data,
   rowKey,
 }: TableProps<T>) {
+  // const [toogleOrder, setToogleOrder] = React.useState<boolean>(false);
+
+  // const ascOrder = (label:string) =>{
+  //   const labelLowerCase = label.toLocaleLowerCase
+
+  // }
+
+  const [sortKey, setSortKey] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
+  const sortedData = [...data].sort((a, b) => {
+    if (!sortKey) return 0;
+
+    const valueA = a[sortKey];
+    const valueB = b[sortKey];
+
+    if (typeof valueA === "number" && typeof valueB === "number") {
+      return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
+    }
+
+    return sortOrder === "asc"
+      ? String(valueA).localeCompare(String(valueB))
+      : String(valueB).localeCompare(String(valueA));
+  });
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse">
@@ -26,12 +51,20 @@ export default function Table<T extends Record<string, any>>({
             {headers.map((h) => (
               <th
                 key={h.key}
-                className={`px-2 py-2 text-sm font-semibold border-b ${
+                onClick={() => {
+                  if (sortKey === h.key) {
+                    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+                  } else {
+                    setSortKey(h.key);
+                    setSortOrder("asc");
+                  }
+                }}
+                className={`px-2 py-2 text-sm font-semibold border-b hover: cursor-pointer ${
                   h.align === "right"
                     ? "text-right"
                     : h.align === "center"
-                    ? "text-center"
-                    : "text-left"
+                      ? "text-center"
+                      : "text-left"
                 }`}
               >
                 {h.label}
@@ -40,9 +73,9 @@ export default function Table<T extends Record<string, any>>({
           </tr>
         </thead>
         <tbody>
-          {data.map((row, idx) => (
+          {sortedData.map((row, idx) => (
             <tr
-              key={String(rowKey ? rowKey(row, idx) : row.id ?? idx)}
+              key={String(rowKey ? rowKey(row, idx) : (row.id ?? idx))}
               className="hover:bg-gray-100"
             >
               {headers.map((h) => (
@@ -52,8 +85,8 @@ export default function Table<T extends Record<string, any>>({
                     h.align === "right"
                       ? "text-right"
                       : h.align === "center"
-                      ? "text-center"
-                      : "text-left"
+                        ? "text-center"
+                        : "text-left"
                   }`}
                 >
                   {h.render ? h.render(row) : (row[h.key] ?? "")}

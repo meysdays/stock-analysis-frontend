@@ -37,7 +37,7 @@ export const PaginationControls = ({
                 {isLoadingMore ? "Loading..." : "See More"}
             </button>
 
-            <span className="text-gray-300">|</span>
+            {/* <span className="text-gray-300">|</span> */}
         </div>
     );
 };

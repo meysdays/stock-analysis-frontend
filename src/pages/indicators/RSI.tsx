@@ -95,7 +95,7 @@ const HistoricalRSI = () => {
 const RSI = () => {
     return (
         <div className="flex h-screen bg-[#FDFDFD] overflow-hidden">
-            <SidePanel />
+            <SidePanel name="Dashboards" />
             <main className="flex-1 p-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <Tab tabProps={rsiTabs} />
 
