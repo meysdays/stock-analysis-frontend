@@ -29,7 +29,7 @@ export const dashboardLinks: NavOption = {
             title: "Nigerian Stock Exchange",
             icon: Trophy,
             links: [
-                { href: "#", label: "Ranking", icon: Trophy, iconClass: "text-yellow-600 bg-yellow-50" },
+                { href: "/indicators/ranking", label: "Ranking", icon: Trophy, iconClass: "text-yellow-600 bg-yellow-50" },
                 { href: "#", label: "Categories", icon: Layers, iconClass: "text-indigo-600 bg-indigo-50" },
             ],
         },

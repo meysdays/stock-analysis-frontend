@@ -1,10 +1,10 @@
 import { dashboardLinks } from "../../utils/utils";
 import { useLocation, Link } from "react-router-dom";
 
-const SidePanel = () => {
+const SidePanel = ({ name }: { name: string }) => {
     const location = useLocation();
     const activePath = location.pathname + location.hash;
-    const sections = dashboardLinks["Dashboards"] || [];
+    const sections = dashboardLinks[name] || [];
 
     return (
         <aside className="w-72 h-full bg-white border-r border-gray-100 flex flex-col py-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] sticky top-0">
