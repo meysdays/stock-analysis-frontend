@@ -8,6 +8,7 @@ import type { MarketItem, MarketTableProps } from "./types";
 /**
  * MarketTable component fetches and displays stock/market data in a responsive table.
  */
+
 export default function MarketTable({
   fetchUrl,
   fetcher,

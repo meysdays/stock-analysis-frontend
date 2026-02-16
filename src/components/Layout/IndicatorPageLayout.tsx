@@ -43,7 +43,7 @@ const IndicatorPageLayout = ({
 
     return (
         <div className="flex h-full bg-[#FDFDFD]">
-            <SidePanel />
+            <SidePanel name="Dashboards" />
             <main className="flex-1 p-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <Tab tabProps={indicatorTabs} />
 

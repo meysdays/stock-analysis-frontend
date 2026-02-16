@@ -12,20 +12,22 @@ import RankingPage from "./pages/nse/ranking";
 const App = () => {
   return (
     <Router>
-      <NavBar />
+      <div className="flex h-screen bg-gray-100">
+        <NavBar />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/stock/:id" element={<StockPage />} />
-        <Route path="/indicators/sp30" element={<SP30 />} />
-        <Route path="/indicators/sp10" element={<SP10 />} />
-        <Route path="/indicators/fear-greed" element={<FearGreed />} />
-        <Route path="/indicators/no-of-stocks" element={<NoOfStocks />} />
-        <Route path="/indicators/rsi" element={<RSI />} />
-        <Route path="/indicators/ranking" element={<RankingPage/>} />
-
-      </Routes>
-
+        <main className="flex-1 overflow-auto">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/stock/:id" element={<StockPage />} />
+            <Route path="/indicators/sp30" element={<SP30 />} />
+            <Route path="/indicators/sp10" element={<SP10 />} />
+            <Route path="/indicators/fear-greed" element={<FearGreed />} />
+            <Route path="/indicators/no-of-stocks" element={<NoOfStocks />} />
+            <Route path="/indicators/rsi" element={<RSI />} />
+            <Route path="/indicators/ranking" element={<RankingPage/>} />
+          </Routes>
+        </main>
+      </div>
     </Router>
   );
 };

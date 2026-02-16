@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
 export interface NavLink {
     href: string;
@@ -42,4 +43,18 @@ export interface SignalApiData {
     signal: string;
     score: number;
     reasons: string[];
+}
+
+export interface NavItemType {
+  name: string;
+  path: string;
+  icon: React.ElementType;
+}
+
+export interface CardProps {
+  children?: ReactNode;
+  title?: string;
+  value?: string | number;
+  className?: string;
+  action?: ReactNode;
 }
