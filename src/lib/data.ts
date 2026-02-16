@@ -7,10 +7,6 @@ export const getStockById = async (id: number): Promise<APIStock> => {
     return data;
 };
 
-export const getPaginatedMarketData = async (page: number, limit: number): Promise<any[]> => {
-    const { data } = await api.get<any[]>(`/market?page=${page}&limit=${limit}`);
-    return data;
-};
 
 export const getKlines = async (id: number, interval: string = "week", limit: number = 100): Promise<KlineResponse> => {
     const { data } = await api.get<KlineResponse>(`/stocks/${id}/klines`, {

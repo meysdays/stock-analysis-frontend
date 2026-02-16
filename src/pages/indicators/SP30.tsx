@@ -1,7 +1,6 @@
 import { mockIndexTenData, mockChartData, calculateStats, formatChartLabels, mockIndexTenLabels } from "../../lib/data-layer";
 import LineChart from "../../components/Chart/LineChart";
 import DoughnutChart from "../../components/Chart/DoughnutChart";
-import MarketTable from "../../components/MarketTable/MarketTable";
 import ChartCard from "../../components/Chart/ChartCard";
 import IndicatorPageLayout from "../../components/Layout/IndicatorPageLayout";
 
@@ -41,7 +40,6 @@ const SP30 = () => {
                     />
                 </ChartCard>
             }
-            marketTable={<MarketTable />}
             doughnutChart={
                 <ChartCard title="Top Constituents">
                     <DoughnutChart labels={mockIndexTenLabels} data={mockIndexTenData} height={350} />

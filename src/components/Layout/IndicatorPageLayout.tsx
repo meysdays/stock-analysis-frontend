@@ -19,7 +19,6 @@ interface IndicatorPageLayoutProps {
     description: string;
     stats: StatsData;
     lineChart: ReactNode;
-    marketTable: ReactNode;
     doughnutChart: ReactNode;
 }
 
@@ -29,7 +28,6 @@ const IndicatorPageLayout = ({
     description,
     stats,
     lineChart,
-    marketTable,
     doughnutChart,
 }: IndicatorPageLayoutProps) => {
     // Format the date for display
@@ -100,10 +98,7 @@ const IndicatorPageLayout = ({
                         {lineChart}
                     </div>
 
-                    {/* Market Table */}
-                    <div className="lg:col-start-1 lg:col-span-2 lg:row-start-4 h-[450px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                        {marketTable}
-                    </div>
+
 
                     {/* Doughnut Chart */}
                     <div className="lg:col-start-3 lg:row-start-4">

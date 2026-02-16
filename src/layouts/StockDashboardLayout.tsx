@@ -18,6 +18,7 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+
         const fetchStockInfo = async () => {
             if (!id) {
                 setIsLoading(false);
@@ -60,7 +61,7 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
         <div className="min-h-screen bg-[#fdfdfd] text-slate-900 flex font-sans selection:bg-indigo-100">
             {/* Sidebar */}
             {/* Sidebar implementation details... */}
-
+            { }
             {/* Main Content */}
             <div className="flex-1 flex flex-col min-w-0 ">
                 {/* Header */}

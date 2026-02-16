@@ -33,10 +33,20 @@ const Summary = () => {
                     getStockStats(Number(id))
                 ]);
 
-                setKlines([...klineData.klines].reverse());
+                // Add defensive check for klines data
+                console.log("Kline data received:", klineData);
+
+                if (klineData && Array.isArray(klineData.klines)) {
+                    setKlines([...klineData.klines].reverse());
+                } else {
+                    console.error("Invalid klines data structure:", klineData);
+                    setKlines([]);
+                }
+
                 setStats(statsData);
             } catch (error) {
                 console.error("Failed to fetch data:", error);
+                setKlines([]);
             } finally {
                 setIsLoading(false);
             }
