@@ -1,7 +1,4 @@
 import type { ReactNode } from "react";
-import SidePanel from "../Navigation/SidePanel";
-import { indicatorTabs } from "../../utils/utils";
-import Tab from "../Navigation/Tab";
 import Card from "../Card";
 
 interface StatsData {
@@ -22,7 +19,6 @@ interface IndicatorPageLayoutProps {
     description: string;
     stats: StatsData;
     lineChart: ReactNode;
-    marketTable: ReactNode;
     doughnutChart: ReactNode;
 }
 
@@ -32,7 +28,6 @@ const IndicatorPageLayout = ({
     description,
     stats,
     lineChart,
-    marketTable,
     doughnutChart,
 }: IndicatorPageLayoutProps) => {
     // Format the date for display
@@ -42,60 +37,58 @@ const IndicatorPageLayout = ({
     };
 
     return (
-        <div className="flex h-full bg-[#FDFDFD]">
-            <SidePanel name="Dashboards" />
-            <main className="flex-1 p-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                <Tab tabProps={indicatorTabs} />
+        <div className="h-full bg-[#fdfdfd] text-slate-900">
+            <main className="p-4 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 
                 <div className="mb-8">
                     <div className="flex items-center gap-3 mb-2">
-                        <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-                        <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded">{tag}</span>
+                        <h1 className="text-2xl font-bold text-slate-900">{title}</h1>
+                        <span className="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded border border-indigo-200">{tag}</span>
                     </div>
-                    <p className="text-gray-500 max-w-4xl">{description}</p>
+                    <p className="text-slate-500 max-w-4xl">{description}</p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-[repeat(4,auto)] gap-6">
                     {/* Stats Cards */}
-                    <Card title={tag} className="lg:col-start-1 lg:row-start-1 p-4">
+                    <Card title={tag} className="lg:col-start-1 lg:row-start-1 p-4 bg-white border-gray-100 shadow-sm">
                         <div className="flex items-baseline gap-2">
-                            <span className="text-4xl font-bold text-gray-900">₦{stats.currentPrice.toFixed(2)}</span>
-                            <span className={`font-medium text-sm flex items-center ${stats.changePercent24h >= 0 ? "text-green-500" : "text-red-500"}`}>
+                            <span className="text-4xl font-bold text-slate-900">₦{stats.currentPrice.toFixed(2)}</span>
+                            <span className={`font-medium text-sm flex items-center ${stats.changePercent24h >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
                                 {stats.changePercent24h >= 0 ? "▲" : "▼"} {Math.abs(stats.changePercent24h).toFixed(2)}% (24h)
                             </span>
                         </div>
                     </Card>
 
-                    <Card title="Historical Values" className="lg:col-start-1 lg:row-start-2 p-4">
+                    <Card title="Historical Values" className="lg:col-start-1 lg:row-start-2 p-4 bg-white border-gray-100 shadow-sm">
                         <div className="space-y-1">
-                            <div className="flex justify-between items-center py-1 border-b border-gray-50 last:border-0">
-                                <span className="text-gray-500 font-medium text-xs">Yesterday</span>
-                                <span className="text-gray-900 font-bold">₦{stats.yesterday.toFixed(2)}</span>
+                            <div className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
+                                <span className="text-slate-500 font-medium text-xs">Yesterday</span>
+                                <span className="text-slate-900 font-bold">₦{stats.yesterday.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between items-center py-1 border-b border-gray-50 last:border-0">
-                                <span className="text-gray-500 font-medium text-xs">Last Week</span>
-                                <span className="text-gray-900 font-bold">₦{stats.lastWeek.toFixed(2)}</span>
+                            <div className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
+                                <span className="text-slate-500 font-medium text-xs">Last Week</span>
+                                <span className="text-slate-900 font-bold">₦{stats.lastWeek.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between items-center py-1 border-b border-gray-50 last:border-0">
-                                <span className="text-gray-500 font-medium text-xs">Last Month</span>
-                                <span className="text-gray-900 font-bold">₦{stats.lastMonth.toFixed(2)}</span>
+                            <div className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
+                                <span className="text-slate-500 font-medium text-xs">Last Month</span>
+                                <span className="text-slate-900 font-bold">₦{stats.lastMonth.toFixed(2)}</span>
                             </div>
                         </div>
                     </Card>
 
-                    <Card title="Yearly Performance" className="lg:col-start-1 lg:row-start-3 p-4">
+                    <Card title="Yearly Performance" className="lg:col-start-1 lg:row-start-3 p-4 bg-white border-gray-100 shadow-sm">
                         <div className="space-y-1">
-                            <div className="flex justify-between items-center py-1 border-b border-gray-50 last:border-0">
-                                <span className="text-gray-500 font-medium text-xs">
-                                    Yearly High <span className="text-gray-400 text-xs">({formatDate(stats.yearlyHighDate)})</span>
+                            <div className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
+                                <span className="text-slate-500 font-medium text-xs">
+                                    Yearly High <span className="text-slate-400 text-xs text-[10px]">({formatDate(stats.yearlyHighDate)})</span>
                                 </span>
-                                <span className="text-gray-900 font-bold">₦{stats.yearlyHigh.toFixed(2)}</span>
+                                <span className="text-slate-900 font-bold">₦{stats.yearlyHigh.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between items-center py-1 border-b border-gray-50 last:border-0">
-                                <span className="text-gray-500 font-medium text-xs">
-                                    Yearly Low <span className="text-gray-400 text-xs">({formatDate(stats.yearlyLowDate)})</span>
+                            <div className="flex justify-between items-center py-2 border-b border-gray-100 last:border-0">
+                                <span className="text-slate-500 font-medium text-xs">
+                                    Yearly Low <span className="text-slate-400 text-xs text-[10px]">({formatDate(stats.yearlyLowDate)})</span>
                                 </span>
-                                <span className="text-gray-900 font-bold">₦{stats.yearlyLow.toFixed(2)}</span>
+                                <span className="text-slate-900 font-bold">₦{stats.yearlyLow.toFixed(2)}</span>
                             </div>
                         </div>
                     </Card>
@@ -105,10 +98,7 @@ const IndicatorPageLayout = ({
                         {lineChart}
                     </div>
 
-                    {/* Market Table */}
-                    <div className="lg:col-start-1 lg:col-span-2 lg:row-start-4 h-[450px] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                        {marketTable}
-                    </div>
+
 
                     {/* Doughnut Chart */}
                     <div className="lg:col-start-3 lg:row-start-4">

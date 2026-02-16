@@ -33,6 +33,25 @@ export interface StockApiData {
     stock_name: string;
 }
 
+export interface APIStock {
+    symbol: string;
+    id: number;
+    name: string;
+    outstanding_shares: number;
+    sector: string;
+    industry: string;
+    description: string;
+    website: string;
+    market_cap: string;
+    currency: string;
+    exchange: string;
+    last_updated: string;
+    pe_ratio: string;
+    fifty_two_week_high: string;
+    fifty_two_week_low: string;
+    adjustment_factor: string | null;
+}
+
 export interface StockName {
     id: number;
     stock_name: string;

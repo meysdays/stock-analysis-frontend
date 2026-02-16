@@ -5,73 +5,51 @@ import {
     Tooltip,
     Legend,
     type ChartData as ChartJSData,
-    type ChartOptions
+    type ChartOptions,
+    type Plugin
 } from "chart.js";
 import { Bubble } from "react-chartjs-2";
-import { faker } from '@faker-js/faker';
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
-// Register necessary Chart.js components
-ChartJS.register(PointElement, LinearScale, Tooltip, Legend);
+ChartJS.register(PointElement, LinearScale,);
 
 // Mock data generator for demonstrating the chart
-export const mockBubbleData: ChartJSData<"bubble"> = {
-    datasets: [
-        {
-            label: 'Oversold',
-            data: Array.from({ length: 20 }).map(() => ({
-                x: faker.number.int({ min: 50, max: 100 }),
-                y: faker.number.int({ min: 0, max: 30 }),
-                r: faker.number.int({ min: 5, max: 15 }),
-            })),
-            backgroundColor: '#129f6a',
-        },
-        {
-            label: 'Weak',
-            data: Array.from({ length: 20 }).map(() => ({
-                x: faker.number.int({ min: 35, max: 100 }),
-                y: faker.number.int({ min: 30, max: 40 }),
-                r: faker.number.int({ min: 5, max: 15 }),
-            })),
-            backgroundColor: '#0d774f',
-        },
-        {
-            label: 'Neutral',
-            data: Array.from({ length: 20 }).map(() => ({
-                x: faker.number.int({ min: 15, max: 100 }),
-                y: faker.number.int({ min: 40, max: 60 }),
-                r: faker.number.int({ min: 5, max: 15 }),
-            })),
-            backgroundColor: '#eee',
-        },
-        {
-            label: 'Strong',
-            data: Array.from({ length: 20 }).map(() => ({
-                x: faker.number.int({ min: 35, max: 100 }),
-                y: faker.number.int({ min: 60, max: 70 }),
-                r: faker.number.int({ min: 5, max: 15 }),
-            })),
-            backgroundColor: '#8c2228',
-        },
-        {
-            label: 'Overbought',
-            data: Array.from({ length: 20 }).map(() => ({
-                x: faker.number.int({ min: 35, max: 100 }),
-                y: faker.number.int({ min: 70, max: 90 }),
-                r: faker.number.int({ min: 5, max: 15 }),
-            })),
-            backgroundColor: '#d3333c',
-        },
-    ],
-};
+
+const backgroundZonesPlugin: Plugin<"bubble"> = {
+    id: "backgroundZones",
+    beforeDraw(chart, _args, _options) {
+        const { ctx, chartArea, scales } = chart;
+        const { left, right } = chartArea;
+
+        ctx.save();
+        const y = scales.y;
+
+        const zones = [
+            { min: 0, max: 30, color: "rgba(18, 159, 106, 0.4)" },
+            { min: 30, max: 40, color: "rgba(13, 119, 79, 0.4)" },
+            { min: 40, max: 60, color: "rgba(238, 238, 238, 0.4)" },
+            { min: 60, max: 70, color: "rgba(140, 34, 40, 0.4)" },
+            { min: 70, max: 100, color: "rgba(211, 51, 60, 0.4)" },
+        ]
+
+
+        zones.forEach(zone => {
+            const y1 = y.getPixelForValue(zone.min);
+            const y2 = y.getPixelForValue(zone.max);
+            ctx.fillStyle = zone.color;
+            ctx.fillRect(left, y1, right - left, y2 - y1);
+        });
+        ctx.restore();
+    }
+}
 
 interface BubbleChartProps {
-    data?: ChartJSData<"bubble">;
+    data: ChartJSData<"bubble">;
     height?: number;
 }
 
 const BubbleChart = ({
-    data = mockBubbleData,
+    data,
     height = 450,
 }: BubbleChartProps) => {
 
@@ -131,7 +109,7 @@ const BubbleChart = ({
     return (
         <div style={{ height: `${height}px`, width: "100%" }} className="flex justify-center">
             <div className="w-full h-full">
-                <Bubble data={data} options={options} plugins={[ChartDataLabels]} />
+                <Bubble data={data} options={options} plugins={[ChartDataLabels, Legend, Tooltip, backgroundZonesPlugin]} />
             </div>
         </div>
     );

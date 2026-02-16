@@ -19,7 +19,12 @@ import {
   Star
 } from "lucide-react";
 
-import type { NavItemType, NavLink, NavOption } from "../lib/definitions";
+import {
+    type ChartData as ChartJSData,
+
+} from "chart.js";
+import { faker } from '@faker-js/faker';
+import type { NavLink, NavOption } from "../lib/definitions"
 import type { TabItem } from "../lib/definitions";
 
 export const navLinks: NavLink[] = [
@@ -64,10 +69,12 @@ export const dashboardLinks: NavOption = {
           iconClass: "text-orange-600 bg-orange-50",
         },
         {
-          href: "#",
-          label: "Most Traded",
-          icon: BarChart3,
-          iconClass: "text-blue-600 bg-blue-50",
+            title: "Technical Analysis",
+            icon: Activity,
+            links: [
+                { href: "/technical/rsi", label: "RSI", icon: Activity, iconClass: "text-cyan-600 bg-cyan-50" },
+                { href: "/technical/macd", label: "MACD", icon: ChartColumn, iconClass: "text-emerald-600 bg-emerald-50" },
+            ],
         },
       ],
     },
@@ -164,6 +171,57 @@ export const color_zones = [
   { min: 60, max: 79, color: "#22c55e", label: "Greed" },
   { min: 80, max: 100, color: "#16a34a", label: "Extreme Greed" },
 ];
+
+export const mockBubbleData: ChartJSData<"bubble"> = {
+    datasets: [
+        {
+            label: 'Oversold',
+            data: Array.from({ length: 20 }).map(() => ({
+                x: faker.number.int({ min: 50, max: 100 }),
+                y: faker.number.int({ min: 0, max: 30 }),
+                r: 10,
+            })),
+            backgroundColor: '#129f6a',
+        },
+        {
+            label: 'Weak',
+            data: Array.from({ length: 20 }).map(() => ({
+                x: faker.number.int({ min: 35, max: 100 }),
+                y: faker.number.int({ min: 30, max: 40 }),
+                r: 10,
+            })),
+            backgroundColor: '#0d774f',
+        },
+        {
+            label: 'Neutral',
+            data: Array.from({ length: 20 }).map(() => ({
+                x: faker.number.int({ min: 15, max: 100 }),
+                y: faker.number.int({ min: 40, max: 60 }),
+                r: 10,
+            })),
+            backgroundColor: '#eee',
+        },
+        {
+            label: 'Strong',
+            data: Array.from({ length: 20 }).map(() => ({
+                x: faker.number.int({ min: 35, max: 100 }),
+                y: faker.number.int({ min: 60, max: 70 }),
+                r: 10,
+            })),
+            backgroundColor: '#8c2228',
+        },
+        {
+            label: 'Overbought',
+            data: Array.from({ length: 20 }).map(() => ({
+                x: faker.number.int({ min: 35, max: 100 }),
+                y: faker.number.int({ min: 70, max: 90 }),
+                r: 10,
+            })),
+            backgroundColor: '#d3333c',
+        },
+    ],
+};
+
 
 export const dummySidebarData = {
   stock_name: "Stock\\DUMMY",

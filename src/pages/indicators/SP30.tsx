@@ -1,7 +1,6 @@
 import { mockIndexTenData, mockChartData, calculateStats, formatChartLabels, mockIndexTenLabels } from "../../lib/data-layer";
 import LineChart from "../../components/Chart/LineChart";
 import DoughnutChart from "../../components/Chart/DoughnutChart";
-import MarketTable from "../../components/MarketTable/MarketTable";
 import ChartCard from "../../components/Chart/ChartCard";
 import IndicatorPageLayout from "../../components/Layout/IndicatorPageLayout";
 
@@ -13,7 +12,7 @@ const SP30 = () => {
         <IndicatorPageLayout
             title="StockPred 30 Index"
             tag="SP30"
-            description="Built by the world's most trusted cryptocurrency data authority, the StockPred 30 Index (SP30) provides the most unbiased, transparent, and data-driven way to track the performance of crypto markets."
+            description="Built by the world's most trusted stock market data authority, the StockPred 30 Index (SP30) provides the most unbiased, transparent, and data-driven way to track the performance of the Nigerian Stock Exchange."
             stats={stats}
             lineChart={
                 <ChartCard
@@ -41,7 +40,6 @@ const SP30 = () => {
                     />
                 </ChartCard>
             }
-            marketTable={<MarketTable />}
             doughnutChart={
                 <ChartCard title="Top Constituents">
                     <DoughnutChart labels={mockIndexTenLabels} data={mockIndexTenData} height={350} />
