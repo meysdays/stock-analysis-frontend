@@ -13,7 +13,7 @@ const SP10 = () => {
     <IndicatorPageLayout
       title="StockPred 10 Index"
       tag="SP10"
-      description="Built by the world's most trusted cryptocurrency data authority, the StockPred 10 Index (SP10) provides the most unbiased, transparent, and data-driven way to track the performance of crypto markets."
+      description="Built by the world's most trusted stock market data authority, the StockPred 10 Index (SP10) provides the most unbiased, transparent, and data-driven way to track the performance of the Nigerian Stock Exchange."
       stats={stats}
       lineChart={
         <ChartCard

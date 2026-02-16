@@ -32,6 +32,7 @@ interface LineChartProps {
     fillColor?: string;
     showGrid?: boolean;
     height?: number;
+    stepped?: boolean;
 }
 
 const LineChart = ({
@@ -42,6 +43,7 @@ const LineChart = ({
     fillColor = "#16c7841a",
     showGrid = true,
     height = 400,
+    stepped = false,
 }: LineChartProps) => {
     const chartData = {
         labels,
@@ -49,6 +51,7 @@ const LineChart = ({
             {
                 label,
                 data,
+                stepped,
                 fill: true,
                 borderColor: lineColor,
                 backgroundColor: fillColor,

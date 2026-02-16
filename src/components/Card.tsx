@@ -10,7 +10,7 @@ interface CardProps {
 
 const Card = ({ children, title, value, className = "", action }: CardProps) => {
   return (
-    <div className={`bg-white rounded-xl p-6 shadow-sm border border-gray-100 ${className}`}>
+    <div className={`bg-white rounded-xl p-5 shadow-sm border border-gray-100 ${className}`}>
       {(title || action) && (
         <div className="flex justify-between items-center mb-4">
           {title && <h3 className="text-gray-900 font-bold text-base">{title}</h3>}

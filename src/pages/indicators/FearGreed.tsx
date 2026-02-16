@@ -4,6 +4,7 @@ import Tab from "../../components/Navigation/Tab";
 import Card from "../../components/Card";
 import ChartCard from "../../components/Chart/ChartCard";
 import { mockChartData, formatChartLabels, extractPrices } from "../../lib/data-layer";
+import LineChart from "../../components/Chart/LineChart";
 
 const FearGreed = () => {
     // Get chart data
@@ -41,14 +42,14 @@ const FearGreed = () => {
                         </button>
                     </div>
                     <p className="text-gray-500 max-w-5xl leading-relaxed">
-                        Discover our Fear and Greed Index, a powerful tool that analyzes market sentiment to help you make informed crypto investment decisions. Stay ahead of market trends with real-time and historical data available through our easy-to-use API.
+                        Discover our Fear and Greed Index, a powerful tool that analyzes market sentiment to help you make informed stock investment decisions on the Nigerian Stock Exchange. Stay ahead of market trends with real-time and historical data available through our easy-to-use API.
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Left Column - Stats */}
                     <div className="space-y-6">
-                        <Card title="CMC Crypto Fear and Greed Index">
+                        <Card title="NSE Stocks Fear and Greed Index">
                             {/* Meter Placeholder */}
                             <p>meter place holder</p>
                         </Card>
@@ -102,10 +103,6 @@ const FearGreed = () => {
                     <div className="lg:col-span-2">
                         <ChartCard
                             title="Fear and Greed Index Chart"
-                            labels={labels}
-                            data={prices}
-                            lineColor="#16c784"
-                            fillColor="rgba(22, 199, 132, 0.1)"
                             actions={
                                 <div className="flex items-center gap-1 text-xs">
                                     {["30d", "1y", "All"].map((period) => (
@@ -118,7 +115,15 @@ const FearGreed = () => {
                                     ))}
                                 </div>
                             }
-                        />
+                        >
+                            <LineChart
+                                labels={labels}
+                                data={prices}
+                                lineColor="#16c784"
+                                fillColor="rgba(22, 199, 132, 0.1)"
+                                height={350}
+                            />
+                        </ChartCard>
                     </div>
                 </div>
             </main>
