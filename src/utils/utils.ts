@@ -163,3 +163,58 @@ export const dummySidebarData = {
     signal: "Buy",
     score: 85
 };
+
+export const formatValue = (value: any, suffix: string = ""): string => {
+    if (value === null || value === undefined || value === "") return "n/a";
+    if (typeof value === "number") {
+        if (value >= 1e12) return (value / 1e12).toFixed(2) + "T" + suffix;
+        if (value >= 1e9) return (value / 1e9).toFixed(2) + "B" + suffix;
+        if (value >= 1e6) return (value / 1e6).toFixed(2) + "M" + suffix;
+        return value.toLocaleString() + suffix;
+    }
+    return value + suffix;
+};
+
+export const generateMockMarketCapData = (range: string) => {
+    const points = range === "1M" ? 30 : range === "6M" ? 180 : range === "YTD" ? 100 : range === "1Y" ? 365 : 500;
+    const data = [];
+    const labels = [];
+    let baseValue = 10000; // Starting at 10T
+
+    const now = new Date();
+    for (let i = points; i >= 0; i--) {
+        const date = new Date(now);
+        date.setDate(now.getDate() - i);
+        labels.push(date.toLocaleDateString("en-GB", { day: '2-digit', month: 'short' }));
+
+        // Add some random walk
+        baseValue += (Math.random() - 0.45) * 100;
+        data.push(Math.round(baseValue));
+    }
+
+    return { labels, data };
+};
+
+export const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('en-NG', {
+        style: 'currency',
+        currency: 'NGN',
+        minimumFractionDigits: 2
+    }).format(value);
+};
+
+export const Tabs = (id: number) => [
+    { label: "Overview", href: `/stock/${id}/summary` },
+    { label: "Financials", href: `/stock/${id}/financials` },
+    {
+        label: "Statistics",
+        href: `/stock/${id}/statistics`,
+        children: [
+            { label: "Statistics", href: `/stock/${id}/statistics` },
+            { label: "Market Cap", href: `/stock/${id}/statistics/market-cap` },
+            { label: "Revenue", href: `/stock/${id}/statistics/revenue` },
+        ]
+    },
+    { label: "Dividends", href: `/stock/${id}/dividends` },
+    { label: "Profile", href: `/stock/${id}/profile` },
+];

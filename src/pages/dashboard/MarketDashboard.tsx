@@ -3,7 +3,7 @@ import MarketDashboardLayout from "../../layouts/MarketDashboardLayout";
 
 const MarketDashboard = () => {
     const tabs = [
-        { label: "Market Overview", href: "/market/overview" },
+        { label: "Market Overview", href: "/home" },
         { label: "SP30 Index", href: "/indicators/sp30" },
         { label: "SP10 Index", href: "/indicators/sp10" },
         { label: "Fear & Greed", href: "/indicators/fear-greed" },

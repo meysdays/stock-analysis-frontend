@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getKlines, getStockStats } from "../../../lib/data";
-import type { KlineData, StockStatsResponse } from "../../../lib/definitions";
+import { getKlines } from "../../../lib/data";
+import { formatValue } from "../../../utils/utils";
+import { useStockPageData } from "../../../hooks/useStockPageData";
+import type { KlineData } from "../../../lib/definitions";
 import LineChart from "../../../components/Chart/LineChart";
 
 
 const Summary = () => {
-    const { id } = useParams<{ id: string }>();
+    const { id, stats } = useStockPageData();
     const [klines, setKlines] = useState<KlineData[]>([]);
-    const [stats, setStats] = useState<StockStatsResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedRange, setSelectedRange] = useState("1M");
 
@@ -19,53 +19,28 @@ const Summary = () => {
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (!id) {
-                setIsLoading(false);
-                return;
-            }
+        const fetchKlines = async () => {
+            if (!id) return;
             try {
                 setIsLoading(true);
                 const config = rangeConfig[selectedRange];
-
-                const [klineData, statsData] = await Promise.all([
-                    getKlines(Number(id), config.interval, config.limit),
-                    getStockStats(Number(id))
-                ]);
-
-                // Add defensive check for klines data
-                console.log("Kline data received:", klineData);
+                const klineData = await getKlines(Number(id), config.interval, config.limit);
 
                 if (klineData && Array.isArray(klineData.klines)) {
                     setKlines([...klineData.klines].reverse());
                 } else {
-                    console.error("Invalid klines data structure:", klineData);
                     setKlines([]);
                 }
-
-                setStats(statsData);
             } catch (error) {
-                console.error("Failed to fetch data:", error);
+                console.error("Failed to fetch klines:", error);
                 setKlines([]);
             } finally {
                 setIsLoading(false);
             }
         };
 
-        fetchData();
+        fetchKlines();
     }, [id, selectedRange]);
-
-    const formatValue = (value: any, suffix: string = "") => {
-        if (value === null || value === undefined || value === "") return "n/a";
-        if (typeof value === "number") {
-            // Basic formatting for large numbers
-            if (value >= 1e12) return (value / 1e12).toFixed(2) + "T" + suffix;
-            if (value >= 1e9) return (value / 1e9).toFixed(2) + "B" + suffix;
-            if (value >= 1e6) return (value / 1e6).toFixed(2) + "M" + suffix;
-            return value.toLocaleString() + suffix;
-        }
-        return value + suffix;
-    };
 
     const metricsLeft = [
         { label: "Market Cap", value: formatValue(stats?.market_cap) },
