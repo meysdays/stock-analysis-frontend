@@ -1,4 +1,13 @@
+import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
+
+export interface CardProps {
+    children?: ReactNode;
+    title?: string;
+    value?: string | number;
+    className?: string;
+    action?: ReactNode;
+}
 
 export interface NavLink {
     href: string;
@@ -130,7 +139,7 @@ export interface StatisticsCardProps {
 }
 
 export interface NavItemType {
-  name: string;
-  path: string;
-  icon: React.ElementType;
+    name: string;
+    path: string;
+    icon: React.ElementType;
 }

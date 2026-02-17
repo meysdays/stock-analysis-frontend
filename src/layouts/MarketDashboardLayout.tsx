@@ -38,7 +38,7 @@ const MarketDashboardLayout = ({ children, tabs }: MarketDashboardLayoutProps) =
 
                 {/* Content */}
                 <main className="flex-1 overflow-y-auto overflow-x-hidden p-8 custom-scrollbar">
-                    <div className="max-w-[1600px] mx-auto space-y-8">
+                    <div className="mx-auto space-y-8">
                         <div className="mb-6">
                             <TabNavigator tabs={tabs} />
                         </div>

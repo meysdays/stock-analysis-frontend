@@ -26,8 +26,8 @@ const TabNavigator = ({ tabs }: TabNavigatorProps) => {
                                 key={tab.href}
                                 to={tab.href}
                                 className={`relative px-10 py-3.5 text-sm transition-colors duration-200 ${isActive
-                                    ? "bg-[#efefef] text-black font-bold"
-                                    : "text-[#0073e6] hover:bg-gray-50 font-semibold"
+                                    ? "bg-[#efefef] text-black font-regular"
+                                    : "text-[#0073e6] hover:bg-gray-50 font-regular"
                                     }`}
                             >
                                 <span className="relative z-10">{tab.label}</span>
@@ -49,7 +49,7 @@ const TabNavigator = ({ tabs }: TabNavigatorProps) => {
                                 to={subTab.href}
                                 className={`px-10 py-3.5 text-sm transition-colors duration-200 ${isSubActive
                                     ? "bg-[#efefef] text-black font-bold"
-                                    : "text-[#0073e6] hover:bg-gray-50 font-semibold"
+                                    : "text-[#0073e6] hover:bg-gray-50 font-regular"
                                     }`}
                             >
                                 {subTab.label}

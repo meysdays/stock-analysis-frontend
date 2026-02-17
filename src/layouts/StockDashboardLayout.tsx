@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Search, Menu, Bell, Sun, Moon } from "lucide-react";
+import { Search, Bell, Sun, Moon } from "lucide-react";
 import TabNavigator from "../components/Navigation/TabNavigator";
 import { getStockInfo } from "../lib/data";
 import type { StockInfoResponse } from "../lib/definitions";
@@ -58,7 +58,7 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
     };
 
     return (
-        <>
+        <div className="min-h-screen bg-[#fdfdfd] text-slate-900 flex font-sans selection:bg-indigo-100">
             {/* Sidebar */}
             {/* Sidebar implementation details... */}
             { }
@@ -160,12 +160,12 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
 
                 {/* Content */}
                 <main className="flex-1 overflow-y-auto overflow-x-hidden px-8 custom-scrollbar">
-                    <div className="max-w-[1600px] mx-auto space-y-8">
+                    <div className="mx-auto space-y-8">
                         {children}
                     </div>
                 </main>
             </div>
-        </>
+        </div>
     );
 };
 
