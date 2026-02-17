@@ -61,10 +61,20 @@ const StockDashboard = () => {
         );
     }
 
-    
+    const tabs = [
+        { label: "Overview", href: `/stock/${id}/summary` },
+        { label: "Financials", href: `/stock/${id}/financials` },
+        { label: "Forecast", href: `/stock/${id}/forecast` },
+        { label: "Statistics", href: `/stock/${id}/statistics` },
+        { label: "Metrics", href: `/stock/${id}/metrics` },
+        { label: "Dividends", href: `/stock/${id}/dividends` },
+        { label: "History", href: `/stock/${id}/history` },
+        { label: "Profile", href: `/stock/${id}/profile` },
+        { label: "Chart →", href: `/stock/${id}/chart` },
+    ];
 
     return (
-        <StockDashboardLayout tabs={Tabs(Number(id))}>
+        <StockDashboardLayout tabs={tabs}>
             <Outlet />
         </StockDashboardLayout>
     );

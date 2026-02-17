@@ -29,7 +29,6 @@ export type NavOption = {
 export interface TabItem {
     label: string;
     href: string;
-    children?: TabItem[];
 }
 
 export interface StockApiData {
