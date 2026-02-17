@@ -24,3 +24,10 @@ export const getStockInfo = async (id: number): Promise<StockInfoResponse> => {
     const { data } = await api.get<StockInfoResponse>(`/stocks/${id}/info`);
     return data;
 };
+
+export const getPaginatedMarketData = async (page: number, limit: number): Promise<APIStock[]> => {
+    const { data } = await api.get<APIStock[]>(`/stocks?page=${page}&limit=${limit}`, {
+        params: { page, limit }
+    });
+    return data;
+}
