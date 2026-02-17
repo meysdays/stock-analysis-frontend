@@ -29,3 +29,10 @@ export const getRelatedStocks = async (id: number): Promise<RelatedStock[]> => {
     const { data } = await api.get<RelatedStock[]>(`/stocks/${id}/related`);
     return data;
 };
+
+export const getPaginatedMarketData = async (page: number, limit: number): Promise<APIStock[]> => {
+    const { data } = await api.get<APIStock[]>(`/stocks?page=${page}&limit=${limit}`, {
+        params: { page, limit }
+    });
+    return data;
+}

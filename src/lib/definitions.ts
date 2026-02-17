@@ -135,3 +135,9 @@ export interface RelatedStock {
     market_cap: number | null;
     revenue_ttm: number | null;
 }
+
+export interface NavItemType {
+    name: string;
+    path: string;
+    icon: React.ElementType;
+}

@@ -55,12 +55,11 @@ const StockDashboard = () => {
 
     if (error || !stockData) {
         return (
-            <div className="flex items-center justify-center h-screen bg-[#fdfdfd] text-red-500">
+            <div className="flex  items-center justify-center h-screen bg-[#fdfdfd] text-red-500">
                 <p>Error: {error?.message || "Stock not found"}</p>
             </div>
         );
     }
-
 
 
     return (
