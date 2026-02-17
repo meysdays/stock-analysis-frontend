@@ -3,6 +3,7 @@ import { useParams, Outlet, useLocation, useNavigate } from "react-router-dom";
 import StockDashboardLayout from "../../layouts/StockDashboardLayout";
 import { getStockById } from "../../lib/data";
 import type { APIStock } from "../../lib/definitions";
+import { Tabs } from "../../utils/utils";
 
 const StockDashboard = () => {
     const { id } = useParams();
@@ -54,26 +55,16 @@ const StockDashboard = () => {
 
     if (error || !stockData) {
         return (
-            <div className="flex items-center justify-center h-screen bg-[#fdfdfd] text-red-500">
+            <div className="flex  items-center justify-center h-screen bg-[#fdfdfd] text-red-500">
                 <p>Error: {error?.message || "Stock not found"}</p>
             </div>
         );
     }
 
-    const tabs = [
-        { label: "Overview", href: `/stock/${id}/summary` },
-        { label: "Financials", href: `/stock/${id}/financials` },
-        { label: "Forecast", href: `/stock/${id}/forecast` },
-        { label: "Statistics", href: `/stock/${id}/statistics` },
-        { label: "Metrics", href: `/stock/${id}/metrics` },
-        { label: "Dividends", href: `/stock/${id}/dividends` },
-        { label: "History", href: `/stock/${id}/history` },
-        { label: "Profile", href: `/stock/${id}/profile` },
-        { label: "Chart →", href: `/stock/${id}/chart` },
-    ];
+    
 
     return (
-        <StockDashboardLayout tabs={tabs}>
+        <StockDashboardLayout tabs={Tabs(Number(id))}>
             <Outlet />
         </StockDashboardLayout>
     );

@@ -58,7 +58,7 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
     };
 
     return (
-        <div className="min-h-screen bg-[#fdfdfd] text-slate-900 flex font-sans selection:bg-indigo-100">
+        <>
             {/* Sidebar */}
             {/* Sidebar implementation details... */}
             { }
@@ -154,7 +154,7 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
                     </div>
                 )}
 
-                <div className="mb-6 px-10 mt-8">
+                <div className="mb-2 px-10 mt-8">
                     <TabNavigator tabs={tabs} />
                 </div>
 
@@ -165,7 +165,7 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
                     </div>
                 </main>
             </div>
-        </div>
+        </>
     );
 };
 

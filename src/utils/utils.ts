@@ -16,16 +16,14 @@ import {
   BarChart2,
   Filter,
   // Settings,
-  Star
+  Star,
 } from "lucide-react";
 
-import {
-    type ChartData as ChartJSData,
-
-} from "chart.js";
-import { faker } from '@faker-js/faker';
-import type { NavLink, NavOption } from "../lib/definitions"
+import { type ChartData as ChartJSData } from "chart.js";
+import { faker } from "@faker-js/faker";
+import type { NavItemType, NavLink, NavOption } from "../lib/definitions";
 import type { TabItem } from "../lib/definitions";
+import { Children } from "react";
 
 export const navLinks: NavLink[] = [
   { href: "#", label: "NSE" },
@@ -69,12 +67,22 @@ export const dashboardLinks: NavOption = {
           iconClass: "text-orange-600 bg-orange-50",
         },
         {
-            title: "Technical Analysis",
-            icon: Activity,
-            links: [
-                { href: "/technical/rsi", label: "RSI", icon: Activity, iconClass: "text-cyan-600 bg-cyan-50" },
-                { href: "/technical/macd", label: "MACD", icon: ChartColumn, iconClass: "text-emerald-600 bg-emerald-50" },
-            ],
+          title: "Technical Analysis",
+          icon: Activity,
+          links: [
+            {
+              href: "/technical/rsi",
+              label: "RSI",
+              icon: Activity,
+              iconClass: "text-cyan-600 bg-cyan-50",
+            },
+            {
+              href: "/technical/macd",
+              label: "MACD",
+              icon: ChartColumn,
+              iconClass: "text-emerald-600 bg-emerald-50",
+            },
+          ],
         },
       ],
     },
@@ -173,55 +181,54 @@ export const color_zones = [
 ];
 
 export const mockBubbleData: ChartJSData<"bubble"> = {
-    datasets: [
-        {
-            label: 'Oversold',
-            data: Array.from({ length: 20 }).map(() => ({
-                x: faker.number.int({ min: 50, max: 100 }),
-                y: faker.number.int({ min: 0, max: 30 }),
-                r: 10,
-            })),
-            backgroundColor: '#129f6a',
-        },
-        {
-            label: 'Weak',
-            data: Array.from({ length: 20 }).map(() => ({
-                x: faker.number.int({ min: 35, max: 100 }),
-                y: faker.number.int({ min: 30, max: 40 }),
-                r: 10,
-            })),
-            backgroundColor: '#0d774f',
-        },
-        {
-            label: 'Neutral',
-            data: Array.from({ length: 20 }).map(() => ({
-                x: faker.number.int({ min: 15, max: 100 }),
-                y: faker.number.int({ min: 40, max: 60 }),
-                r: 10,
-            })),
-            backgroundColor: '#eee',
-        },
-        {
-            label: 'Strong',
-            data: Array.from({ length: 20 }).map(() => ({
-                x: faker.number.int({ min: 35, max: 100 }),
-                y: faker.number.int({ min: 60, max: 70 }),
-                r: 10,
-            })),
-            backgroundColor: '#8c2228',
-        },
-        {
-            label: 'Overbought',
-            data: Array.from({ length: 20 }).map(() => ({
-                x: faker.number.int({ min: 35, max: 100 }),
-                y: faker.number.int({ min: 70, max: 90 }),
-                r: 10,
-            })),
-            backgroundColor: '#d3333c',
-        },
-    ],
+  datasets: [
+    {
+      label: "Oversold",
+      data: Array.from({ length: 20 }).map(() => ({
+        x: faker.number.int({ min: 50, max: 100 }),
+        y: faker.number.int({ min: 0, max: 30 }),
+        r: 10,
+      })),
+      backgroundColor: "#129f6a",
+    },
+    {
+      label: "Weak",
+      data: Array.from({ length: 20 }).map(() => ({
+        x: faker.number.int({ min: 35, max: 100 }),
+        y: faker.number.int({ min: 30, max: 40 }),
+        r: 10,
+      })),
+      backgroundColor: "#0d774f",
+    },
+    {
+      label: "Neutral",
+      data: Array.from({ length: 20 }).map(() => ({
+        x: faker.number.int({ min: 15, max: 100 }),
+        y: faker.number.int({ min: 40, max: 60 }),
+        r: 10,
+      })),
+      backgroundColor: "#eee",
+    },
+    {
+      label: "Strong",
+      data: Array.from({ length: 20 }).map(() => ({
+        x: faker.number.int({ min: 35, max: 100 }),
+        y: faker.number.int({ min: 60, max: 70 }),
+        r: 10,
+      })),
+      backgroundColor: "#8c2228",
+    },
+    {
+      label: "Overbought",
+      data: Array.from({ length: 20 }).map(() => ({
+        x: faker.number.int({ min: 35, max: 100 }),
+        y: faker.number.int({ min: 70, max: 90 }),
+        r: 10,
+      })),
+      backgroundColor: "#d3333c",
+    },
+  ],
 };
-
 
 export const dummySidebarData = {
   stock_name: "Stock\\DUMMY",
@@ -241,3 +248,27 @@ export const navItems: NavItemType[] = [
   { name: "Screener", path: "/settings", icon: Filter },
 ];
 
+export const Tabs = (id: number) => [
+  { label: "Overview", href: `/stock/${id}/summary` },
+  {
+    label: "Financials",
+    href: `/stock/${id}/financials`,
+    children: [
+      {
+        label: "Income Statement",
+        href: `/stock/${id}/financials`,
+      },
+      { label: "Balance Sheet", href: `/stock/${id}/financials/balance-sheet` },
+      { label: "Cash Flow", href: `/stock/${id}/financials/cash-flow` },
+      { label: "Ratios", href: `/stock/${id}/financials/ratios` },
+      { label: "KPIs", href: `/stock/${id}/financials/kpis` },
+    ],
+  },
+  { label: "Forecast", href: `/stock/${id}/forecast` },
+  { label: "Statistics", href: `/stock/${id}/statistics` },
+  { label: "Metrics", href: `/stock/${id}/metrics` },
+  { label: "Dividends", href: `/stock/${id}/dividends` },
+  { label: "History", href: `/stock/${id}/history` },
+  { label: "Profile", href: `/stock/${id}/profile` },
+  { label: "Chart →", href: `/stock/${id}/chart` },
+];
