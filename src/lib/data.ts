@@ -1,6 +1,5 @@
 import api from "./api";
 import type { APIStock, KlineResponse, StockStatsResponse, StockInfoResponse } from "./definitions";
-import type { APIStock, KlineResponse, StockStatsResponse, StockInfoResponse } from "./definitions";
 
 
 export const getStockById = async (id: number): Promise<APIStock> => {
