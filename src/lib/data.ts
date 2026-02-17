@@ -1,5 +1,5 @@
 import api from "./api";
-import type { APIStock, KlineResponse, StockStatsResponse, StockInfoResponse, RelatedStock } from "./definitions";
+import type { APIStock, KlineResponse, StockStatsResponse, StockInfoResponse } from "./definitions";
 
 
 export const getStockById = async (id: number): Promise<APIStock> => {
@@ -22,10 +22,5 @@ export const getStockStats = async (id: number): Promise<StockStatsResponse> => 
 
 export const getStockInfo = async (id: number): Promise<StockInfoResponse> => {
     const { data } = await api.get<StockInfoResponse>(`/stocks/${id}/info`);
-    return data;
-};
-
-export const getRelatedStocks = async (id: number): Promise<RelatedStock[]> => {
-    const { data } = await api.get<RelatedStock[]>(`/stocks/${id}/related`);
     return data;
 };
