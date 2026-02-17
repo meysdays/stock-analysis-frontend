@@ -20,6 +20,7 @@ export type NavOption = {
 export interface TabItem {
     label: string;
     href: string;
+    children?: TabItem[];
 }
 
 export interface StockApiData {
@@ -113,4 +114,23 @@ export interface StockInfoResponse {
     industry: string | null;
     sentiment: string | null;
     sp_score: number | null;
+}
+
+export type Stat = {
+    label: string;
+    value: string;
+}
+
+export interface StatisticsCardProps {
+    symbol: string;
+    description: string;
+    stats: Stat[];
+    sidebarTitle: string;
+    sidebarText: string;
+}
+
+export interface NavItemType {
+  name: string;
+  path: string;
+  icon: React.ElementType;
 }

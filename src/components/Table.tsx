@@ -59,7 +59,7 @@ export default function Table<T extends Record<string, any>>({
                     setSortOrder("asc");
                   }
                 }}
-                className={`px-2 py-2 text-sm font-semibold border-b hover: cursor-pointer ${
+                className={`px-2 py-2 text-sm font-semibold  hover: cursor-pointer text-gray-500 ${
                   h.align === "right"
                     ? "text-right"
                     : h.align === "center"
@@ -76,7 +76,7 @@ export default function Table<T extends Record<string, any>>({
           {sortedData.map((row, idx) => (
             <tr
               key={String(rowKey ? rowKey(row, idx) : (row.id ?? idx))}
-              className="hover:bg-gray-100"
+              className="rounded-3xl hover:bg-gray-200  transition"
             >
               {headers.map((h) => (
                 <td
