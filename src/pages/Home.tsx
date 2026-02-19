@@ -14,7 +14,7 @@ const Home = () => {
   ];
 
   return (
-    <div style={{ padding: "24px" }}>
+    <div className="p-6 flex-1">
       <h1
         style={{
           fontSize: "24px",

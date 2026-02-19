@@ -84,7 +84,9 @@ const NavBar = () => {
     //         </nav>
     //     </div>
     // </div>
-    <Sidebar />
+    <div className="flex">
+      <Sidebar />
+    </div>
   );
 };
 

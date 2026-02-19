@@ -3,7 +3,7 @@ import { getPaginatedMarketData } from "../../lib/data";
 import Table from "../Table";
 import { PaginationControls } from "./PaginationControls";
 import { defaultHeaders } from "./DefaultHeaders";
-import type { MarketItem, MarketTableProps } from "./types";
+import type { DashboardItem, MarketTableProps } from "./types";
 
 /**
  * MarketTable component fetches and displays stock/market data in a responsive table.
@@ -15,7 +15,7 @@ export default function MarketTable({
   data: initialData,
   headers,
 }: MarketTableProps) {
-  const [data, setData] = useState<MarketItem[] | null>(initialData ?? null);
+  const [data, setData] = useState<DashboardItem[] | null>(initialData ?? null);
   const [loading, setLoading] = useState<boolean>(!initialData);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +30,7 @@ export default function MarketTable({
     const load = async () => {
       try {
         setLoading(true);
-        let res: MarketItem[] = [];
+        let res: DashboardItem[] = [];
 
         if (fetcher) {
           res = await fetcher();
@@ -113,7 +113,7 @@ export default function MarketTable({
       <Table
         headers={headers ?? defaultHeaders}
         data={data}
-        rowKey={(r, idx) => r.id ?? `${r.name}${idx}`}
+        rowKey={(r, idx) => r.id ?? `${r.symbol}${idx}`}
       />
 
       <PaginationControls

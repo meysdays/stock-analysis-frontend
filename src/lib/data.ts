@@ -1,5 +1,6 @@
+import type { DashboardItem, FinancialItem } from "../components/MarketTable/types";
 import api from "./api";
-import type { APIStock, KlineResponse, StockStatsResponse, StockInfoResponse } from "./definitions";
+import type { APIStock, KlineResponse, StockStatsResponse, StockInfoResponse, Stock, IncomeStatement } from "./definitions";
 
 
 export const getStockById = async (id: number): Promise<APIStock> => {
@@ -25,8 +26,13 @@ export const getStockInfo = async (id: number): Promise<StockInfoResponse> => {
     return data;
 };
 
-export const getPaginatedMarketData = async (page: number, limit: number): Promise<APIStock[]> => {
-    const { data } = await api.get<APIStock[]>(`/stocks?page=${page}&limit=${limit}`, {
+export const getFinancials = async (id: number): Promise<IncomeStatement[]> => {
+    const {data} = await api.get<IncomeStatement[]>(`stocks/${id}/financials/income-statement`);
+    return data;
+}
+
+export const getPaginatedMarketData = async (page: number, limit: number): Promise<DashboardItem[]> => {
+    const { data } = await api.get<DashboardItem[]>(`/stocks?page=${page}&limit=${limit}`, {
         params: { page, limit }
     });
     return data;

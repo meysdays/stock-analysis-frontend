@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import type { TableHeader } from "../Table";
-import type { MarketItem } from "./types";
-import SparklineChart from "../Chart/SparklineChart";
+import type { DashboardItem } from "./types";
+// import SparklineChart from "../Chart/SparklineChart";
 
 export const fmt = (v: number) =>
     new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(v);
@@ -9,78 +9,91 @@ export const fmt = (v: number) =>
 export const fmtLarge = (v: number) =>
     new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(v);
 
-export const defaultHeaders: TableHeader<MarketItem>[] = [
+export const defaultHeaders: TableHeader<DashboardItem>[] = [
     {
-        key: "name",
-        label: "Name",
+        key: "Symbol",
+        label: "Symbol",
         align: "left",
         render: (r) => (
             <NavLink to={`/stock/${r.id}`} className="pointer-events-auto">
-                {r.name}
+                {r.symbol}
             </NavLink>
         ),
     },
     {
-        key: "price",
-        label: "Price",
+        key: "Company Name",
+        label: "Company Name",
         align: "right",
-        render: (r) => <>${fmt(r.price)}</>,
-    },
-    {
-        key: "percent1h",
-        label: "1h %",
-        align: "right",
-        render: (r) => (
-            <span className={r.percent1h >= 0 ? "text-green-600" : "text-red-600"}>
-                {r.percent1h >= 0 ? "+" : ""}
-                {fmt(r.percent1h)}%
-            </span>
-        ),
-    },
-    {
-        key: "percent24h",
-        label: "24h %",
-        align: "right",
-        render: (r) => (
-            <span className={r.percent24h >= 0 ? "text-green-600" : "text-red-600"}>
-                {r.percent24h >= 0 ? "+" : ""}
-                {fmt(r.percent24h)}%
-            </span>
-        ),
-    },
-    {
-        key: "percent7d",
-        label: "7d %",
-        align: "right",
-        render: (r) => (
-            <span className={r.percent7d >= 0 ? "text-green-600" : "text-red-600"}>
-                {r.percent7d >= 0 ? "+" : ""}
-                {fmt(r.percent7d)}%
-            </span>
-        ),
+        render: (r) => <>{r.companyName}</>,
     },
     {
         key: "marketCap",
         label: "Market Cap",
         align: "right",
-        render: (r) => <>${fmtLarge(r.marketCap)}</>,
+        render: (r) => <>${fmtLarge(Number(r.marketCap))}</>,
     },
     {
-        key: "volume24h",
-        label: "Volume(24h)",
+        key: "stockPrice",
+        label: "Stock Price",
         align: "right",
-        render: (r) => <>${fmtLarge(r.volume24h)}</>,
+        render: (r) => <>${fmt(Number(r.stockPrice))}</>,
     },
     {
-        key: "circulatingSupply",
-        label: "Circulating Supply",
+        key: "change",
+        label: "Change",
         align: "right",
-        render: (r) => <>{fmtLarge(r.circulatingSupply)}</>,
+        render: (r) => <>${fmt(Number(r.change))}</>,
     },
     {
-        key: "sparkline7d",
-        label: "Last 7 Days",
-        align: "center",
-        render: (r) => <SparklineChart data={r.sparkline7d} label="7-Day Trend" />,
+        key: "Company Name",
+        label: "Company Name",
+        align: "right",
+        render: (r) => <>{r.industry}</>,
     },
+    // {
+    //     key: "percent1h",
+    //     label: "1h %",
+    //     align: "right",
+    //     render: (r) => (
+    //         <span className={r.percent1h >= 0 ? "text-green-600" : "text-red-600"}>
+    //             {r.percent1h >= 0 ? "+" : ""}
+    //             {fmt(r.percent1h)}%
+    //         </span>
+    //     ),
+    // },
+    // {
+    //     key: "percent24h",
+    //     label: "24h %",
+    //     align: "right",
+    //     render: (r) => (
+    //         <span className={r.percent24h >= 0 ? "text-green-600" : "text-red-600"}>
+    //             {r.percent24h >= 0 ? "+" : ""}
+    //             {fmt(r.percent24h)}%
+    //         </span>
+    //     ),
+    // },
+    // {
+    //     key: "percent7d",
+    //     label: "7d %",
+    //     align: "right",
+    //     render: (r) => (
+    //         <span className={r.percent7d >= 0 ? "text-green-600" : "text-red-600"}>
+    //             {r.percent7d >= 0 ? "+" : ""}
+    //             {fmt(r.percent7d)}%
+    //         </span>
+    //     ),
+    // },
+   
+    {
+        key: "volume",
+        label: "Volume",
+        align: "right",
+        render: (r) => <>${fmtLarge(Number(r.volume))}</>,
+    },
+    {
+        key: "peRatio",
+        label: "P/E Ratio",
+        align: "right",
+        render: (r) => <>{fmt(Number(r.peRatio))}</>,
+    }
 ];

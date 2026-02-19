@@ -1,14 +1,16 @@
-import React from 'react'
-import NavBar from '../Navigation/NavBar'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import NavBar from "../Navigation/NavBar";
+import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
-    <div className=" flex">
-        <NavBar/>
-        <Outlet/>
+    <div>
+      <NavBar />
+      <div className="md:ml-64">
+        <Outlet />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

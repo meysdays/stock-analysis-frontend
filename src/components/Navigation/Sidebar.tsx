@@ -64,7 +64,7 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`h-screen border-r-2 border-[#dde5f0] p-4 transition-all duration-300
+      className={`h-screen border-r-2 fixed border-[#dde5f0] p-4 transition-all duration-300
         ${collapsed ? "w-20" : "w-64"}`}
     >
       {/* Header */}
