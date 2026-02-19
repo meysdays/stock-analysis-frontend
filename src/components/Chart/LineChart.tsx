@@ -90,7 +90,7 @@ const LineChart = ({
                 displayColors: false,
                 callbacks: {
                     title: (context) => context[0].label,
-                    label: (context) => `${context.parsed.y?.toLocaleString()}${lineColor === "#1a5b81" ? "B" : ""}`,
+                    label: (context) => `₦${context.parsed.y?.toFixed(2) ?? "N/A"}`,
                 },
             },
         },
@@ -99,14 +99,14 @@ const LineChart = ({
                 display: true,
                 grid: {
                     display: showGrid,
-                    color: "rgba(156, 163, 175, 0.05)",
+                    color: "rgba(156, 163, 175, 0.1)",
                 },
                 ticks: {
                     color: "#9ca3af",
                     font: {
                         size: 11,
                     },
-                    maxTicksLimit: 8,
+                    maxTicksLimit: 6,
                 },
                 border: {
                     display: false,
@@ -117,14 +117,14 @@ const LineChart = ({
                 position: "right",
                 grid: {
                     display: showGrid,
-                    color: "rgba(156, 163, 175, 0.05)",
+                    color: "rgba(156, 163, 175, 0.1)",
                 },
                 ticks: {
                     color: "#9ca3af",
                     font: {
                         size: 11,
                     },
-                    callback: (value) => `${value.toLocaleString()}${lineColor === "#1a5b81" ? "B" : ""}`,
+                    callback: (value) => `₦${value}`,
                 },
                 border: {
                     display: false,

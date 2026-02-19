@@ -1,3 +1,22 @@
+import {
+  Globe,
+  LayoutGrid,
+  Gauge,
+  TrendingUp,
+  ChartNoAxesCombined,
+  RefreshCw,
+  Activity,
+  ChartColumn,
+  Trophy,
+  Layers,
+  ArrowUpDown,
+  Zap,
+  Home as HomeIcon,
+  BarChart2,
+  Filter,
+  // Settings,
+  Star,
+} from "lucide-react";
 import { type ChartData as ChartJSData } from "chart.js";
 import { faker } from "@faker-js/faker";
 import type { NavItemType, NavLink, NavOption } from "../lib/definitions";

@@ -3,11 +3,11 @@ import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
-    <div>
+    <div className="flex min-h-screen">
       <NavBar />
-      <div className="md:ml-64">
+      <main className="flex-1 min-w-0 md:ml-64">
         <Outlet />
-      </div>
+      </main>
     </div>
   );
 };

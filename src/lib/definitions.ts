@@ -1,4 +1,12 @@
-import React from "react";
+import React, { type ReactNode } from "react";
+
+export interface CardProps {
+    children?: ReactNode;
+    title?: string;
+    value?: string | number;
+    className?: string;
+    action?: ReactNode;
+}
 
 export interface NavLink {
     href: string;
@@ -20,7 +28,6 @@ export type NavOption = {
 export interface TabItem {
     label: string;
     href: string;
-    children?: TabItem[];
 }
 
 export interface StockApiData {

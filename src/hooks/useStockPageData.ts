@@ -1,40 +1,37 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getStockStats, getStockInfo } from "../lib/data";
-import type { StockStatsResponse, StockInfoResponse } from "../lib/definitions";
+import { getStockInfo, getStockComparison } from "../lib/data";
+import type { StockInfoResponse, StockComparisonItem } from "../lib/definitions";
 
 export const useStockPageData = () => {
     const { id } = useParams<{ id: string }>();
-    const [stats, setStats] = useState<StockStatsResponse | null>(null);
     const [info, setInfo] = useState<StockInfoResponse | null>(null);
+    const [stats, setStats] = useState<StockComparisonItem | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (!id) {
-                setIsLoading(false);
-                return;
-            }
+        const loadData = async () => {
+            if (!id) return;
+            const numericId = Number(id);
             try {
                 setIsLoading(true);
-                const [statsData, infoData] = await Promise.all([
-                    getStockStats(Number(id)),
-                    getStockInfo(Number(id))
+                // We fetch both info and comparison (which has all stats)
+                const [infoData, statsData] = await Promise.all([
+                    getStockInfo(numericId),
+                    getStockComparison(numericId)
                 ]);
-                setStats(statsData);
                 setInfo(infoData);
-                setError(null);
+                setStats(statsData);
             } catch (err) {
                 console.error("Failed to fetch stock page data:", err);
-                setError(err instanceof Error ? err : new Error("An unknown error occurred"));
+                setError(err as Error);
             } finally {
                 setIsLoading(false);
             }
         };
-
-        fetchData();
+        loadData();
     }, [id]);
 
-    return { id, stats, info, isLoading, error };
+    return { info, stats, isLoading, error };
 };

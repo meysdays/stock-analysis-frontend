@@ -1,5 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import type { TabItem } from "../../lib/definitions";
+
+interface TabItem {
+    label: string;
+    href: string;
+    children?: TabItem[];
+}
 
 interface TabNavigatorProps {
     tabs: TabItem[];
@@ -9,9 +14,10 @@ interface TabNavigatorProps {
 const TabNavigator = ({ tabs, className }: TabNavigatorProps) => {
     const location = useLocation();
 
-    // Find the active main tab
+    // Find the active main tab to check for children
     const activeMainTab = tabs.find(tab =>
-        location.pathname === tab.href || (tab.href !== "/" && location.pathname.startsWith(tab.href))
+        location.pathname === tab.href ||
+        (tab.href !== "/" && location.pathname.startsWith(tab.href))
     );
 
     return (
@@ -27,7 +33,7 @@ const TabNavigator = ({ tabs, className }: TabNavigatorProps) => {
                                 key={tab.href}
                                 to={tab.href}
                                 className={`relative px-10 py-3.5 text-sm transition-colors duration-200 ${isActive
-                                    ? "bg-[#efefef] text-black font-regular"
+                                    ? "bg-[#efefef] text-black font-semibold"
                                     : "text-[#0073e6] hover:bg-gray-50 font-regular"
                                     }`}
                             >
@@ -49,7 +55,7 @@ const TabNavigator = ({ tabs, className }: TabNavigatorProps) => {
                                 key={subTab.href}
                                 to={subTab.href}
                                 className={`px-10 py-3.5 text-sm transition-colors duration-200 ${isSubActive
-                                    ? "bg-[#efefef] text-black font-regular"
+                                    ? "bg-[#efefef] text-black font-semibold"
                                     : "text-[#0073e6] hover:bg-gray-50 font-regular"
                                     }`}
                             >
