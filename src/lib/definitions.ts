@@ -106,6 +106,7 @@ export interface KlineData {
     volume: number;
 }
 
+
 export interface KlineResponse {
     symbol: string;
     interval: string;
@@ -423,3 +424,31 @@ export interface MetricComparisonResponse {
     metric: string;
     comparisons: MetricComparison[];
 }
+
+export interface IncomeStatement {
+    [key: string]: number | string | null | undefined;
+}
+
+export interface Stock {
+    id: number;
+    symbol: string;
+    name: string;
+    sector: string;
+    industry: string;
+    exchange: string;
+    currency: string;
+    country: string;
+    website: string;
+    ceo: string;
+    employees: number;
+    fiscal_year_end: string;
+
+    income_statement: IncomeStatement;
+}
+
+export type TableHeader<T> = {
+    key: string;
+    label: string;
+    align?: "left" | "right" | "center";
+    render?: (item: T) => React.ReactNode;
+};

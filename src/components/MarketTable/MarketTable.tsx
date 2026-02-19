@@ -106,7 +106,7 @@ export default function MarketTable({
       <Table
         headers={headers ?? defaultHeaders}
         data={data}
-        rowKey={(r, idx) => r.id ?? `${r.name}${idx}`}
+        rowKey={(r, idx) => r.id ?? `${r.symbol}${idx}`}
       />
 
       <PaginationControls

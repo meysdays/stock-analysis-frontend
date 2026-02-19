@@ -70,7 +70,7 @@ const Sidebar = ({ stock_name, volume, className }: SidebarProps) => {
 
   return (
     <aside
-      className={`h-screen border-r-2 border-[#dde5f0] p-4 transition-all duration-300 bg-white
+      className={`h-screen border-r-2 fixed border-[#dde5f0] p-4 transition-all duration-300 bg-white
         ${collapsed ? "w-20" : "w-64"} ${className}`}
     >
       {/* Header */}

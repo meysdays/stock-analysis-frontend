@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import type { TableHeader } from "../Table";
-import type { MarketItem } from "./types";
 import SparklineChart from "../Chart/SparklineChart";
+import type { MarketItem } from "./types";
 
 export const fmt = (v: number) =>
     new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(v);
@@ -68,8 +68,42 @@ export const homeHeaders: TableHeader<MarketItem>[] = [
         key: "sparkline",
         label: "Last 7 Days",
         align: "center",
-        render: (r) => <SparklineChart data={r.sparkline_7d} />,
+        render: (r) => <SparklineChart data={r.sparkline_7d as number[]} />,
     },
+    // {
+    //     key: "percent1h",
+    //     label: "1h %",
+    //     align: "right",
+    //     render: (r) => (
+    //         <span className={r.percent1h >= 0 ? "text-green-600" : "text-red-600"}>
+    //             {r.percent1h >= 0 ? "+" : ""}
+    //             {fmt(r.percent1h)}%
+    //         </span>
+    //     ),
+    // },
+    // {
+    //     key: "percent24h",
+    //     label: "24h %",
+    //     align: "right",
+    //     render: (r) => (
+    //         <span className={r.percent24h >= 0 ? "text-green-600" : "text-red-600"}>
+    //             {r.percent24h >= 0 ? "+" : ""}
+    //             {fmt(r.percent24h)}%
+    //         </span>
+    //     ),
+    // },
+    // {
+    //     key: "percent7d",
+    //     label: "7d %",
+    //     align: "right",
+    //     render: (r) => (
+    //         <span className={r.percent7d >= 0 ? "text-green-600" : "text-red-600"}>
+    //             {r.percent7d >= 0 ? "+" : ""}
+    //             {fmt(r.percent7d)}%
+    //         </span>
+    //     ),
+    // },
+
 ];
 
 

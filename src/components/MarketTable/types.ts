@@ -19,6 +19,34 @@ export interface MarketItem {
     last_updated?: string | null;
 }
 
+export interface DashboardItem {
+    id?: string;
+    symbol: string;
+    companyName: string;
+    marketCap: string;
+    stockPrice: string;
+    change: string;
+    industry: string;
+    volume: string;
+    peRatio: string;
+}
+
+export interface FinancialItem {
+    id?: string;
+    FiscalYear: string;
+    FY2021: string
+    FY2022: string
+    FY2023: string
+    FY2024: string
+    FY2025: string
+}
+
+export interface FinancialItemProps {
+    fetchUrl?: string;
+    fetcher?: () => Promise<FinancialItem[]>;
+    data?: FinancialItem[];
+    headers?: TableHeader<FinancialItem>[];
+}
 export interface MarketTableProps {
     fetchUrl?: string;
     fetcher?: (page: number, limit: number) => Promise<MarketItem[]>;

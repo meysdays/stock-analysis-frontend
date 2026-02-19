@@ -1,3 +1,4 @@
+import type { DashboardItem } from "../components/MarketTable/types";
 import api from "./api";
 import type {
     APIStock,
@@ -15,6 +16,7 @@ import type {
     StockComparisonItem,
     MetricComparisonResponse,
     MarketTableResponse,
+    IncomeStatement
 } from "./definitions";
 import type { MarketItem } from "../components/MarketTable/types";
 
@@ -45,6 +47,18 @@ export const getStockInfo = async (id: number): Promise<StockInfoResponse> => {
 export const getRelatedStocks = async (id: number, limit: number = 10): Promise<RelatedStock[]> => {
     const { data } = await api.get<RelatedStock[]>(`/stocks/${id}/related`, {
         params: { limit }
+    });
+    return data;
+};
+
+export const getFinancials = async (id: number): Promise<IncomeStatement[]> => {
+    const { data } = await api.get<IncomeStatement[]>(`stocks/${id}/financials/income-statement`);
+    return data;
+}
+
+export const getPaginatedMarketData = async (page: number, limit: number): Promise<DashboardItem[]> => {
+    const { data } = await api.get<DashboardItem[]>(`/stocks?page=${page}&limit=${limit}`, {
+        params: { page, limit }
     });
     return data;
 };
