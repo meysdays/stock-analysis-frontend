@@ -262,7 +262,6 @@ export const navItems: NavItemType[] = [
   { name: "Dashboard", path: "/", icon: "home" },
   { name: "Stocks", path: "/stocks", icon: "bar_chart" },
   { name: "WatchList", path: "/users", icon: "star" },
-  { name: "Screener", path: "/settings", icon: "filter_alt" },
   { name: "Comparison Tool", path: "/comparison", icon: "query_stats" }
 ];
 

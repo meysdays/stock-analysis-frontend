@@ -5,6 +5,8 @@
 // import Card from '../components/Card';
 import Card from "../components/Card";
 import MarketTable from "../components/MarketTable/MarketTable";
+import { homeHeaders } from "../components/MarketTable/DefaultHeaders";
+import { getDashboardStocks } from "../lib/data";
 
 const Home = () => {
   const sampleData = [
@@ -33,7 +35,7 @@ const Home = () => {
       </div>
 
       <div className="overflow-hidden">
-        <MarketTable />
+        <MarketTable headers={homeHeaders} fetcher={getDashboardStocks} />
       </div>
     </div>
   );

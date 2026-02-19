@@ -33,6 +33,31 @@ export interface StockApiData {
     stock_name: string;
 }
 
+export interface SparklinePoint {
+    date: string;
+    value: number;
+}
+
+export interface MarketTableResponse {
+    stocks: MarketItem[];
+    total: number;
+    page: number;
+    limit: number;
+}
+
+export interface DashboardStock {
+    id: number;
+    symbol: string;
+    name: string;
+    price: number;
+    change_1h: number | null;
+    change_24h: number | null;
+    change_7d: number | null;
+    market_cap: number;
+    volume_24h: number;
+    sparkline_7d: SparklinePoint[];
+}
+
 export interface APIStock {
     symbol: string;
     id: number;
@@ -50,6 +75,14 @@ export interface APIStock {
     fifty_two_week_high: string;
     fifty_two_week_low: string;
     adjustment_factor: string | null;
+    price: number;
+    percent1h: number;
+    percent24h: number;
+    percent7d: number;
+    marketCap: number;
+    volume24h: number;
+    circulatingSupply: number;
+    sparkline7d?: number[];
 }
 
 export interface StockName {
@@ -140,6 +173,7 @@ export interface RelatedStock {
     market_cap: number | null;
     revenue_ttm: number | null;
 }
+
 
 export interface NavItemType {
     name: string;
@@ -242,6 +276,22 @@ export interface BulkComparisonItem {
 
 export interface BulkComparisonResponse {
     comparisons: BulkComparisonItem[];
+}
+
+// ── Market Table ───────────────────────────────────
+
+export interface MarketItem {
+    id: number;
+    symbol: string;
+    name: string;
+    price: number;
+    change_1h: number | null;
+    change_24h: number | null;
+    change_7d: number | null;
+    market_cap: number;
+    volume_24h: number;
+    circulatingSupply?: number;
+    sparkline_7d: SparklinePoint[] | number[];
 }
 
 // ── Full Comparison (80+ fields) ──────────────────

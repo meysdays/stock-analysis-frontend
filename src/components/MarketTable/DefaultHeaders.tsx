@@ -1,60 +1,76 @@
 import { NavLink } from "react-router-dom";
 import type { TableHeader } from "../Table";
 import type { MarketItem } from "./types";
+import SparklineChart from "../Chart/SparklineChart";
 
 export const fmt = (v: number) =>
     new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(v);
 
 export const fmtLarge = (v: number) =>
-    new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 }).format(v);
+    new Intl.NumberFormat(undefined, { maximumFractionDigits: 0, notation: 'compact' }).format(v);
 
-export const defaultHeaders: TableHeader<MarketItem>[] = [
+// --- Shared Renderers with Simplified Styling ---
+
+const SymbolCell = (r: MarketItem) => (
+    <NavLink to={`/stock/${r.id}`} className="font-regular text-black hover:underline">
+        {r.symbol}
+    </NavLink>
+);
+
+const NameCell = (r: MarketItem) => <span className="text-gray-900">{r.name}</span>;
+
+const PriceCell = (r: MarketItem) => <span className="text-gray-900 font-medium">₦{fmt(r.price)}</span>;
+
+const PercentCell = (v: number | null) => {
+    if (v === null) return <span className="text-gray-400 font-medium">n/a</span>;
+    const isPositive = v >= 0;
+    return (
+        <span className={isPositive ? "text-emerald-600 font-medium" : "text-rose-600 font-medium"}>
+            {isPositive ? "+" : ""}{fmt(v)}%
+        </span>
+    );
+};
+
+const MarketCapCell = (r: MarketItem) => <span className="text-gray-600">₦{fmtLarge(r.market_cap)}</span>;
+
+// --- Specialized Header Sets ---
+
+export const homeHeaders: TableHeader<MarketItem>[] = [
+    { key: "symbol", label: "Symbol", align: "left", render: SymbolCell },
+    { key: "name", label: "Name", align: "left", render: NameCell },
+    { key: "price", label: "Price", align: "right", render: PriceCell },
     {
-        key: "symbol",
-        label: "Symbol",
-        align: "left",
-        render: (r) => (
-            <NavLink to={`/stock/${r.id}`} className="font-bold text-blue-600 hover:underline">
-                {r.symbol}
-            </NavLink>
-        ),
-    },
-    {
-        key: "name",
-        label: "Name",
-        align: "left",
-        render: (r) => <span className="text-gray-900">{r.name}</span>,
-    },
-    {
-        key: "sector",
-        label: "Sector",
-        align: "left",
-        render: (r) => <span className="text-gray-500">{r.sector}</span>,
-    },
-    {
-        key: "industry",
-        label: "Industry",
-        align: "left",
-        render: (r) => <span className="text-gray-400 text-sm">{r.industry}</span>,
-    },
-    {
-        key: "exchange",
-        label: "Exchange",
-        align: "center",
-        render: (r) => (
-            <span className="px-2 py-1 bg-gray-100 text-gray-600 text-[10px] font-bold rounded uppercase">
-                {r.exchange}
-            </span>
-        ),
-    },
-    {
-        key: "last_updated",
-        label: "Last Updated",
+        key: "change_1h",
+        label: "1h %",
         align: "right",
-        render: (r) => (
-            <span className="text-gray-400 text-xs">
-                {r.last_updated ? new Date(r.last_updated).toLocaleDateString() : "n/a"}
-            </span>
-        ),
+        render: (r) => PercentCell(r.change_1h),
+    },
+    {
+        key: "change_24h",
+        label: "24h %",
+        align: "right",
+        render: (r) => PercentCell(r.change_24h),
+    },
+    {
+        key: "change_7d",
+        label: "7d %",
+        align: "right",
+        render: (r) => PercentCell(r.change_7d),
+    },
+    { key: "market_cap", label: "Market Cap", align: "right", render: MarketCapCell },
+    {
+        key: "volume_24h",
+        label: "Volume (24h)",
+        align: "right",
+        render: (r) => <span className="text-gray-600">₦{fmtLarge(r.volume_24h)}</span>,
+    },
+    {
+        key: "sparkline",
+        label: "Last 7 Days",
+        align: "center",
+        render: (r) => <SparklineChart data={r.sparkline_7d} />,
     },
 ];
+
+
+export const defaultHeaders = homeHeaders;

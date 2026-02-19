@@ -14,7 +14,9 @@ import type {
     BulkComparisonResponse,
     StockComparisonItem,
     MetricComparisonResponse,
+    MarketTableResponse,
 } from "./definitions";
+import type { MarketItem } from "../components/MarketTable/types";
 
 
 export const getStockById = async (id: number): Promise<APIStock> => {
@@ -47,11 +49,12 @@ export const getRelatedStocks = async (id: number, limit: number = 10): Promise<
     return data;
 };
 
-export const getPaginatedMarketData = async (page: number, limit: number): Promise<APIStock[]> => {
-    const { data } = await api.get<APIStock[]>(`/stocks`, {
+export const getDashboardStocks = async (page: number, limit: number): Promise<MarketItem[]> => {
+    const { data } = await api.get<MarketTableResponse>(`/stocks/dashboard`, {
         params: { page, limit }
     });
-    return data;
+
+    return data.stocks;
 }
 
 export const getPopularComparisons = async (): Promise<PopularComparisonResponse> => {
