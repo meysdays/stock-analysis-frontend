@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import type { TableHeader } from "../Table";
-import SparklineChart from "../Chart/SparklineChart";
 import type { MarketItem } from "./types";
+import SparklineChart from "../Chart/SparklineChart";
 
 export const fmt = (v: number) =>
     new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(v);
