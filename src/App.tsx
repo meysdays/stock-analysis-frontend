@@ -22,6 +22,7 @@ import Profile from "./pages/dashboard/stock/Profile";
 import Home from "./pages/Home";
 import FinancialsDashboard from "./pages/dashboard/FinancialsDashboard";
 import MainLayout from "./components/Layout/mainlayout";
+import Comparison from "./pages/comparison/Comparison";
 
 const App = () => {
   return (
@@ -45,6 +46,8 @@ const App = () => {
             <Route path="risk" element={<Risk />} />
             <Route path="sentiments" element={<Sentiments />} />
           </Route>
+
+          <Route path="/comparison" element={<Comparison />} />
 
           {/* Market Dashboard Routes */}
           <Route element={<MarketDashboard />}>

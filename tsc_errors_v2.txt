@@ -1,0 +1,17 @@
+﻿src/components/Chart/GaugeMeter.tsx(2,1): error TS6133: 'color_zones' is declared but its value is never read.
+src/components/Chart/GaugeMeter.tsx(21,7): error TS6133: 'GaugeMeter' is declared but its value is never read.
+src/components/Chart/GaugeMeter.tsx(22,12): error TS6133: 'value' is declared but its value is never read.
+src/components/Chart/GaugeMeter.tsx(22,19): error TS6133: 'setValue' is declared but its value is never read.
+src/components/Chart/SparklineChart.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/MarketTable/MarketTable.tsx(46,21): error TS2345: Argument of type 'APIStock[]' is not assignable to parameter of type 'SetStateAction<MarketItem[] | null>'.
+  Type 'APIStock[]' is not assignable to type 'MarketItem[]'.
+    Type 'APIStock' is missing the following properties from type 'MarketItem': price, percent1h, percent24h, percent7d, and 3 more.
+src/components/MarketTable/MarketTable.tsx(50,11): error TS2322: Type 'APIStock[]' is not assignable to type 'MarketItem[]'.
+  Type 'APIStock' is missing the following properties from type 'MarketItem': price, percent1h, percent24h, percent7d, and 3 more.
+src/components/MarketTable/MarketTable.tsx(81,15): error TS2345: Argument of type '(prevData: MarketItem[] | null) => (APIStock | MarketItem)[]' is not assignable to parameter of type 'SetStateAction<MarketItem[] | null>'.
+  Type '(prevData: MarketItem[] | null) => (APIStock | MarketItem)[]' is not assignable to type '(prevState: MarketItem[] | null) => MarketItem[] | null'.
+    Type '(APIStock | MarketItem)[]' is not assignable to type 'MarketItem[]'.
+      Type 'APIStock | MarketItem' is not assignable to type 'MarketItem'.
+        Type 'APIStock' is missing the following properties from type 'MarketItem': price, percent1h, percent24h, percent7d, and 3 more.
+src/components/StockList.tsx(2,15): error TS2614: Module '"../lib/api"' has no exported member 'StockName'. Did you mean to use 'import StockName from "../lib/api"' instead?
+src/pages/dashboard/financials/incomestatement.tsx(1,1): error TS6133: 'React' is declared but its value is never read.

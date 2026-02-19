@@ -3,9 +3,10 @@ import type { TabItem } from "../../lib/definitions";
 
 interface TabNavigatorProps {
     tabs: TabItem[];
+    className?: string;
 }
 
-const TabNavigator = ({ tabs }: TabNavigatorProps) => {
+const TabNavigator = ({ tabs, className }: TabNavigatorProps) => {
     const location = useLocation();
 
     // Find the active main tab
@@ -14,7 +15,7 @@ const TabNavigator = ({ tabs }: TabNavigatorProps) => {
     );
 
     return (
-        <div className="w-full">
+        <div className={`w-full ${className || ""}`}>
             {/* Main Tabs */}
             <div className="w-full border-b-[3px] border-[#1a5b81]">
                 <div className="flex w-full overflow-x-auto custom-scrollbar-hidden whitespace-nowrap">
@@ -26,8 +27,8 @@ const TabNavigator = ({ tabs }: TabNavigatorProps) => {
                                 key={tab.href}
                                 to={tab.href}
                                 className={`relative px-10 py-3.5 text-sm transition-colors duration-200 ${isActive
-                                    ? "bg-[#efefef] text-black font-bold"
-                                    : "text-[#0073e6] hover:bg-gray-50 font-semibold"
+                                    ? "bg-[#efefef] text-black font-regular"
+                                    : "text-[#0073e6] hover:bg-gray-50 font-regular"
                                     }`}
                             >
                                 <span className="relative z-10">{tab.label}</span>
@@ -48,8 +49,8 @@ const TabNavigator = ({ tabs }: TabNavigatorProps) => {
                                 key={subTab.href}
                                 to={subTab.href}
                                 className={`px-10 py-3.5 text-sm transition-colors duration-200 ${isSubActive
-                                    ? "bg-[#efefef] text-black font-bold"
-                                    : "text-[#0073e6] hover:bg-gray-50 font-semibold"
+                                    ? "bg-[#efefef] text-black font-regular"
+                                    : "text-[#0073e6] hover:bg-gray-50 font-regular"
                                     }`}
                             >
                                 {subTab.label}

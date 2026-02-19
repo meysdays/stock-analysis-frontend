@@ -1,16 +1,10 @@
-import { Info } from "lucide-react";
 import Card from "../../components/Card";
 import ChartCard from "../../components/Chart/ChartCard";
 import TechnicalIndicatorLayout from "../../components/Layout/TechnicalIndicatorLayout";
 import { mockBubbleData } from "../../utils/utils";
 import BubbleChart from "../../components/Chart/BubbleChart";
 
-// const macdTabs = [
-//     { label: "RSI", href: "/technical/rsi" },
-//     { label: "MACD", href: "/technical/macd" },
-// ];
 const AverageMACD = () => {
-    // Determine thumb position based on value (0-100)
     const value = 0.4;
     return (
         <div className="mx-auto">
@@ -21,12 +15,9 @@ const AverageMACD = () => {
                     <span>Negative</span>
                 </div>
             </div>
-            {/* Slider bar at bottom mimicking the image */}
             <div className="w-full mt-2 h-1.5 bg-gray-200 rounded-full relative">
                 <div className="absolute top-0 left-0 h-full bg-[#16c784] w-[50%]"></div>
                 <div className="absolute top-0 left-[50%] h-full bg-[#ea3943] w-[50%]"></div>
-
-                {/* Thumb */}
                 <div className="absolute top-1/2 w-4 h-4 bg-white border border-gray-300 rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-sm" style={{ left: `${value * 100}%` }}></div>
             </div>
         </div>
@@ -34,10 +25,7 @@ const AverageMACD = () => {
 }
 
 const MACDSignalStatus = () => {
-    const value = {
-        "positive": 85,
-        "negative": 15
-    };
+    const value = { "positive": 85, "negative": 15 };
     return (
         <div className="space-y-3 pt-1">
             <div className="flex justify-start gap-6">
@@ -50,7 +38,6 @@ const MACDSignalStatus = () => {
                     </div>
                     <h3 className="text-xl font-bold">{value.positive}%</h3>
                 </div>
-
                 <div>
                     <div className="flex justify-between items-">
                         <div className="flex items-center gap-2">
@@ -81,13 +68,11 @@ const HistoricalMACD = () => {
         { label: "30 Days Ago", value: 0.50, status: "good" },
         { label: "90 Days Ago", value: -0.20, status: "bad" },
     ];
-
     const getStatusColor = (status: string) => {
         if (status === "good") return "bg-green-500 text-white";
         if (status === "bad") return "bg-red-500 text-white";
         return "bg-gray-100 text-gray-600";
     }
-
     return (
         <div className="space-y-3">
             {history.map((item) => (
@@ -108,13 +93,13 @@ const MACD = () => {
             title="NSE MACD (Moving Average Convergence Divergence)"
             description="MACD is a trend-following momentum indicator that shows the relationship between two moving averages of a security’s price. This dashboard provides a consolidated view of MACD values across major Nigerian stocks."
             leftCards={[
-                <Card title="Average Normalized MACD" action={<Info className="w-4 h-4 text-gray-400" />}>
+                <Card title="Average Normalized MACD" action={<span className="material-symbols-outlined text-[18px] text-gray-400">info</span>}>
                     <AverageMACD />
                 </Card>,
-                <Card title="Positive vs Negative Momentum" action={<Info className="w-4 h-4 text-gray-400" />}>
+                <Card title="Positive vs Negative Momentum" action={<span className="material-symbols-outlined text-[18px] text-gray-400">info</span>}>
                     <MACDSignalStatus />
                 </Card>,
-                <Card title="Historical MACD values" action={<Info className="w-4 h-4 text-gray-400" />}>
+                <Card title="Historical MACD values" action={<span className="material-symbols-outlined text-[18px] text-gray-400">info</span>}>
                     <HistoricalMACD />
                 </Card>
             ]}

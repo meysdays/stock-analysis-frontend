@@ -1,16 +1,14 @@
 import type { TableHeader } from "../Table";
 
 export interface MarketItem {
-    id?: string;
-    name: string;
-    price: number;
-    percent1h: number;
-    percent24h: number;
-    percent7d: number;
-    marketCap: number;
-    volume24h: number;
-    circulatingSupply: number;
-    sparkline7d?: number[];
+    id: number;
+    symbol: string;
+    name: string | null;
+    sector: string | null;
+    industry: string | null;
+    exchange: string | null;
+    currency: string | null;
+    last_updated: string | null;
 }
 
 export interface MarketTableProps {

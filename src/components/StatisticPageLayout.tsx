@@ -1,6 +1,5 @@
 import React from "react";
 import StatisticsCard from "./StatisticsCard";
-import { MoreVertical, Info, ChevronDown, Lock } from "lucide-react";
 
 interface StatItem {
     label: string;
@@ -74,8 +73,8 @@ const StatisticPageLayout: React.FC<StatisticPageLayoutProps> = ({
                         <div className="p-6">
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="text-2xl font-bold text-[#1a5b81]">{chartTitle}</h2>
-                                <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                                    <MoreVertical className="w-5 h-5 text-gray-500" />
+                                <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex items-center justify-center">
+                                    <span className="material-symbols-outlined text-[20px] text-gray-500">more_vert</span>
                                 </button>
                             </div>
 
@@ -112,7 +111,7 @@ const StatisticPageLayout: React.FC<StatisticPageLayoutProps> = ({
                     <div className="flex items-start gap-4 bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
                         <div className="mt-1">
                             <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-500 text-white">
-                                <Info className="w-4 h-4" />
+                                <span className="material-symbols-outlined text-[16px]">info</span>
                             </div>
                         </div>
                         <p className="text-gray-700 leading-relaxed">
@@ -156,18 +155,18 @@ const StatisticPageLayout: React.FC<StatisticPageLayoutProps> = ({
             </div>
 
             {/* History Section */}
-            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-                <div className="p-6 border-b border-gray-200 flex justify-between items-center">
+            <div className="bg-white overflow-hidden">
+                <div className="p-6 flex justify-between items-center">
                     <h2 className="text-2xl font-bold text-black">{historyTitle}</h2>
                     <div className="relative">
                         <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
-                            Annual <ChevronDown className="w-4 h-4" />
+                            Annual <span className="material-symbols-outlined text-[18px]">expand_more</span>
                         </button>
                     </div>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
-                        <thead className="bg-gray-50/50 border-b border-gray-200">
+                        <thead className="bg-gray-50/50">
                             <tr>
                                 <th className="px-6 py-4 text-sm font-bold text-gray-700">Date</th>
                                 <th className="px-6 py-4 text-sm font-bold text-gray-700 text-right">{historyValueLabel}</th>
@@ -175,26 +174,19 @@ const StatisticPageLayout: React.FC<StatisticPageLayoutProps> = ({
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
-                            {historyData.map((row, i) => (
-                                <tr key={i} className={`${row.isLocked ? "bg-gray-50/10" : "hover:bg-gray-50/30"} transition-colors`}>
+                            {historyData.filter((row) => row.value && row.date).map((row, i) => (
+                                <tr key={i} className="hover:bg-gray-50/30 transition-colors">
                                     <td className="px-6 py-4 text-[#1a1a1a] font-medium">{row.date}</td>
                                     <td className="px-6 py-4 text-right text-[#1a1a1a] font-medium">
-                                        {row.isLocked ? (
-                                            <button className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 font-medium">
-                                                Upgrade <Lock className="w-3.5 h-3.5" />
-                                            </button>
-                                        ) : (
+                                        {
+
                                             row.value
-                                        )}
+                                        }
                                     </td>
                                     <td className={`px-6 py-4 text-right font-medium ${row.isLocked ? "" : row.positive ? "text-emerald-600" : "text-rose-500"}`}>
-                                        {row.isLocked ? (
-                                            <button className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 font-medium">
-                                                Upgrade <Lock className="w-3.5 h-3.5" />
-                                            </button>
-                                        ) : (
+                                        {
                                             row.change
-                                        )}
+                                        }
                                     </td>
                                 </tr>
                             ))}

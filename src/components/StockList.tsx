@@ -1,8 +1,8 @@
 
-import type { StockName } from "../lib/api";
+import type { APIStock } from "../lib/definitions";
 
 interface StockListProps {
-    stocks: StockName[];
+    stocks: APIStock[];
     onSelect: (name: string) => void;
     selectedStock: string;
 }
@@ -19,28 +19,28 @@ const StockList = ({ stocks, onSelect, selectedStock }: StockListProps) => {
                 {stocks.map((stock, index) => (
                     <button
                         key={index}
-                        onClick={() => onSelect(stock.stock_name)}
-                        className={`w-full text-left px-4 py-3 rounded-2xl flex items-center justify-between transition-all duration-200 group ${selectedStock === stock.stock_name
+                        onClick={() => onSelect(stock.name || "")}
+                        className={`w-full text-left px-4 py-3 rounded-2xl flex items-center justify-between transition-all duration-200 group ${selectedStock === stock.name
                             ? 'bg-orange-50 ring-1 ring-orange-100'
                             : 'hover:bg-gray-50'
                             }`}
                     >
                         <div className="flex items-center gap-3">
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${selectedStock === stock.stock_name
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold ${selectedStock === stock.name
                                 ? 'bg-orange-100 text-orange-600'
                                 : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
                                 }`}>
-                                {stock.stock_name.substring(0, 2).toUpperCase()}
+                                {(stock.name || "ST").substring(0, 2).toUpperCase()}
                             </div>
                             <div>
-                                <p className={`font-semibold text-sm ${selectedStock === stock.stock_name ? 'text-gray-900' : 'text-gray-700'
+                                <p className={`font-semibold text-sm ${selectedStock === stock.name ? 'text-gray-900' : 'text-gray-700'
                                     }`}>
-                                    {stock.stock_name}
+                                    {stock.name}
                                 </p>
-                                <p className="text-xs text-gray-400">Stock Ticker</p>
+                                <p className="text-xs text-gray-400">{stock.symbol}</p>
                             </div>
                         </div>
-                        {selectedStock === stock.stock_name && (
+                        {selectedStock === stock.name && (
                             <div className="w-2 h-2 rounded-full bg-orange-500"></div>
                         )}
                     </button>

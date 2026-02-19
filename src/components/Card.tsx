@@ -1,5 +1,4 @@
 // import type { ReactNode } from "react";
-import { TrendingUp } from "lucide-react";
 
 import type { CardProps } from "../lib/definitions";
 
@@ -37,9 +36,9 @@ const Card = ({
         <div>
           <p>Total {title}</p>
         </div>
-        <div className="flex items-center bg-green-200 px-2 py-1 rounded-2xl">
-          <span className="text-green-600 font-medium">+2.25%</span>
-          <TrendingUp className="w-4 h-4 mr-1 text-green-600" />
+        <div className="flex items-center bg-green-200 px-2 py-1 rounded-2xl gap-1">
+          <span className="text-green-600 font-medium text-xs">+2.25%</span>
+          <span className="material-symbols-outlined text-[16px] text-green-600">trending_up</span>
         </div>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import type { TableHeader } from "../Table";
 import type { MarketItem } from "./types";
-import SparklineChart from "../Chart/SparklineChart";
 
 export const fmt = (v: number) =>
     new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(v);
@@ -11,76 +10,51 @@ export const fmtLarge = (v: number) =>
 
 export const defaultHeaders: TableHeader<MarketItem>[] = [
     {
-        key: "name",
-        label: "Name",
+        key: "symbol",
+        label: "Symbol",
         align: "left",
         render: (r) => (
-            <NavLink to={`/stock/${r.id}`} className="pointer-events-auto">
-                {r.name}
+            <NavLink to={`/stock/${r.id}`} className="font-bold text-blue-600 hover:underline">
+                {r.symbol}
             </NavLink>
         ),
     },
     {
-        key: "price",
-        label: "Price",
-        align: "right",
-        render: (r) => <>${fmt(r.price)}</>,
+        key: "name",
+        label: "Name",
+        align: "left",
+        render: (r) => <span className="text-gray-900">{r.name}</span>,
     },
     {
-        key: "percent1h",
-        label: "1h %",
-        align: "right",
-        render: (r) => (
-            <span className={r.percent1h >= 0 ? "text-green-600" : "text-red-600"}>
-                {r.percent1h >= 0 ? "+" : ""}
-                {fmt(r.percent1h)}%
-            </span>
-        ),
+        key: "sector",
+        label: "Sector",
+        align: "left",
+        render: (r) => <span className="text-gray-500">{r.sector}</span>,
     },
     {
-        key: "percent24h",
-        label: "24h %",
-        align: "right",
-        render: (r) => (
-            <span className={r.percent24h >= 0 ? "text-green-600" : "text-red-600"}>
-                {r.percent24h >= 0 ? "+" : ""}
-                {fmt(r.percent24h)}%
-            </span>
-        ),
+        key: "industry",
+        label: "Industry",
+        align: "left",
+        render: (r) => <span className="text-gray-400 text-sm">{r.industry}</span>,
     },
     {
-        key: "percent7d",
-        label: "7d %",
-        align: "right",
-        render: (r) => (
-            <span className={r.percent7d >= 0 ? "text-green-600" : "text-red-600"}>
-                {r.percent7d >= 0 ? "+" : ""}
-                {fmt(r.percent7d)}%
-            </span>
-        ),
-    },
-    {
-        key: "marketCap",
-        label: "Market Cap",
-        align: "right",
-        render: (r) => <>${fmtLarge(r.marketCap)}</>,
-    },
-    {
-        key: "volume24h",
-        label: "Volume(24h)",
-        align: "right",
-        render: (r) => <>${fmtLarge(r.volume24h)}</>,
-    },
-    {
-        key: "circulatingSupply",
-        label: "Circulating Supply",
-        align: "right",
-        render: (r) => <>{fmtLarge(r.circulatingSupply)}</>,
-    },
-    {
-        key: "sparkline7d",
-        label: "Last 7 Days",
+        key: "exchange",
+        label: "Exchange",
         align: "center",
-        render: (r) => <SparklineChart data={r.sparkline7d} label="7-Day Trend" />,
+        render: (r) => (
+            <span className="px-2 py-1 bg-gray-100 text-gray-600 text-[10px] font-bold rounded uppercase">
+                {r.exchange}
+            </span>
+        ),
+    },
+    {
+        key: "last_updated",
+        label: "Last Updated",
+        align: "right",
+        render: (r) => (
+            <span className="text-gray-400 text-xs">
+                {r.last_updated ? new Date(r.last_updated).toLocaleDateString() : "n/a"}
+            </span>
+        ),
     },
 ];

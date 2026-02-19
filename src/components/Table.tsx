@@ -45,7 +45,7 @@ export default function Table<T extends Record<string, any>>({
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full border-collapse">
+      <table className="w-full">
         <thead>
           <tr>
             {headers.map((h) => (
@@ -59,13 +59,12 @@ export default function Table<T extends Record<string, any>>({
                     setSortOrder("asc");
                   }
                 }}
-                className={`px-2 py-2 text-sm font-semibold  hover: cursor-pointer text-gray-500 ${
-                  h.align === "right"
+                className={`px-2 py-2 text-sm font-semibold  hover: cursor-pointer text-gray-500 ${h.align === "right"
                     ? "text-right"
                     : h.align === "center"
                       ? "text-center"
                       : "text-left"
-                }`}
+                  }`}
               >
                 {h.label}
               </th>
@@ -81,13 +80,12 @@ export default function Table<T extends Record<string, any>>({
               {headers.map((h) => (
                 <td
                   key={h.key}
-                  className={`px-2 py-2 text-sm ${
-                    h.align === "right"
+                  className={`px-2 py-2 text-sm ${h.align === "right"
                       ? "text-right"
                       : h.align === "center"
                         ? "text-center"
                         : "text-left"
-                  }`}
+                    }`}
                 >
                   {h.render ? h.render(row) : (row[h.key] ?? "")}
                 </td>

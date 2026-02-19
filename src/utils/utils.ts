@@ -1,23 +1,3 @@
-import {
-  Globe,
-  LayoutGrid,
-  Gauge,
-  TrendingUp,
-  ChartNoAxesCombined,
-  RefreshCw,
-  Activity,
-  ChartColumn,
-  Trophy,
-  Layers,
-  ArrowUpDown,
-  Zap,
-  Home,
-  BarChart2,
-  Filter,
-  // Settings,
-  Star,
-} from "lucide-react";
-
 import { type ChartData as ChartJSData } from "chart.js";
 import { faker } from "@faker-js/faker";
 import type { NavItemType, NavLink, NavOption } from "../lib/definitions";
@@ -32,54 +12,54 @@ export const dashboardLinks: NavOption = {
   NSE: [
     {
       title: "Nigerian Stock Exchange",
-      icon: Trophy,
+      icon: "emoji_events",
       links: [
         {
           href: "/indicators/ranking",
           label: "Ranking",
-          icon: Trophy,
+          icon: "emoji_events",
           iconClass: "text-yellow-600 bg-yellow-50",
         },
         {
           href: "#",
           label: "Categories",
-          icon: Layers,
+          icon: "layers",
           iconClass: "text-indigo-600 bg-indigo-50",
         },
       ],
     },
     {
       title: "Leaderboard",
-      icon: Trophy,
+      icon: "emoji_events",
       links: [
         {
           href: "#",
           label: "Gainers & Losers",
-          icon: ArrowUpDown,
+          icon: "swap_vert",
           iconClass: "text-emerald-600 bg-emerald-50",
         },
         {
           href: "#",
           label: "Most Active",
-          icon: Zap,
+          icon: "bolt",
           iconClass: "text-orange-600 bg-orange-50",
         },
       ],
     },
     {
       title: "Technical Analysis",
-      icon: Activity,
+      icon: "monitoring",
       links: [
         {
           href: "/technical/rsi",
           label: "RSI",
-          icon: Activity,
+          icon: "monitoring",
           iconClass: "text-cyan-600 bg-cyan-50",
         },
         {
           href: "/technical/macd",
           label: "MACD",
-          icon: ChartColumn,
+          icon: "bar_chart",
           iconClass: "text-emerald-600 bg-emerald-50",
         },
       ],
@@ -89,66 +69,66 @@ export const dashboardLinks: NavOption = {
   Dashboards: [
     {
       title: "Markets",
-      icon: Globe,
+      icon: "public",
       links: [
         {
           href: "#",
           label: "Market Overview",
-          icon: Globe,
+          icon: "public",
           iconClass: "text-blue-600 bg-blue-50",
         },
         {
           href: "/indicators/no-of-stocks",
           label: "No. of Stocks",
-          icon: LayoutGrid,
+          icon: "grid_view",
           iconClass: "text-indigo-600 bg-indigo-50",
         },
       ],
     },
     {
       title: "Indicators",
-      icon: Gauge,
+      icon: "speed",
       links: [
         {
           href: "/indicators/fear-greed",
           label: "Fear and Greed Index",
-          icon: Gauge,
+          icon: "speed",
           iconClass: "text-green-600 bg-green-50",
         },
         {
           href: "/indicators/sp10",
           label: "StockPred 10 Index",
-          icon: TrendingUp,
+          icon: "trending_up",
           iconClass: "text-orange-600 bg-orange-50",
         },
         {
           href: "/indicators/sp30",
           label: "StockPred 30 Index",
-          icon: ChartNoAxesCombined,
+          icon: "show_chart",
           iconClass: "text-purple-600 bg-purple-50",
         },
         {
           href: "#",
           label: "Market Cycle Indicators",
-          icon: RefreshCw,
+          icon: "sync",
           iconClass: "text-pink-600 bg-pink-50",
         },
       ],
     },
     {
       title: "Technical Analysis",
-      icon: Activity,
+      icon: "monitoring",
       links: [
         {
           href: "/indicators/rsi",
           label: "RSI",
-          icon: Activity,
+          icon: "monitoring",
           iconClass: "text-cyan-600 bg-cyan-50",
         },
         {
           href: "/technical/macd",
           label: "MACD",
-          icon: ChartColumn,
+          icon: "bar_chart",
           iconClass: "text-emerald-600 bg-emerald-50",
         },
       ],
@@ -279,10 +259,11 @@ export const formatCurrency = (value: number) => {
 };
 
 export const navItems: NavItemType[] = [
-  { name: "Dashboard", path: "/", icon: Home },
-  { name: "Stocks", path: "/stocks", icon: BarChart2 },
-  { name: "WatchList", path: "/users", icon: Star },
-  { name: "Screener", path: "/settings", icon: Filter },
+  { name: "Dashboard", path: "/", icon: "home" },
+  { name: "Stocks", path: "/stocks", icon: "bar_chart" },
+  { name: "WatchList", path: "/users", icon: "star" },
+  { name: "Screener", path: "/settings", icon: "filter_alt" },
+  { name: "Comparison Tool", path: "/comparison", icon: "query_stats" }
 ];
 
 export const Tabs = (id: number) => [
@@ -311,7 +292,6 @@ export const Tabs = (id: number) => [
       { label: "Revenue", href: `/stock/${id}/statistics/revenue` },
     ],
   },
-  { label: "Metrics", href: `/stock/${id}/metrics` },
   { label: "Dividends", href: `/stock/${id}/dividends` },
   { label: "History", href: `/stock/${id}/history` },
   { label: "Profile", href: `/stock/${id}/profile` },

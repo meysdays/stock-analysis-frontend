@@ -1,5 +1,20 @@
 import api from "./api";
-import type { APIStock, KlineResponse, StockStatsResponse, StockInfoResponse, RelatedStock } from "./definitions";
+import type {
+    APIStock,
+    KlineResponse,
+    StockStatsResponse,
+    StockInfoResponse,
+    RelatedStock,
+    PopularComparisonResponse,
+    DividendResponse,
+    StockSearchResult,
+    MarketCapHistoryResponse,
+    StockProfile,
+    StockExecutive,
+    BulkComparisonResponse,
+    StockComparisonItem,
+    MetricComparisonResponse,
+} from "./definitions";
 
 
 export const getStockById = async (id: number): Promise<APIStock> => {
@@ -25,14 +40,75 @@ export const getStockInfo = async (id: number): Promise<StockInfoResponse> => {
     return data;
 };
 
-export const getRelatedStocks = async (id: number): Promise<RelatedStock[]> => {
-    const { data } = await api.get<RelatedStock[]>(`/stocks/${id}/related`);
+export const getRelatedStocks = async (id: number, limit: number = 10): Promise<RelatedStock[]> => {
+    const { data } = await api.get<RelatedStock[]>(`/stocks/${id}/related`, {
+        params: { limit }
+    });
     return data;
 };
 
 export const getPaginatedMarketData = async (page: number, limit: number): Promise<APIStock[]> => {
-    const { data } = await api.get<APIStock[]>(`/stocks?page=${page}&limit=${limit}`, {
+    const { data } = await api.get<APIStock[]>(`/stocks`, {
         params: { page, limit }
     });
     return data;
 }
+
+export const getPopularComparisons = async (): Promise<PopularComparisonResponse> => {
+    const { data } = await api.get<PopularComparisonResponse>(`/popular_comparisons`);
+    return data;
+};
+
+export const getDividends = async (id: number): Promise<DividendResponse> => {
+    const { data } = await api.get<DividendResponse>(`/stocks/${id}/dividends`);
+    return data;
+};
+
+// ── New API functions ──────────────────────────────
+
+export const searchStocks = async (query: string, limit: number = 10): Promise<StockSearchResult[]> => {
+    const { data } = await api.get<StockSearchResult[]>(`/stocks/search`, {
+        params: { q: query, limit }
+    });
+    return data;
+};
+
+export const getMarketCapHistory = async (id: number, limit: number = 500): Promise<MarketCapHistoryResponse> => {
+    const { data } = await api.get<MarketCapHistoryResponse>(`/stocks/${id}/market-cap`, {
+        params: { limit }
+    });
+    return data;
+};
+
+export const getStockProfile = async (id: number): Promise<StockProfile> => {
+    const { data } = await api.get<StockProfile>(`/stocks/${id}/profile`);
+    return data;
+};
+
+export const getStockExecutives = async (id: number): Promise<StockExecutive[]> => {
+    const { data } = await api.get<StockExecutive[]>(`/stocks/${id}/executives`);
+    return data;
+};
+
+export const getBulkComparison = async (
+    symbols: string,
+    interval: string = "week",
+    limit: number = 52
+): Promise<BulkComparisonResponse> => {
+    const { data } = await api.get<BulkComparisonResponse>(`/stocks/compare`, {
+        params: { symbols, interval, limit }
+    });
+    return data;
+};
+
+export const getStockComparison = async (id: number): Promise<StockComparisonItem> => {
+    const { data } = await api.get<StockComparisonItem>(`/stocks/${id}/comparison`);
+    return data;
+};
+
+export const getCompareMetrics = async (metric: string, symbols: string): Promise<MetricComparisonResponse> => {
+    const { data } = await api.get<MetricComparisonResponse>(`/stocks/compare-metrics`, {
+        params: { metric, symbols }
+    });
+    return data;
+};

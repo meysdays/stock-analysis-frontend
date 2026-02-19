@@ -26,8 +26,8 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
                 <div className="lg:col-span-2 space-y-6">
                     {/* Info box */}
                     <div className="flex items-start gap-3 bg-white p-4 rounded-lg border border-gray-300">
-                        <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-500 text-white text-sm font-bold">
-                            i
+                        <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-500 text-white">
+                            <span className="material-symbols-outlined text-[16px]">info</span>
                         </div>
                         <p className="text-gray-700 text-sm">{description}</p>
                     </div>
@@ -41,7 +41,7 @@ const StatisticsCard: React.FC<StatisticsCardProps> = ({
                 </div>
 
                 {/* Sidebar */}
-                <div className="bg-white p-6 rounded-lg border space-y-4 border-gray-300 max-w-[350px]">
+                <div className="bg-white p-6 rounded-lg border space-y-4 border-gray-300 ">
                     <h2 className="text-lg font-semibold text-black">
                         {sidebarTitle}
                     </h2>

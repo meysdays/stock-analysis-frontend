@@ -3,6 +3,7 @@
 @layer base {
   html, body {
     @apply h-full bg-[#fdfdfd] text-slate-900;
+    font-family: 'Poppins', sans-serif;
   }
 }
 

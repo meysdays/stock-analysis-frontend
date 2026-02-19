@@ -54,8 +54,6 @@ export default function Revenue() {
         { date: "Dec 31, 2023", value: "2.56T", change: "12.8%", positive: true },
         { date: "Dec 31, 2022", value: "2.27T", change: "8.5%", positive: true },
         { date: "Dec 31, 2021", value: "2.09T", change: "-2.1%", positive: false },
-        { date: "Dec 31, 2020", isLocked: true },
-        { date: "Dec 31, 2019", isLocked: true },
     ];
 
     const relatedStocksFormatted = relatedStocks?.map((stock) => ({

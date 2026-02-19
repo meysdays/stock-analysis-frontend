@@ -134,8 +134,8 @@ const Summary = () => {
                                 data={klines.map(k => k.close)}
                                 height={350}
                                 stepped={true}
-                                lineColor="#10b981" // emerald-500
-                                fillColor="rgba(16, 185, 129, 0.1)"
+                                lineColor="#1a5b81" // emerald-500
+                                fillColor="rgba(26, 91, 129, 0.05)"
                                 showGrid={true}
                             />
                         ) : (

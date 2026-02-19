@@ -16,14 +16,17 @@ const NavItem = ({ item, collapsed }: Props) => {
       to={item.path}
       className={({ isActive }) =>
         `flex items-center gap-3 px-4 py-3 rounded-xl transition-all
-        ${
-          isActive
-            ? "bg-blue-600 text-white"
-            : "text-gray-700 hover:bg-gray-800 hover:text-white"
+        ${isActive
+          ? "bg-blue-600 text-white"
+          : "text-gray-700 hover:bg-gray-800 hover:text-white"
         }`
       }
     >
-      <Icon size={20} />
+      {typeof item.icon === "string" ? (
+        <span className="material-symbols-outlined text-[20px]">{item.icon}</span>
+      ) : (
+        <Icon size={20} />
+      )}
 
       {!collapsed && (
         <span className="text-sm font-medium">
