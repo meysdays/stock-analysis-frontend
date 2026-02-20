@@ -3,6 +3,7 @@ import { useParams, Outlet, useLocation, useNavigate } from "react-router-dom";
 import StockDashboardLayout from "../../layouts/StockDashboardLayout";
 import { getStockById } from "../../lib/data";
 import type { APIStock } from "../../lib/definitions";
+
 import { Tabs } from "../../utils/utils";
 
 const StockDashboard = () => {
@@ -61,10 +62,10 @@ const StockDashboard = () => {
         );
     }
 
-    
+    const tabs = Tabs(Number(id));
 
     return (
-        <StockDashboardLayout tabs={Tabs(Number(id))}>
+        <StockDashboardLayout tabs={tabs}>
             <Outlet />
         </StockDashboardLayout>
     );

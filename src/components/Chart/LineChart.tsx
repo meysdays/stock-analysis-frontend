@@ -33,11 +33,13 @@ interface LineChartProps {
     showGrid?: boolean;
     height?: number;
     stepped?: boolean;
+    tension?: number;
 }
 
 const LineChart = ({
     labels,
     data,
+    tension,
     label = "Price",
     lineColor = "#16c784",
     fillColor = "#16c7841a",
@@ -52,10 +54,10 @@ const LineChart = ({
                 label,
                 data,
                 stepped,
+                tension,
                 fill: true,
                 borderColor: lineColor,
                 backgroundColor: fillColor,
-                tension: 0.4,
                 pointRadius: 0,
                 pointHoverRadius: 6,
                 pointHoverBackgroundColor: lineColor,

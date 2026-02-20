@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Send, Bot, User } from "lucide-react";
 import { queryGpt } from "../gpt";
 
 interface Message {
@@ -64,7 +63,7 @@ const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
                 <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-gray-50">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
-                            <Bot size={20} />
+                            <span className="material-symbols-outlined text-[20px]">smart_toy</span>
                         </div>
                         <div>
                             <h3 className="font-bold text-gray-900">Stock Market Assistant</h3>
@@ -72,9 +71,9 @@ const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
                     </div>
                     <button
                         onClick={onClose}
-                        className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-full transition-colors"
+                        className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-full transition-colors flex items-center justify-center"
                     >
-                        <X size={20} />
+                        <span className="material-symbols-outlined text-[20px]">close</span>
                     </button>
                 </div>
 
@@ -89,7 +88,11 @@ const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
                                 className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 
                   ${msg.role === 'user' ? 'bg-orange-500 text-white' : 'bg-gray-200 text-gray-600'}`}
                             >
-                                {msg.role === 'user' ? <User size={16} /> : <Bot size={16} />}
+                                {msg.role === 'user' ? (
+                                    <span className="material-symbols-outlined text-[16px]">person</span>
+                                ) : (
+                                    <span className="material-symbols-outlined text-[16px]">smart_toy</span>
+                                )}
                             </div>
                             <div
                                 className={`max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed
@@ -105,7 +108,7 @@ const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
                     {isLoading && (
                         <div className="flex gap-3">
                             <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center shrink-0 text-gray-600">
-                                <Bot size={16} />
+                                <span className="material-symbols-outlined text-[16px]">smart_toy</span>
                             </div>
                             <div className="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-gray-100">
                                 <div className="flex gap-1.5">
@@ -134,9 +137,9 @@ const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
                         <button
                             onClick={handleSend}
                             disabled={!input.trim() || isLoading}
-                            className="p-2 text-orange-500 hover:bg-orange-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="p-2 text-orange-500 hover:bg-orange-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                         >
-                            <Send size={18} />
+                            <span className="material-symbols-outlined text-[18px]">send</span>
                         </button>
                     </div>
                 </div>

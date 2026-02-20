@@ -6,14 +6,14 @@ import {
     getStockById,
 } from "../lib/data";
 import Tab from "../components/Navigation/Tab";
-import type { StockApiData } from "../lib/definitions";
+import type { APIStock } from "../lib/definitions";
 
 
 const StockPage = () => {
     const { id } = useParams();
     const [error, setError] = useState<Error | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [stockData, setStockData] = useState<StockApiData[]>([]);
+    const [stockData, setStockData] = useState<APIStock | null>(null);
 
 
     // Effect: Load stock data on mount or when URL ID changes
@@ -25,8 +25,8 @@ const StockPage = () => {
                 setLoading(true);
                 if (numericId && !isNaN(numericId)) {
                     // Fetch specific stock by numeric ID
-                    const detailsData = await getStockById(numericId);
-                    setStockData(detailsData);
+                    const data = await getStockById(numericId);
+                    setStockData(data);
                 }
             } catch (e) {
                 if (e instanceof Error) setError(e);
@@ -55,11 +55,21 @@ const StockPage = () => {
     }
 
     return (
-        <div className="flex h-[calc(100vh-80px)] overflow-hidden bg-[#FDFDFD] font-sans">
-            <Sidebar {...dummySidebarData} />
+        <div className="flex h-screen overflow-hidden bg-[#FDFDFD] font-sans">
+            <Sidebar
+                {...dummySidebarData}
+                stock_name={stockData?.name || dummySidebarData.stock_name}
+                volume={stockData?.market_cap || dummySidebarData.volume}
+            />
 
-            <main className="flex-1 overflow-y-auto p-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <main className="flex-1 overflow-y-auto p-8 custom-scrollbar">
                 <Tab tabProps={stockTabs} />
+                {stockData && (
+                    <div className="mt-8">
+                        <h2 className="text-2xl font-bold text-slate-900 mb-4">{stockData.name}</h2>
+                        <p className="text-slate-600">{stockData.description}</p>
+                    </div>
+                )}
             </main>
 
         </div >

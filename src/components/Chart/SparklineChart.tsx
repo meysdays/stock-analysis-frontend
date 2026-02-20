@@ -1,4 +1,3 @@
-import React from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -6,116 +5,82 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  Title,
   Tooltip,
+  Legend,
   Filler,
 } from "chart.js";
+import type { SparklinePoint } from "../../lib/definitions";
 
-/**
- * Register Chart.js components needed for line charts.
- * This must be done once before rendering any charts.
- */
+// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  Title,
   Tooltip,
+  Legend,
   Filler
 );
 
-/**
- * Props for SparklineChart component.
- */
 interface SparklineChartProps {
-  data?: number[]; // Array of price points (typically last 7 closing prices)
-  label?: string; // Optional label for the chart
+  data: number[] | SparklinePoint[];
+  label?: string;
+  width?: string | number;
+  height?: string | number;
 }
 
 /**
- * SparklineChart component renders a mini line chart using Chart.js.
- * Visualizes 7-day price trends with automatic color coding:
- * - Green if price increased (last >= first)
- * - Red if price decreased (last < first)
- *
- * @param {SparklineChartProps} props - Component props
- * @returns JSX element containing a Chart.js line chart
+ * A lightweight line chart component designed for high-density dashboards.
+ * Displays a trend over time without axis labels or background noise.
  */
 export default function SparklineChart({
-  data = [],
-  label = "Price",
+  data: rawData = [],
+  label = "Trend",
 }: SparklineChartProps) {
+  // Extract values if data is an array of objects
+  const data = (rawData || []).map((item) => (typeof item === "number" ? item : item.value));
+
   // Return placeholder if no data
-  if (!data || data.length === 0) {
-    return <div className="w-34 h-8 bg-gray-100 rounded" />;
+  if (data.length === 0) {
+    return <div className="w-28 h-12 bg-gray-50/50 rounded animate-pulse" />;
   }
 
   // Determine color: green if uptrend (last >= first), red if downtrend
-  const isUptrend = data[data.length - 1] >= data[0];
-  const lineColor = isUptrend ? "#10b981" : "#ef4444";
-  const backgroundColor = isUptrend ? "rgba(16, 185, 129, 0.1)" : "rgba(239, 68, 68, 0.1)";
+  const isUptrend = data.length > 0 ? data[data.length - 1] >= data[0] : true;
+  const lineColor = isUptrend ? "#359592ff" : "#a62d2dff";
 
   // Configuration object for Chart.js line chart
   const chartData = {
-    // X-axis labels: day numbers (not shown but needed for chart structure)
     labels: data.map((_, i) => i),
     datasets: [
       {
-        label, // Dataset label displayed in tooltip
-        data, // Array of price points
-        borderColor: lineColor, // Line color (green or red)
-        backgroundColor, // Fill color under the line
-        fill: true, // Enable area fill under the line
-        borderWidth: 2, // Line thickness
-        pointRadius: 0, // Hide individual data points (cleaner sparkline look)
-        pointHoverRadius: 4, // Show point on hover
-        pointBackgroundColor: lineColor, // Point color (matches line)
-        tension: 0.4, // Smooth curve instead of sharp angles
-        spanGaps: true, // Connect gaps in data
+        label,
+        data,
+        backgroundColor: "transparent",
+        borderColor: lineColor,
+        borderWidth: 1.5,
+        pointRadius: 0,
+        tension: 0,
+        spanGaps: true,
       },
     ],
   };
 
-  // Chart.js configuration options for minimal styling
   const options = {
-    responsive: true, // Responsive resizing
-    maintainAspectRatio: true,
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
-      legend: {
-        display: false, // Hide legend for sparkline
-      },
-      tooltip: {
-        mode: "index" as const, // Show tooltip on hover
-        intersect: false,
-        backgroundColor: "rgba(0, 0, 0, 0.8)", // Dark tooltip background
-        padding: 6,
-        titleFont: { size: 12 },
-        bodyFont: { size: 11 },
-        callbacks: {
-          // Format tooltip label to show price with 2 decimal places
-          label: (context: any) => {
-            const value = context.raw;
-            return `$${typeof value === "number" ? value.toFixed(2) : value}`;
-          },
-        },
-      },
+      legend: { display: false },
+      tooltip: { enabled: false }, // Disable tooltips for sparkline
     },
     scales: {
-      x: {
-        display: false, // Hide X-axis labels
-        grid: {
-          display: false, // Hide X-axis grid
-        },
-      },
-      y: {
-        display: false, // Hide Y-axis labels
-        grid: {
-          display: false, // Hide Y-axis grid
-        },
-      },
+      x: { display: false },
+      y: { display: false },
     },
   };
 
-  // Render the chart
   return (
     <div className="flex justify-center items-center w-28 h-12">
       <Line data={chartData} options={options} />

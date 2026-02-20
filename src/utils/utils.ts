@@ -11,19 +11,16 @@ import {
   Layers,
   ArrowUpDown,
   Zap,
-  BarChart3,
-  Home,
+  Home as HomeIcon,
   BarChart2,
   Filter,
   // Settings,
   Star,
 } from "lucide-react";
-
 import { type ChartData as ChartJSData } from "chart.js";
 import { faker } from "@faker-js/faker";
 import type { NavItemType, NavLink, NavOption } from "../lib/definitions";
 import type { TabItem } from "../lib/definitions";
-import { Children } from "react";
 
 export const navLinks: NavLink[] = [
   { href: "#", label: "NSE" },
@@ -34,55 +31,55 @@ export const dashboardLinks: NavOption = {
   NSE: [
     {
       title: "Nigerian Stock Exchange",
-      icon: Trophy,
+      icon: "emoji_events",
       links: [
         {
           href: "/indicators/ranking",
           label: "Ranking",
-          icon: Trophy,
+          icon: "emoji_events",
           iconClass: "text-yellow-600 bg-yellow-50",
         },
         {
           href: "#",
           label: "Categories",
-          icon: Layers,
+          icon: "layers",
           iconClass: "text-indigo-600 bg-indigo-50",
         },
       ],
     },
     {
       title: "Leaderboard",
-      icon: Trophy,
+      icon: "emoji_events",
       links: [
         {
           href: "#",
           label: "Gainers & Losers",
-          icon: ArrowUpDown,
+          icon: "swap_vert",
           iconClass: "text-emerald-600 bg-emerald-50",
         },
         {
           href: "#",
           label: "Most Active",
-          icon: Zap,
+          icon: "bolt",
           iconClass: "text-orange-600 bg-orange-50",
         },
+      ],
+    },
+    {
+      title: "Technical Analysis",
+      icon: "monitoring",
+      links: [
         {
-          title: "Technical Analysis",
-          icon: Activity,
-          links: [
-            {
-              href: "/technical/rsi",
-              label: "RSI",
-              icon: Activity,
-              iconClass: "text-cyan-600 bg-cyan-50",
-            },
-            {
-              href: "/technical/macd",
-              label: "MACD",
-              icon: ChartColumn,
-              iconClass: "text-emerald-600 bg-emerald-50",
-            },
-          ],
+          href: "/technical/rsi",
+          label: "RSI",
+          icon: "monitoring",
+          iconClass: "text-cyan-600 bg-cyan-50",
+        },
+        {
+          href: "/technical/macd",
+          label: "MACD",
+          icon: "bar_chart",
+          iconClass: "text-emerald-600 bg-emerald-50",
         },
       ],
     },
@@ -91,66 +88,66 @@ export const dashboardLinks: NavOption = {
   Dashboards: [
     {
       title: "Markets",
-      icon: Globe,
+      icon: "public",
       links: [
         {
           href: "#",
           label: "Market Overview",
-          icon: Globe,
+          icon: "public",
           iconClass: "text-blue-600 bg-blue-50",
         },
         {
           href: "/indicators/no-of-stocks",
           label: "No. of Stocks",
-          icon: LayoutGrid,
+          icon: "grid_view",
           iconClass: "text-indigo-600 bg-indigo-50",
         },
       ],
     },
     {
       title: "Indicators",
-      icon: Gauge,
+      icon: "speed",
       links: [
         {
           href: "/indicators/fear-greed",
           label: "Fear and Greed Index",
-          icon: Gauge,
+          icon: "speed",
           iconClass: "text-green-600 bg-green-50",
         },
         {
           href: "/indicators/sp10",
           label: "StockPred 10 Index",
-          icon: TrendingUp,
+          icon: "trending_up",
           iconClass: "text-orange-600 bg-orange-50",
         },
         {
           href: "/indicators/sp30",
           label: "StockPred 30 Index",
-          icon: ChartNoAxesCombined,
+          icon: "show_chart",
           iconClass: "text-purple-600 bg-purple-50",
         },
         {
           href: "#",
           label: "Market Cycle Indicators",
-          icon: RefreshCw,
+          icon: "sync",
           iconClass: "text-pink-600 bg-pink-50",
         },
       ],
     },
     {
       title: "Technical Analysis",
-      icon: Activity,
+      icon: "monitoring",
       links: [
         {
           href: "/indicators/rsi",
           label: "RSI",
-          icon: Activity,
+          icon: "monitoring",
           iconClass: "text-cyan-600 bg-cyan-50",
         },
         {
           href: "/technical/macd",
           label: "MACD",
-          icon: ChartColumn,
+          icon: "bar_chart",
           iconClass: "text-emerald-600 bg-emerald-50",
         },
       ],
@@ -241,11 +238,50 @@ export const dummySidebarData = {
   score: 85,
 };
 
+export const formatValue = (value: any, suffix: string = ""): string => {
+  if (value === null || value === undefined || value === "") return "n/a";
+  if (typeof value === "number") {
+    if (value >= 1e12) return (value / 1e12).toFixed(2) + "T" + suffix;
+    if (value >= 1e9) return (value / 1e9).toFixed(2) + "B" + suffix;
+    if (value >= 1e6) return (value / 1e6).toFixed(2) + "M" + suffix;
+    return value.toLocaleString() + suffix;
+  }
+  return value + suffix;
+};
+
+export const generateMockMarketCapData = (range: string) => {
+  const points = range === "1M" ? 30 : range === "6M" ? 180 : range === "YTD" ? 100 : range === "1Y" ? 365 : 500;
+  const data = [];
+  const labels = [];
+  let baseValue = 10000; // Starting at 10T
+
+  const now = new Date();
+  for (let i = points; i >= 0; i--) {
+    const date = new Date(now);
+    date.setDate(now.getDate() - i);
+    labels.push(date.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }));
+
+    // Add some random walk
+    baseValue += (Math.random() - 0.45) * 100;
+    data.push(Math.round(baseValue));
+  }
+
+  return { labels, data };
+};
+
+export const formatCurrency = (value: number) => {
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN",
+    minimumFractionDigits: 2,
+  }).format(value);
+};
+
 export const navItems: NavItemType[] = [
-  { name: "Dashboard", path: "/", icon: Home },
-  { name: "Stocks", path: "/stocks", icon: BarChart2 },
-  { name: "WatchList", path: "/users", icon: Star },
-  { name: "Screener", path: "/settings", icon: Filter },
+  { name: "Dashboard", path: "/", icon: "home" },
+  { name: "Stocks", path: "/stocks", icon: "bar_chart" },
+  { name: "WatchList", path: "/users", icon: "star" },
+  { name: "Comparison Tool", path: "/comparison", icon: "query_stats" }
 ];
 
 export const Tabs = (id: number) => [
@@ -265,8 +301,15 @@ export const Tabs = (id: number) => [
     ],
   },
   { label: "Forecast", href: `/stock/${id}/forecast` },
-  { label: "Statistics", href: `/stock/${id}/statistics` },
-  { label: "Metrics", href: `/stock/${id}/metrics` },
+  {
+    label: "Statistics",
+    href: `/stock/${id}/statistics`,
+    children: [
+      { label: "Statistics", href: `/stock/${id}/statistics` },
+      { label: "Market Cap", href: `/stock/${id}/statistics/market-cap` },
+      { label: "Revenue", href: `/stock/${id}/statistics/revenue` },
+    ],
+  },
   { label: "Dividends", href: `/stock/${id}/dividends` },
   { label: "History", href: `/stock/${id}/history` },
   { label: "Profile", href: `/stock/${id}/profile` },

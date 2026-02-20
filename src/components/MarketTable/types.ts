@@ -1,16 +1,22 @@
 import type { TableHeader } from "../Table";
+import type { SparklinePoint } from "../../lib/definitions";
 
 export interface MarketItem {
-    id?: string;
+    id: number;
+    symbol: string;
     name: string;
+    sector?: string | null;
+    industry?: string | null;
+    exchange?: string | null;
     price: number;
-    percent1h: number;
-    percent24h: number;
-    percent7d: number;
-    marketCap: number;
-    volume24h: number;
-    circulatingSupply: number;
-    sparkline7d?: number[];
+    change_1h: number | null;
+    change_24h: number | null;
+    change_7d: number | null;
+    market_cap: number;
+    volume_24h: number;
+    circulatingSupply?: number;
+    sparkline_7d: SparklinePoint[] | number[];
+    last_updated?: string | null;
 }
 
 export interface DashboardItem {
@@ -43,7 +49,7 @@ export interface FinancialItemProps {
 }
 export interface MarketTableProps {
     fetchUrl?: string;
-    fetcher?: () => Promise<DashboardItem[]>;
-    data?: DashboardItem[];
-    headers?: TableHeader<DashboardItem>[];
+    fetcher?: (page: number, limit: number) => Promise<MarketItem[]>;
+    data?: MarketItem[];
+    headers?: TableHeader<MarketItem>[];
 }

@@ -36,19 +36,19 @@ export default function Table<T extends Record<string, any>>({
   const sortedData = disableSorting
     ? data
     : [...data].sort((a, b) => {
-        if (!sortKey) return 0;
+      if (!sortKey) return 0;
 
-        const valueA = a[sortKey];
-        const valueB = b[sortKey];
+      const valueA = a[sortKey];
+      const valueB = b[sortKey];
 
-        if (typeof valueA === "number" && typeof valueB === "number") {
-          return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
-        }
+      if (typeof valueA === "number" && typeof valueB === "number") {
+        return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
+      }
 
-        return sortOrder === "asc"
-          ? String(valueA).localeCompare(String(valueB))
-          : String(valueB).localeCompare(String(valueA));
-      });
+      return sortOrder === "asc"
+        ? String(valueA).localeCompare(String(valueB))
+        : String(valueB).localeCompare(String(valueA));
+    });
 
   useEffect(() => {
     console.log(sortedData);
@@ -70,13 +70,12 @@ export default function Table<T extends Record<string, any>>({
                     setSortOrder("asc");
                   }
                 }}
-                className={twMerge(`px-2 py-2 text-sm font-semibold  hover: cursor-pointer text-gray-500 ${
-                  h.align === "right"
+                className={twMerge(`px-2 py-2 text-sm font-semibold  hover: cursor-pointer text-gray-500 ${h.align === "right"
                     ? "text-right"
                     : h.align === "center"
                       ? "text-center"
                       : "text-left"
-                }`, className)}
+                  }`)}
               >
                 {h.label}
               </th>
@@ -93,13 +92,12 @@ export default function Table<T extends Record<string, any>>({
                 <td
                   key={h.key}
                   className={twMerge(
-                    `px-2 py-2 text-sm ${
-                      h.align === "right"
-                        ? "text-right"
-                        : h.align === "center"
-                          ? "text-center"
-                          : "text-left"
-                    }`, className
+                    `px-2 py-2 text-sm ${h.align === "right"
+                      ? "text-right"
+                      : h.align === "center"
+                        ? "text-center"
+                        : "text-left"
+                    }`
                   )}
                 >
                   {h.render ? h.render(row) : (row[h.key] ?? "")}

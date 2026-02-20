@@ -4,12 +4,18 @@
 import { navItems } from "../../utils/utils";
 import NavItem from "./NavItem";
 import { useState } from "react";
-import { Menu } from "lucide-react";
 
-// interface SidebarProps extends Omit<StockApiData, "date"> {
-//     signal: string;
-//     score: number;
-// }
+interface SidebarProps {
+  stock_name?: string;
+  volume?: string;
+  close?: string;
+  high?: string;
+  low?: string;
+  open?: string;
+  signal?: string;
+  score?: number;
+  className?: string;
+}
 
 // const Sidebar = ({
 //     stock_name,
@@ -59,25 +65,25 @@ import { Menu } from "lucide-react";
 //     );
 // };
 
-const Sidebar = () => {
+const Sidebar = ({ stock_name, volume, className }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
     <aside
-      className={`h-screen border-r-2 fixed border-[#dde5f0] p-4 transition-all duration-300
-        ${collapsed ? "w-20" : "w-64"}`}
+      className={`h-screen border-r-2 fixed border-[#dde5f0] p-4 transition-all duration-300 bg-white
+        ${collapsed ? "w-20" : "w-64"} ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         {!collapsed && (
-          <h1 className="text-xl font-bold text-black">StockPred</h1>
+          <h2 className="text-xl font-bold text-black truncate">{stock_name || "StockPred"}</h2>
         )}
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className={`text-gray-400  ${collapsed && "mx-auto"} hover:text-white cursor-pointer`}
+          className={`text-gray-400  ${collapsed && "mx-auto"} hover:text-slate-600 cursor-pointer`}
         >
-          <Menu size={22} />
+          <span className="material-symbols-outlined text-[22px]">menu</span>
         </button>
       </div>
 
@@ -91,6 +97,18 @@ const Sidebar = () => {
           />
         ))}
       </nav>
+
+      {!collapsed && stock_name && (
+        <div className="mt-auto pt-8 border-t border-slate-100">
+          <div className="bg-slate-50 p-4 rounded-2xl">
+            <p className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Stock</p>
+            <p className="text-sm font-bold text-slate-900 truncate">{stock_name}</p>
+            <div className="mt-2 text-xs text-slate-600">
+              Vol: <span className="font-bold">{volume}</span>
+            </div>
+          </div>
+        </div>
+      )}
     </aside>
   );
 };

@@ -1,5 +1,3 @@
-import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
-
 interface StatsCardProps {
     title: string;
     value: string;
@@ -17,7 +15,9 @@ const StatsCard = ({ title, value, description, trend, percentage }: StatsCardPr
                 {percentage && (
                     <span className={`flex items-center text-sm font-semibold ${trend === 'up' ? 'text-green-500' : 'text-red-500'}`}>
                         {percentage}
-                        {trend === 'up' ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
+                        <span className="material-symbols-outlined text-[16px]">
+                            {trend === 'up' ? 'north_east' : 'south_east'}
+                        </span>
                     </span>
                 )}
             </div>

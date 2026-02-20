@@ -1,17 +1,10 @@
-import { Info } from "lucide-react";
 import Card from "../../components/Card";
 import ChartCard from "../../components/Chart/ChartCard";
 import BubbleChart from "../../components/Chart/BubbleChart";
 import TechnicalIndicatorLayout from "../../components/Layout/TechnicalIndicatorLayout";
 import { mockBubbleData } from "../../utils/utils";
 
-// const rsiTabs = [
-//     { label: "RSI", href: "/technical/rsi" },
-//     { label: "MACD", href: "/technical/macd" },
-// ];
-
 const AverageRSIGauge = () => {
-    // Determine thumb position based on value (0-100)
     const value = 50;
     return (
         <div className="mx-auto">
@@ -22,7 +15,6 @@ const AverageRSIGauge = () => {
                     <span>Overbought</span>
                 </div>
             </div>
-            {/* Slider bar at bottom mimicking the image */}
             <div className="w-full mt-2 h-1.5 bg-gray-200 rounded-full relative">
                 <div className="absolute top-0 left-0 h-full bg-[#16c784] w-[16.67%]"></div>
                 <div className="absolute top-0 left-[16.67%] h-full bg-[#0f8b5c] w-[16.67%]"></div>
@@ -30,8 +22,6 @@ const AverageRSIGauge = () => {
                 <div className="absolute top-0 left-[50%] h-full bg-gray-200 w-[16.67%]"></div>
                 <div className="absolute top-0 left-[66.67%] h-full bg-[#a4282f] w-[16.67%]"></div>
                 <div className="absolute top-0 left-[83.34%] h-full bg-[#ea3943] w-[16.67%]"></div>
-
-                {/* Thumb */}
                 <div className="absolute top-1/2 w-4 h-4 bg-white border border-gray-300 rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-sm" style={{ left: `${value}%` }}></div>
             </div>
         </div>
@@ -39,10 +29,7 @@ const AverageRSIGauge = () => {
 }
 
 const OverboughtVsOversold = () => {
-    const value = {
-        "oversold": 2.0,
-        "overbought": 1.3
-    };
+    const value = { "oversold": 2.0, "overbought": 1.3 };
     return (
         <div className="space-y-3 pt-1">
             <div className="flex justify-start gap-6">
@@ -55,7 +42,6 @@ const OverboughtVsOversold = () => {
                     </div>
                     <h3 className="text-xl font-bold">2.0%</h3>
                 </div>
-
                 <div>
                     <div className="flex justify-between items-">
                         <div className="flex items-center gap-2">
@@ -86,12 +72,10 @@ const HistoricalRSI = () => {
         { label: "30 Days Ago", value: 47.03, status: "neutral" },
         { label: "90 Days Ago", value: 45.76, status: "neutral" },
     ];
-
     const getStatusColor = (status: string) => {
         if (status === "good") return "bg-green-500 text-white";
         return "bg-gray-100 text-gray-600";
     }
-
     return (
         <div className="space-y-3">
             {history.map((item) => (
@@ -111,15 +95,14 @@ const RSI = () => {
         <TechnicalIndicatorLayout
             title="NSE Relative Strength Index (RSI)"
             description="This page shows the current Nigerian stock market Relative Strength Index heatmap and data. The dashboard includes the largest stocks - such as MTN, Airtel and Dangote - and their current overbought vs oversold status."
-            // tabs={rsiTabs} // Removed
             leftCards={[
-                <Card title="Average NSE RSI" action={<Info className="w-4 h-4 text-gray-400" />}>
+                <Card title="Average NSE RSI" action={<span className="material-symbols-outlined text-[18px] text-gray-400">info</span>}>
                     <AverageRSIGauge />
                 </Card>,
-                <Card title="Overbought vs oversold" action={<Info className="w-4 h-4 text-gray-400" />}>
+                <Card title="Overbought vs oversold" action={<span className="material-symbols-outlined text-[18px] text-gray-400">info</span>}>
                     <OverboughtVsOversold />
                 </Card>,
-                <Card title="Historical RSI values" action={<Info className="w-4 h-4 text-gray-400" />}>
+                <Card title="Historical RSI values" action={<span className="material-symbols-outlined text-[18px] text-gray-400">info</span>}>
                     <HistoricalRSI />
                 </Card>
             ]}
