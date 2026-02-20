@@ -35,6 +35,14 @@ export function pivotIncomeStatements(incomeStatements: IncomeStatement[]) {
   return value as string | number;
 }
 
+function extractYear(periodEnding: string | null | undefined): string {
+  if (!periodEnding) return "Unknown";
+
+  const date = new Date(periodEnding);
+  return `FY${date.getFullYear()}`;
+}
+
+
   if (!incomeStatements.length) return [];
 
   const allKeys = Object.keys(incomeStatements[0]);
@@ -48,8 +56,8 @@ export function pivotIncomeStatements(incomeStatements: IncomeStatement[]) {
       metric: formatLabel(metric),
     };
 
-     incomeStatements.forEach((statement, idx) => {
-      const fy = `FY${2021 + idx}`; // or dynamic if needed
+     incomeStatements.forEach((statement) => {
+      const fy = extractYear(statement.period_ending as string);
       row[fy] = normalizeValue(statement[metric]);
     });
 
