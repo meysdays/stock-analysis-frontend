@@ -70,18 +70,18 @@ const Sidebar = ({ stock_name, volume, className }: SidebarProps) => {
 
   return (
     <aside
-      className={`h-screen border-r-2 fixed border-[#dde5f0] p-4 transition-all duration-300 bg-white
+      className={`h-screen border-r fixed border-gray-100 p-4 transition-all duration-300 bg-background-1
         ${collapsed ? "w-20" : "w-64"} ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         {!collapsed && (
-          <h2 className="text-xl font-bold text-black truncate">{stock_name || "StockPred"}</h2>
+          <h2 className="text-xl font-bold text-primary truncate">{stock_name || "StockPred"}</h2>
         )}
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className={`text-gray-400  ${collapsed && "mx-auto"} hover:text-slate-600 cursor-pointer`}
+          className={`text-secondary ${collapsed && "mx-auto"} hover:text-text-primary transition-colors cursor-pointer`}
         >
           <span className="material-symbols-outlined text-[22px]">menu</span>
         </button>
@@ -99,11 +99,11 @@ const Sidebar = ({ stock_name, volume, className }: SidebarProps) => {
       </nav>
 
       {!collapsed && stock_name && (
-        <div className="mt-auto pt-8 border-t border-slate-100">
-          <div className="bg-slate-50 p-4 rounded-2xl">
-            <p className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Stock</p>
-            <p className="text-sm font-bold text-slate-900 truncate">{stock_name}</p>
-            <div className="mt-2 text-xs text-slate-600">
+        <div className="mt-auto pt-8 border-t border-gray-100">
+          <div className="bg-background-2 p-4 rounded-2xl">
+            <p className="text-xs text-caption uppercase font-bold tracking-wider mb-1">Stock</p>
+            <p className="text-sm font-bold text-primary truncate">{stock_name}</p>
+            <div className="mt-2 text-xs text-secondary">
               Vol: <span className="font-bold">{volume}</span>
             </div>
           </div>

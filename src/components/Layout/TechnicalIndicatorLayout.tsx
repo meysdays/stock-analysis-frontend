@@ -16,12 +16,12 @@ const TechnicalIndicatorLayout = ({
     rightContent,
 }: TechnicalIndicatorLayoutProps) => {
     return (
-        <div className="h-full bg-[#fdfdfd] text-slate-900">
+        <div className="h-full bg-background-1 text-primary">
             <main className="p-4 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-slate-900 mb-2">{title}</h1>
-                    <p className="text-slate-500 max-w-6xl leading-relaxed">
+                    <h1 className="text-3xl font-bold text-primary mb-2">{title}</h1>
+                    <p className="text-secondary max-w-6xl leading-relaxed">
                         {description}
                     </p>
                 </div>

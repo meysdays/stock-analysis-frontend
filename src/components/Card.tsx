@@ -10,14 +10,14 @@ const Card = ({
 }: CardProps) => {
   return (
     <div
-      className={`bg-white rounded-3xl flex flex-col justify-between px-6 py-5 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-slate-100 ${className}`}
+      className={`bg-surface-1 rounded-3xl flex flex-col justify-between px-6 py-5 shadow-sm border border-gray-100 ${className}`}
     >
       <div className="mb-10">
         <div>
           {(title || action) && (
             <div className="flex items-center mb-6">
               {title && (
-                <h3 className="text-slate-500 font-semibold text-xs uppercase tracking-wider">{title}</h3>
+                <h3 className="text-caption font-semibold text-xs uppercase tracking-wider">{title}</h3>
               )}
               {action && <div>{action}</div>}
             </div>
@@ -25,19 +25,19 @@ const Card = ({
         </div>
         <div>
           {value && (
-            <div className="text-3xl font-bold text-slate-900 mb-2">{value}</div>
+            <div className="text-3xl font-bold text-primary mb-2">{value}</div>
           )}
           {children}
         </div>
       </div>
 
-      <div className="flex flex-row items-center justify-between pt-4 border-t border-slate-50">
+      <div className="flex flex-row items-center justify-between pt-4 border-t border-gray-100">
         <div>
-          <p className="text-xs text-slate-400 font-medium">Total {title}</p>
+          <p className="text-xs text-caption font-medium">Total {title}</p>
         </div>
-        <div className="flex items-center bg-emerald-50 px-2.5 py-1 rounded-full">
-          <span className="text-emerald-600 font-bold text-xs">+2.25%</span>
-          <TrendingUp className="w-3 h-3 ml-1 text-emerald-600" />
+        <div className="flex items-center bg-positive-bg px-2.5 py-1 rounded-full">
+          <span className="text-positive font-bold text-xs">+2.25%</span>
+          <TrendingUp className="w-3 h-3 ml-1 text-positive" />
         </div>
       </div>
     </div>

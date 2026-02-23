@@ -39,7 +39,7 @@ export default function Revenue() {
     if (isLoadingMain || isRelatedLoading) {
         return (
             <div className="flex items-center justify-center p-20">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-link"></div>
             </div>
         );
     }
@@ -88,7 +88,7 @@ export default function Revenue() {
             ranges={ranges}
             summaryText={
                 <>
-                    In the last 12 months, <span className="font-bold">NGX:${symbol}</span> had revenue of {revenueFormatted} and net income of {formatValue(stats?.net_income)}. This represents a <span className="text-emerald-600 font-bold">15.4%</span> increase in revenue compared to the previous year.
+                    In the last 12 months, <span className="font-bold">NGX:${symbol}</span> had revenue of {revenueFormatted} and net income of {formatValue(stats?.net_income)}. This represents a <span className="text-positive font-bold">15.4%</span> increase in revenue compared to the previous year.
                 </>
             }
             relatedStocks={relatedStocksFormatted}
