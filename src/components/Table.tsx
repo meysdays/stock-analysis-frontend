@@ -97,7 +97,7 @@ export default function Table<T extends Record<string, any>>({
                       : h.align === "center"
                         ? "text-center"
                         : "text-left"
-                    }`
+                    }`, className
                   )}
                 >
                   {h.render ? h.render(row) : (row[h.key] ?? "")}
