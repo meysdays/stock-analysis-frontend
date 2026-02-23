@@ -12,14 +12,14 @@ export const fmtLarge = (v: number) =>
 // --- Shared Renderers with Simplified Styling ---
 
 const SymbolCell = (r: MarketItem) => (
-    <NavLink to={`/stock/${r.id}`} className="font-regular text-black hover:underline">
+    <NavLink to={`/stock/${r.id}`} className="font-semibold text-primary hover:underline">
         {r.symbol}
     </NavLink>
 );
 
-const NameCell = (r: MarketItem) => <span className="text-gray-900">{r.name}</span>;
+const NameCell = (r: MarketItem) => <span className="text-secondary">{r.name}</span>;
 
-const PriceCell = (r: MarketItem) => <span className="text-gray-900 font-medium">₦{fmt(r.price)}</span>;
+const PriceCell = (r: MarketItem) => <span className="text-primary font-medium">₦{fmt(r.price)}</span>;
 
 const PercentCell = (v: number | null) => {
     if (v === null) return <span className="text-gray-400 font-medium">n/a</span>;

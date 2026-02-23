@@ -8,30 +8,67 @@ import MarketTable from "../components/MarketTable/MarketTable";
 import { homeHeaders } from "../components/MarketTable/DefaultHeaders";
 import { getDashboardStocks } from "../lib/data";
 
+import MeterCard from "../components/MeterCard";
+
 const Home = () => {
   const sampleData = [
     { stock: "AAPL", price: 150, change: "+1.5%", title: 'No of Stocks' },
     { stock: "GOOGL", price: 2800, change: "-0.5%", title: 'Market Cap' },
-    { stock: "AMZN", price: 3400, change: "+0.8%", title: 'Total Volume' },
   ];
 
   return (
     <div className="px-10 py-10">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+        <h1 className="text-2xl font-bold text-primary tracking-tight">
           Market Overview
         </h1>
-        <p className="text-slate-500 text-sm mt-1">
+        <p className="text-secondary text-sm mt-1">
           Real-time performance of the Nigerian Stock Exchange.
         </p>
       </div>
 
-      <div className="flex flex-row gap-6 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {sampleData.map((item, index) => (
-          <div key={index} className="flex-1 min-w-0">
-            <Card title={item.title} value={item.price} className="h-full" />
+          <div key={index} className="min-w-0">
+            <Card title={item.title} value={`$${item.price}B`} className="h-[140px]" />
           </div>
         ))}
+
+        {/* RSI Meter based on Average Crypto RSI from reference */}
+        <MeterCard
+          title="Average Market RSI"
+          value={<>45.75</>}
+          min={0}
+          max={100}
+          current={45.75}
+          leftLabel="Oversold"
+          rightLabel="Overbought"
+          className="h-[140px]"
+          segments={[
+            { color: '#16c784', widthPercent: 16.67 },
+            { color: '#0f8b5c', widthPercent: 16.67 },
+            { color: '#2a2e39', widthPercent: 16.67 }, // neutral / background
+            { color: '#2a2e39', widthPercent: 16.67 }, // neutral / background
+            { color: '#a4282f', widthPercent: 16.67 },
+            { color: '#ea3943', widthPercent: 16.67 },
+          ]}
+        />
+
+        {/* MACD / Momentum Meter */}
+        <MeterCard
+          title="Market MACD Momentum"
+          value={<>+1.20</>}
+          min={-5}
+          max={5}
+          current={1.20}
+          leftLabel="Bearish"
+          rightLabel="Bullish"
+          className="h-[140px]"
+          segments={[
+            { color: '#ea3943', widthPercent: 50 }, // negative half
+            { color: '#16c784', widthPercent: 50 }, // positive half
+          ]}
+        />
       </div>
 
       <div className="overflow-hidden">

@@ -29,19 +29,19 @@ const FearGreed = () => {
     }
 
     return (
-        <div className="flex h-full bg-[#FDFDFD] overflow-auto">
+        <div className="flex h-full bg-background-1 overflow-auto">
             <SidePanel name="Dashboards" />
             <main className="flex-1 p-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <Tab tabProps={indicatorTabs} />
 
                 <div className="mb-8">
                     <div className="flex items-center gap-3 mb-2">
-                        <h1 className="text-2xl font-bold text-gray-900">SP Nigerian Stocks Fear and Greed Index</h1>
-                        <button className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors">
+                        <h1 className="text-2xl font-bold text-primary">SP Nigerian Stocks Fear and Greed Index</h1>
+                        <button className="px-3 py-1 bg-background-2 text-secondary text-xs font-bold rounded-lg hover:bg-background-2/80 transition-colors">
                             See API Details
                         </button>
                     </div>
-                    <p className="text-gray-500 max-w-5xl leading-relaxed">
+                    <p className="text-secondary max-w-5xl leading-relaxed">
                         Discover our Fear and Greed Index, a powerful tool that analyzes market sentiment to help you make informed stock investment decisions on the Nigerian Stock Exchange. Stay ahead of market trends with real-time and historical data available through our easy-to-use API.
                     </p>
                 </div>
@@ -57,19 +57,19 @@ const FearGreed = () => {
                         <Card title="Historical Values">
                             <div className="space-y-1">
                                 <div className="flex justify-between items-center py-1">
-                                    <span className="text-gray-500 font-medium text-xs">Yesterday</span>
+                                    <span className="text-secondary font-medium text-xs">Yesterday</span>
                                     <span className={`px-3 py-1 rounded-full text-xs font-bold ${getSentimentStyle(9)}`}>
                                         {getSentimentLabel(9)} - 9
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center py-1">
-                                    <span className="text-gray-500 font-medium text-xs">Last Week</span>
+                                    <span className="text-secondary font-medium text-xs">Last Week</span>
                                     <span className={`px-3 py-1 rounded-full text-xs font-bold ${getSentimentStyle(17)}`}>
                                         {getSentimentLabel(17)} - 17
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center py-1">
-                                    <span className="text-gray-500 font-medium text-xs">Last Month</span>
+                                    <span className="text-secondary font-medium text-xs">Last Month</span>
                                     <span className={`px-3 py-1 rounded-full text-xs font-bold ${getSentimentStyle(40)}`}>
                                         {getSentimentLabel(40)} - 40
                                     </span>
@@ -80,16 +80,16 @@ const FearGreed = () => {
                         <Card title="Yearly High and Low">
                             <div className="space-y-1">
                                 <div className="flex justify-between items-center py-1">
-                                    <span className="text-gray-500 font-medium">
-                                        Yearly High <span className="text-gray-400 text-xs">(May 23, 2025)</span>
+                                    <span className="text-secondary font-medium">
+                                        Yearly High <span className="text-caption text-xs">(May 23, 2025)</span>
                                     </span>
                                     <span className={`px-3 py-1 rounded-full text-xs font-bold ${getSentimentStyle(76)}`}>
                                         {getSentimentLabel(76)} - 76
                                     </span>
                                 </div>
                                 <div className="flex justify-between items-center py-1">
-                                    <span className="text-gray-500 font-medium">
-                                        Yearly Low <span className="text-gray-400 text-xs">(Feb 06, 2026)</span>
+                                    <span className="text-secondary font-medium">
+                                        Yearly Low <span className="text-caption text-xs">(Feb 06, 2026)</span>
                                     </span>
                                     <span className={`px-3 py-1 rounded-full text-xs font-bold ${getSentimentStyle(5)}`}>
                                         {getSentimentLabel(5)} - 5
@@ -108,7 +108,7 @@ const FearGreed = () => {
                                     {["30d", "1y", "All"].map((period) => (
                                         <button
                                             key={period}
-                                            className={`px-3 py-1 rounded-md transition-colors ${period === 'All' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-100'}`}
+                                            className={`px-3 py-1 rounded-md transition-colors ${period === 'All' ? 'bg-primary text-background-1' : 'text-caption hover:bg-background-2 hover:text-primary'}`}
                                         >
                                             {period}
                                         </button>

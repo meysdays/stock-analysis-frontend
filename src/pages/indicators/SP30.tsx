@@ -23,7 +23,7 @@ const SP30 = () => {
                             {["24h", "7d", "30d", "1y", "All"].map((period) => (
                                 <button
                                     key={period}
-                                    className="px-3 py-1 rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+                                    className="px-3 py-1 rounded-md text-caption hover:bg-background-2 hover:text-primary transition-colors"
                                 >
                                     {period}
                                 </button>

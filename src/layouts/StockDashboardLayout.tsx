@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Search, Bell, Sun, Moon } from "lucide-react";
 import TabNavigator from "../components/Navigation/TabNavigator";
 import { getStockInfo } from "../lib/data";
 import type { StockInfoResponse } from "../lib/definitions";
@@ -50,37 +49,37 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
     };
 
     const getSentimentColor = (sentiment: string | null) => {
-        if (!sentiment) return "text-gray-600";
+        if (!sentiment) return "text-secondary";
         const lower = sentiment.toLowerCase();
-        if (lower.includes("bullish")) return "text-green-600";
-        if (lower.includes("bearish")) return "text-red-600";
-        return "text-gray-600";
+        if (lower.includes("bullish")) return "text-positive";
+        if (lower.includes("bearish")) return "text-negative";
+        return "text-secondary";
     };
 
     return (
-        <div className="min-h-screen bg-[#fdfdfd] text-slate-900 flex font-sans selection:bg-indigo-100">
+        <div className="min-h-screen bg-background-1 text-primary flex font-sans selection:bg-blue-400/20">
             {/* Sidebar */}
             {/* Sidebar implementation details... */}
             { }
             {/* Main Content */}
             <div className="flex-1 flex flex-col min-w-0 ">
                 {/* Header */}
-                <header className="h-20 border-b border-gray-200 flex items-center justify-between px-10 shrink-0 bg-white/80 backdrop-blur-xs z-10 mb-8 sticky top-0">
+                <header className="h-20 border-b border-gray-100 flex items-center justify-between px-10 shrink-0 bg-surface-1/80 backdrop-blur-xs z-10 mb-8 sticky top-0">
                     <div className="flex items-center gap-6">
-                        <Link to="/" className="text-xl font-semibold tracking-wide text-indigo-600">StockPred</Link>
+                        <Link to="/" className="text-xl font-semibold tracking-wide text-link">StockPred</Link>
                         <div className="relative hidden md:block flex items-center">
-                            <span className="material-symbols-outlined absolute left-3 top-[50%] -translate-y-[50%] text-[18px] opacity-50 text-slate-400">search</span>
+                            <span className="material-symbols-outlined absolute left-3 top-[50%] -translate-y-[50%] text-[18px] opacity-50 text-secondary">search</span>
                             <input
                                 placeholder="Search here"
-                                className="pl-10 pr-4 py-2 bg-gray-100 rounded-2xl border-none focus:outline-none focus:ring-2 focus:ring-indigo-500 text-xs w-64 text-slate-900 placeholder:text-gray-400"
+                                className="pl-10 pr-4 py-2 bg-background-2 rounded-2xl border-none focus:outline-none focus:ring-2 focus:ring-link/30 text-xs w-64 text-primary placeholder:text-caption"
                             />
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <span className="material-symbols-outlined text-[20px] opacity-60 hover:opacity-100 cursor-pointer transition-opacity text-slate-600">light_mode</span>
-                        <span className="material-symbols-outlined text-[20px] opacity-60 hover:opacity-100 cursor-pointer transition-opacity text-slate-600">dark_mode</span>
-                        <span className="material-symbols-outlined text-[20px] opacity-60 hover:opacity-100 cursor-pointer transition-opacity text-slate-600">notifications</span>
+                    <div className="flex items-center gap-4 text-secondary">
+                        <span className="material-symbols-outlined text-[20px] opacity-60 hover:opacity-100 cursor-pointer transition-opacity">light_mode</span>
+                        <span className="material-symbols-outlined text-[20px] opacity-60 hover:opacity-100 cursor-pointer transition-opacity">dark_mode</span>
+                        <span className="material-symbols-outlined text-[20px] opacity-60 hover:opacity-100 cursor-pointer transition-opacity">notifications</span>
                     </div>
                 </header>
                 {/* Top Info Card */}
@@ -89,60 +88,60 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
                     </div>
                 ) : stockInfo ? (
-                    <div className="bg-white rounded-2xl py-4 flex justify-between items-start mx-10">
+                    <div className="bg-surface-1 rounded-2xl py-4 flex justify-between items-start mx-auto w-full px-5">
                         <div>
-                            <h2 className="text-2xl font-bold text-slate-900">
+                            <h2 className="text-2xl font-bold text-primary">
                                 {stockInfo.name || "Unknown"} - {stockInfo.symbol}
                             </h2>
                             <div className="flex items-center gap-2 mt-2">
-                                <span className="text-slate-500 text-xs font-regular uppercase">IPO Date:</span>
-                                <span className="text-slate-700 text-xs font-bold uppercase">
+                                <span className="text-secondary text-xs font-regular uppercase">IPO Date:</span>
+                                <span className="text-primary text-xs font-bold uppercase">
                                     {formatDate(stockInfo.ipo_date)}
                                 </span>
                             </div>
                             <div className="flex items-center gap-2 mt-2">
-                                <span className="text-slate-500 text-xs font-regular uppercase">Sector:</span>
-                                <span className="text-slate-700 text-xs font-bold uppercase">
+                                <span className="text-secondary text-xs font-regular uppercase">Sector:</span>
+                                <span className="text-primary text-xs font-bold uppercase">
                                     {stockInfo.sector || "n/a"}
                                 </span>
                             </div>
 
-                            <p className="text-xs text-slate-500 mt-1">
+                            <p className="text-xs text-secondary mt-1">
                                 NGX · {stockInfo.sector || "Unknown"} · {stockInfo.industry || "Unknown"}
                             </p>
                         </div>
 
                         <div className="grid grid-cols-3 gap-10 text-xs">
                             <div className="flex flex-col gap-3">
-                                <p className="text-slate-900 font-bold text-base">Trend Strength</p>
+                                <p className="text-primary font-bold text-base">Trend Strength</p>
                                 <div className="flex items-center gap-1 justify-between">
-                                    <span className="text-slate-500 text-xs font-medium">52w High</span>
-                                    <span className="text-slate-900 text-xs font-bold">
+                                    <span className="text-secondary text-xs font-medium">52w High</span>
+                                    <span className="text-primary text-xs font-bold">
                                         {formatCurrency(stockInfo.fifty_two_week_high)}
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-1 justify-between">
-                                    <span className="text-slate-500 text-xs font-medium">52w Low</span>
-                                    <span className="text-slate-900 text-xs font-bold">
+                                    <span className="text-secondary text-xs font-medium">52w Low</span>
+                                    <span className="text-primary text-xs font-bold">
                                         {formatCurrency(stockInfo.fifty_two_week_low)}
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-1 justify-between">
-                                    <span className="text-slate-500 text-xs font-medium">50d MA</span>
-                                    <span className="text-slate-900 text-xs font-bold">
+                                    <span className="text-secondary text-xs font-medium">50d MA</span>
+                                    <span className="text-primary text-xs font-bold">
                                         {formatCurrency(stockInfo.fifty_day_moving_average)}
                                     </span>
                                 </div>
                             </div>
                             <div>
-                                <p className="text-slate-900 font-semibold text-base">Sentiment</p>
+                                <p className="text-primary font-semibold text-base">Sentiment</p>
                                 <div className={`w-16 h-16 flex items-center justify-center mt-2 font-bold text-sm ${getSentimentColor(stockInfo.sentiment)}`}>
                                     {stockInfo.sentiment || "n/a"}
                                 </div>
                             </div>
                             <div>
-                                <p className="text-slate-900 font-semibold text-base">SP Score</p>
-                                <div className="w-16 h-16 rounded-full border-4 border-emerald-500 text-emerald-600 flex items-center justify-center mt-2 font-bold text-lg">
+                                <p className="text-primary font-semibold text-base">SP Score</p>
+                                <div className="w-16 h-16 rounded-full border-4 border-positive text-positive flex items-center justify-center mt-2 font-bold text-lg">
                                     {stockInfo.sp_score ?? "n/a"}
                                 </div>
                             </div>
@@ -154,12 +153,12 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
                     </div>
                 )}
 
-                <div className="mb-2 px-10 mt-8">
+                <div className="mb-2 w-full mt-8">
                     <TabNavigator tabs={tabs} />
                 </div>
 
                 {/* Content */}
-                <main className="flex-1 overflow-y-auto overflow-x-hidden px-8 custom-scrollbar">
+                <main className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
                     <div className="mx-auto space-y-8">
                         {children}
                     </div>

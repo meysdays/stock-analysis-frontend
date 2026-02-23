@@ -17,8 +17,8 @@ const NavItem = ({ item, collapsed }: Props) => {
       className={({ isActive }) =>
         `flex items-center gap-3 px-4 py-3 rounded-xl transition-all
         ${isActive
-          ? "bg-blue-600 text-white"
-          : "text-gray-700 hover:bg-gray-800 hover:text-white"
+          ? "bg-blue-400 text-white shadow-lg shadow-blue-400/20"
+          : "text-secondary hover:bg-background-2 hover:text-primary"
         }`
       }
     >

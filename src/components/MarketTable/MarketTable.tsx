@@ -86,17 +86,17 @@ export default function MarketTable({
   // Loading state: show loading message while fetching
   if (loading)
     return (
-      <div className="p-4 text-center text-gray-600">Loading market data…</div>
+      <div className="p-4 text-center text-secondary">Loading market data…</div>
     );
 
   // Error state: show error message in red if fetch fails
   if (error)
-    return <div className="p-4 text-center text-red-500">Error: {error}</div>;
+    return <div className="p-4 text-center text-negative">Error: {error}</div>;
 
   // Empty state: show message if no data available
   if (!data || data.length === 0)
     return (
-      <div className="p-4 text-center text-gray-500">
+      <div className="p-4 text-center text-caption">
         No market data available.
       </div>
     );

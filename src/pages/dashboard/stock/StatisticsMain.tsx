@@ -6,7 +6,7 @@ import { formatValue } from "../../../utils/utils";
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div className="mb-10">
-        <h2 className="text-xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-2">{title}</h2>
+        <h2 className="text-xl font-bold text-primary mb-6 border-b border-gray-100 pb-2">{title}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-12">
             {children}
         </div>
@@ -15,10 +15,10 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
 
 const StatRow = ({ label, value, subtext }: { label: string; value: string | number | null | undefined; subtext?: string }) => (
     <div className="flex flex-col">
-        <span className="text-sm font-medium text-gray-500 mb-1">{label}</span>
+        <span className="text-sm font-medium text-secondary mb-1">{label}</span>
         <div className="flex items-baseline gap-2">
-            <span className="text-base font-bold text-gray-900">{formatValue(value)}</span>
-            {subtext && <span className="text-xs text-gray-400">{subtext}</span>}
+            <span className="text-base font-bold text-primary">{formatValue(value)}</span>
+            {subtext && <span className="text-xs text-caption">{subtext}</span>}
         </div>
     </div>
 );
@@ -48,24 +48,24 @@ const StatisticsMain = () => {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center p-20">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-link"></div>
             </div>
         );
     }
 
     if (!data) {
         return (
-            <div className="p-8 text-center text-gray-500">
+            <div className="p-8 text-center text-secondary">
                 No detailed statistics available for this stock.
             </div>
         );
     }
 
     return (
-        <div className="max-w-6xl mx-auto p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
+        <div className="max-w-6xl mx-auto p-6 bg-surface-1 rounded-2xl border border-gray-100 shadow-sm">
             <div className="mb-12">
-                <h1 className="text-3xl font-bold text-gray-900">Statistics</h1>
-                <p className="text-gray-500 mt-2">Comprehensive financial and technical metrics for {data.name} ({data.symbol}).</p>
+                <h1 className="text-3xl font-bold text-primary">Statistics</h1>
+                <p className="text-secondary mt-2">Comprehensive financial and technical metrics for {data.name} ({data.symbol}).</p>
             </div>
 
             <Section title="Valuation">

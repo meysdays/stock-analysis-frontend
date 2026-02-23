@@ -9,7 +9,7 @@ interface FinancialsDashboardLayoutProps {
 }
 
 const FinancialsDashboardLayout = ({ children, tabs }: FinancialsDashboardLayoutProps) => {
-//   const { id } = useParams();
+  //   const { id } = useParams();
 
   //   const tabs = [
   //     { label: "Income Statement", href: `/stock/${id}/summary` },
@@ -20,7 +20,7 @@ const FinancialsDashboardLayout = ({ children, tabs }: FinancialsDashboardLayout
   //   ];
 
   return (
-    <div className=" text-slate-500">
+    <div className="text-secondary">
       <div className="mb-6 ">
         <TabNavigator className="border-0" tabs={tabs} />
       </div>

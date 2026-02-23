@@ -91,7 +91,7 @@ const Financials = () => {
       headers={headers}
       data={pivotedRows}
       rowKey={(r, idx) => r.id ?? `${r.FiscalYear}${idx}`}
-      className="border-3 border-gray-200 "
+      className="border-gray-100"
     />
   );
 };

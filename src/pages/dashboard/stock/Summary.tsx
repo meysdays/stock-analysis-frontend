@@ -94,16 +94,16 @@ const Summary = () => {
     const timeRanges = ["1W", "1M", "YTD"];
 
     return (
-        <div className="bg-white px-6 rounded-2xl">
+        <div className="bg-surface-1 px-6">
             <div className="grid grid-cols-12 gap-12">
                 {/* Metrics Section */}
                 <div className="col-span-12 lg:col-span-5 grid grid-cols-2 gap-x-10">
                     <div className="space-y-0 text-[13px]">
                         {metricsLeft.map((m, i) => (
                             <div key={i} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0 h-[46px]">
-                                <span className="text-gray-500 font-medium underline decoration-gray-300 underline-offset-4 cursor-help">{m.label}</span>
+                                <span className="text-secondary font-medium underline decoration-gray-100 underline-offset-4 cursor-help">{m.label}</span>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-slate-900 font-bold">{m.value}</span>
+                                    <span className="text-primary font-bold">{m.value}</span>
                                 </div>
                             </div>
                         ))}
@@ -111,8 +111,8 @@ const Summary = () => {
                     <div className="space-y-0 text-[13px]">
                         {metricsRight.map((m, i) => (
                             <div key={i} className="flex justify-between items-center py-2.5 border-b border-gray-100 last:border-0 h-[46px]">
-                                <span className="text-gray-500 font-medium">{m.label}</span>
-                                <span className="text-slate-900 font-bold">{m.value}</span>
+                                <span className="text-secondary font-medium">{m.label}</span>
+                                <span className="text-primary font-bold">{m.value}</span>
                             </div>
                         ))}
                     </div>
@@ -121,14 +121,14 @@ const Summary = () => {
                 {/* Chart Section */}
                 <div className="col-span-12 lg:col-span-7 flex flex-col">
                     <div className="flex justify-between items-center mb-6">
-                        <div className="flex bg-gray-100/50 p-1 rounded-lg">
+                        <div className="flex bg-background-2 p-1 rounded-lg">
                             {timeRanges.map((range) => (
                                 <button
                                     key={range}
                                     onClick={() => setSelectedRange(range)}
                                     className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors ${range === selectedRange
-                                        ? "bg-white text-slate-900 shadow-sm"
-                                        : "text-gray-500 hover:text-slate-900"
+                                        ? "bg-surface-1 text-primary shadow-sm"
+                                        : "text-secondary hover:text-primary"
                                         }`}
                                 >
                                     {range}
@@ -136,16 +136,16 @@ const Summary = () => {
                             ))}
                         </div>
                         <div className="text-right">
-                            <span className="text-emerald-500 font-bold text-lg">+14.38%</span>
-                            <span className="text-gray-400 text-sm ml-1">({selectedRange})</span>
+                            <span className="text-positive font-bold text-lg">+14.38%</span>
+                            <span className="text-caption text-sm ml-1">({selectedRange})</span>
                         </div>
                     </div>
 
                     {/* Chart Area */}
                     <div className="flex-1 min-h-[350px] relative">
                         {isLoading ? (
-                            <div className="absolute inset-0 flex items-center justify-center bg-gray-50/30 rounded-xl border border-gray-100">
-                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
+                            <div className="absolute inset-0 flex items-center justify-center bg-background-1/30 rounded-xl border border-gray-100">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-positive"></div>
                             </div>
                         ) : klines.length > 0 ? (
                             <LineChart
@@ -164,10 +164,10 @@ const Summary = () => {
                                 showGrid={true}
                             />
                         ) : (
-                            <div className="absolute inset-0 border border-dashed border-gray-200 rounded-xl flex items-center justify-center bg-gray-50/30">
+                            <div className="absolute inset-0 border border-dashed border-gray-100 rounded-xl flex items-center justify-center bg-background-1/30">
                                 <div className="text-center">
-                                    <p className="text-gray-400 font-medium">No chart data available</p>
-                                    <p className="text-gray-300 text-xs mt-1">Try a different stocks or check back later</p>
+                                    <p className="text-caption font-medium">No chart data available</p>
+                                    <p className="text-gray-500 text-xs mt-1">Try a different stocks or check back later</p>
                                 </div>
                             </div>
                         )}

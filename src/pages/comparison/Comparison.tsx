@@ -11,10 +11,10 @@ const TAG_COLORS = [
 
 const Switch = ({ enabled, onChange, label }: { enabled: boolean; onChange: () => void; label: string }) => (
     <div className="flex items-center justify-between w-full py-1">
-        <span className="text-[13px] text-slate-600">{label}</span>
+        <span className="text-[13px] text-secondary">{label}</span>
         <button
             onClick={onChange}
-            className={`relative inline-flex h-5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${enabled ? "bg-blue-600" : "bg-slate-200"
+            className={`relative inline-flex h-5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${enabled ? "bg-link" : "bg-background-2"
                 }`}
         >
             <span
@@ -243,10 +243,10 @@ const Comparison = () => {
 
 
     return (
-        <div className="flex flex-col w-full min-h-screen bg-[#fdfdfd] text-slate-900 font-sans">
+        <div className="flex flex-col w-full min-h-screen bg-background-1 text-primary font-sans">
             {/* Header */}
-            <div className="px-8 pt-6 pb-2 border-b border-slate-200 flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-slate-900">Compare Stocks</h1>
+            <div className="px-8 pt-6 pb-2 border-b border-gray-100 flex items-center justify-between">
+                <h1 className="text-2xl font-bold text-primary">Compare Stocks</h1>
 
             </div>
 
@@ -254,20 +254,20 @@ const Comparison = () => {
             <div className="px-8 py-6 flex flex-wrap items-center gap-4">
                 {/* Search Bar with Tags */}
                 <div className="flex-1 relative min-w-[400px]" ref={searchRef}>
-                    <div className={`flex items-center gap-2 p-1.5 bg-white border border-slate-200 rounded-xl transition-all duration-200  ${isSearching ? "ring-2 ring-blue-500 border-transparent" : ""}`}>
+                    <div className={`flex items-center gap-2 p-1.5 bg-surface-1 border border-gray-100 rounded-xl transition-all duration-200  ${isSearching ? "ring-2 ring-link border-transparent" : ""}`}>
                         <div className="flex items-center gap-2 flex-wrap pl-2">
                             {selectedStocks.map((stock, idx) => {
                                 const color = TAG_COLORS[idx % TAG_COLORS.length];
                                 return (
                                     <div
                                         key={stock.symbol}
-                                        className={`flex items-center gap-2 px-3 py-1.5  border-2 border-l-4 ${color.border} rounded-lg group animate-in zoom-in-95 duration-200`}
+                                        className={`flex items-center gap-2 px-3 py-1.5  border-2 border-l-4 ${color.border} rounded-lg group animate-in zoom-in-95 duration-200 bg-background-2/40`}
                                     >
                                         <div className={`w-2.5 h-2.5 rounded-sm`} />
-                                        <span className="text-[13px] font-bold text-slate-800 tracking-tight">NGX:{stock.symbol}</span>
+                                        <span className="text-[13px] font-bold text-primary tracking-tight">NGX:{stock.symbol}</span>
                                         <button
                                             onClick={() => removeStock(stock.symbol)}
-                                            className="hover:bg-slate-200 rounded-full p-0.5 transition-colors flex items-center justify-center"
+                                            className="hover:bg-background-2 rounded-full p-0.5 transition-colors flex items-center justify-center"
                                         >
                                             <span className="material-symbols-outlined text-[14px]">close</span>
                                         </button>
@@ -278,43 +278,43 @@ const Comparison = () => {
 
                         {selectedStocks.length < 3 && (
                             <div className="flex-1 flex items-center min-w-[120px]">
-                                <span className="material-symbols-outlined text-[20px] text-slate-400 ml-2">search</span>
+                                <span className="material-symbols-outlined text-[20px] text-caption ml-2">search</span>
                                 <input
                                     type="text"
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     onFocus={() => setIsSearching(true)}
                                     placeholder={selectedStocks.length === 0 ? "Search for a stock" : "Add stock"}
-                                    className="w-full pl-2 pr-4 py-1 bg-transparent focus:outline-none text-[14px] placeholder:text-slate-400"
+                                    className="w-full pl-2 pr-4 py-1 bg-transparent focus:outline-none text-[14px] placeholder:text-caption"
                                 />
                             </div>
                         )}
 
                         {selectedStocks.length === 3 && (
-                            <div className="flex-1 text-[13px] text-slate-400 font-medium px-4 py-1 italic">
+                            <div className="flex-1 text-[13px] text-caption font-medium px-4 py-1 italic">
                                 Maximum reached (3)
                             </div>
                         )}
 
                         <div className="pr-2 flex items-center">
-                            <span className="material-symbols-outlined text-[22px] text-slate-700">search</span>
+                            <span className="material-symbols-outlined text-[22px] text-secondary">search</span>
                         </div>
                     </div>
 
                     {/* Suggestions Dropdown */}
                     {isSearching && suggestions.length > 0 && (
-                        <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-100 rounded-2xl  z-[60] py-2 animate-in slide-in-from-top-2 duration-200">
+                        <div className="absolute top-full left-0 right-0 mt-2 bg-surface-1 border border-gray-100 rounded-2xl  z-[60] py-2 animate-in slide-in-from-top-2 duration-200">
                             {suggestions.map((stock) => (
                                 <button
                                     key={stock.symbol}
                                     onClick={() => addStock(stock)}
-                                    className="w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors text-left"
+                                    className="w-full px-4 py-3 flex items-center justify-between hover:bg-background-2 transition-colors text-left"
                                 >
                                     <div className="flex flex-col">
-                                        <span className="text-[14px] font-bold text-slate-900">{stock.symbol}</span>
-                                        <span className="text-[12px] text-slate-500">{stock.name}</span>
+                                        <span className="text-[14px] font-bold text-primary">{stock.symbol}</span>
+                                        <span className="text-[12px] text-secondary">{stock.name}</span>
                                     </div>
-                                    <div className="bg-slate-100 px-2 py-0.5 rounded text-[11px] font-bold text-slate-600">NGX</div>
+                                    <div className="bg-background-2 px-2 py-0.5 rounded text-[11px] font-bold text-secondary">NGX</div>
                                 </button>
                             ))}
                         </div>
@@ -325,14 +325,14 @@ const Comparison = () => {
                 <div className="relative" ref={metricRef}>
                     <button
                         onClick={() => setIsMetricOpen(!isMetricOpen)}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors  text-[14px] font-medium text-slate-700"
+                        className="flex items-center gap-2 px-4 py-2.5 bg-surface-1 border border-gray-100 rounded-xl hover:bg-background-2 transition-colors  text-[14px] font-medium text-secondary"
                     >
                         {selectedMetric.label}
-                        <span className={`material-symbols-outlined text-[20px] text-slate-400 transition-transform ${isMetricOpen ? "rotate-180" : ""}`}>expand_more</span>
+                        <span className={`material-symbols-outlined text-[20px] text-caption transition-transform ${isMetricOpen ? "rotate-180" : ""}`}>expand_more</span>
                     </button>
 
                     {isMetricOpen && (
-                        <div className="absolute left-0 mt-2 w-56 bg-white border border-slate-100 rounded-2xl shadow-2xl z-[70] py-2 animate-in fade-in zoom-in-95 duration-200">
+                        <div className="absolute left-0 mt-2 w-56 bg-surface-1 border border-gray-100 rounded-2xl shadow-2xl z-[70] py-2 animate-in fade-in zoom-in-95 duration-200">
                             {METRICS.map((m) => (
                                 <button
                                     key={m.value}
@@ -340,7 +340,7 @@ const Comparison = () => {
                                         setSelectedMetric(m);
                                         setIsMetricOpen(false);
                                     }}
-                                    className={`w-full text-left px-4 py-2.5 text-[13px] hover:bg-slate-50 transition-colors ${selectedMetric.value === m.value ? "text-blue-600 font-bold bg-blue-50/30" : "text-slate-600 font-medium"}`}
+                                    className={`w-full text-left px-4 py-2.5 text-[13px] hover:bg-background-2 transition-colors ${selectedMetric.value === m.value ? "text-link font-bold bg-link/10" : "text-secondary font-medium"}`}
                                 >
                                     {m.label}
                                 </button>
@@ -353,28 +353,28 @@ const Comparison = () => {
                 <div className="relative">
                     <button
                         onClick={() => setIsOptionsOpen(!isOptionsOpen)}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors  text-[14px] font-medium text-slate-700"
+                        className="flex items-center gap-2 px-4 py-2.5 bg-surface-1 border border-gray-100 rounded-xl hover:bg-background-2 transition-colors  text-[14px] font-medium text-secondary"
                     >
                         Options
-                        <span className={`material-symbols-outlined text-[20px] text-slate-400 transition-transform ${isOptionsOpen ? "rotate-180" : ""}`}>expand_more</span>
+                        <span className={`material-symbols-outlined text-[20px] text-caption transition-transform ${isOptionsOpen ? "rotate-180" : ""}`}>expand_more</span>
                     </button>
 
                     {isOptionsOpen && (
-                        <div className="absolute right-0 mt-2 w-64 bg-white border border-slate-100 rounded-2xl shadow-2xl z-50 py-3 animate-in fade-in zoom-in-95 duration-200">
+                        <div className="absolute right-0 mt-2 w-64 bg-surface-1 border border-gray-100 rounded-2xl shadow-2xl z-50 py-3 animate-in fade-in zoom-in-95 duration-200">
                             <div className="px-4 py-1 space-y-1">
                                 <Switch label="Labels" enabled={labelsEnabled} onChange={() => setLabelsEnabled(!labelsEnabled)} />
                                 <Switch label="Date Picker" enabled={datePickerEnabled} onChange={() => setDatePickerEnabled(!datePickerEnabled)} />
                                 <Switch label="Range Slider" enabled={rangeSliderEnabled} onChange={() => setRangeSliderEnabled(!rangeSliderEnabled)} />
                             </div>
 
-                            <div className="h-px bg-slate-100 my-2" />
+                            <div className="h-px bg-gray-100 my-2" />
 
                             <div className="px-2 space-y-0.5">
                                 {[
                                     { icon: "print", label: "Print" },
                                     { icon: "fullscreen", label: "View full screen" },
                                 ].map((item, idx) => (
-                                    <div key={idx} className="flex items-center justify-between px-3 py-2 text-[13px] text-slate-600 hover:bg-slate-50 cursor-pointer rounded-lg transition-colors">
+                                    <div key={idx} className="flex items-center justify-between px-3 py-2 text-[13px] text-secondary hover:bg-background-2 cursor-pointer rounded-lg transition-colors">
                                         <div className="flex items-center gap-3">
                                             <span className="material-symbols-outlined text-[18px] opacity-70">{item.icon}</span>
                                             {item.label}
@@ -384,7 +384,7 @@ const Comparison = () => {
                                 ))}
                             </div>
 
-                            <div className="h-px bg-slate-100 my-2" />
+                            <div className="h-px bg-gray-100 my-2" />
 
                             <div className="px-2 space-y-0.5">
                                 {[
@@ -392,9 +392,9 @@ const Comparison = () => {
                                     { icon: "image", label: "Download JPEG" },
                                     { icon: "description", label: "Download PDF" },
                                 ].map((item, idx) => (
-                                    <div key={idx} className="flex items-center justify-between px-3 py-2 text-[13px] text-slate-600 hover:bg-slate-50 cursor-pointer rounded-lg transition-colors">
+                                    <div key={idx} className="flex items-center justify-between px-3 py-2 text-[13px] text-secondary hover:bg-background-2 cursor-pointer rounded-lg transition-colors">
                                         <div className="flex items-center gap-3">
-                                            <span className="material-symbols-outlined text-[18px] opacity-70 text-slate-500">{item.icon}</span>
+                                            <span className="material-symbols-outlined text-[18px] opacity-70 text-caption">{item.icon}</span>
                                             {item.label}
                                         </div>
                                     </div>
@@ -407,12 +407,12 @@ const Comparison = () => {
 
             {/* Chart Area */}
             <div className="px-8 pb-8 flex-1">
-                <div className="w-full h-full min-h-[500px] bg-white border border-slate-200 rounded-lg overflow-hidden relative group p-6">
+                <div className="w-full h-full min-h-[500px] bg-surface-1 border border-gray-100 rounded-lg overflow-hidden relative group p-6">
                     {selectedStocks.length > 0 ? (
                         isLoading ? (
                             <div className="flex flex-col items-center justify-center h-full gap-4">
-                                <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-                                <p className="text-slate-500 text-sm">Loading {selectedMetric.label} data...</p>
+                                <div className="w-8 h-8 border-4 border-link border-t-transparent rounded-full animate-spin" />
+                                <p className="text-secondary text-sm">Loading {selectedMetric.label} data...</p>
                             </div>
                         ) : (
                             <ComparisonChart
@@ -422,15 +422,15 @@ const Comparison = () => {
                         )
                     ) : (
                         <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
-                            <h3 className="text-xl font-semibold text-slate-900">
+                            <h3 className="text-xl font-semibold text-primary">
                                 Add a stock symbol to get started
                             </h3>
-                            <p className="text-slate-500 text-sm max-w-xs">
+                            <p className="text-secondary text-sm max-w-xs">
                                 Search for your favorite stocks to compare their performance over time.
                             </p>
                             {/* Background grid pattern */}
                             <div className="absolute inset-0 opacity-[0.03] pointer-events-none -z-10"
-                                style={{ backgroundImage: "radial-gradient(#1e293b 0.5px, transparent 0.5px)", backgroundSize: "24px 24px" }}
+                                style={{ backgroundImage: "radial-gradient(#ffffff 0.5px, transparent 0.5px)", backgroundSize: "24px 24px" }}
                             />
                         </div>
                     )}
@@ -440,7 +440,7 @@ const Comparison = () => {
             {/* Popular Stock Comparisons Section */}
             <div className="px-8 pb-12 mt-4">
                 <div className="flex items-center gap-2 mb-8">
-                    <h2 className="text-xl font-bold text-slate-900">Popular Stock Comparisons</h2>
+                    <h2 className="text-xl font-bold text-primary">Popular Stock Comparisons</h2>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -449,17 +449,17 @@ const Comparison = () => {
                             <button
                                 key={idx}
                                 onClick={() => handleCompareStock(pair.symbol1, pair.symbol2)}
-                                className="group flex items-center justify-center gap-3 px-6 py-4 bg-blue-50 hover:bg-blue-100 text-black rounded-xl transition-all duration-200 border border-transparent hover:border-blue-200"
+                                className="group flex items-center justify-center gap-3 px-6 py-4 bg-background-2/50 hover:bg-background-2 text-primary rounded-xl transition-all duration-200 border border-gray-100 hover:border-link/30"
                             >
                                 <span className="text-[14px] font-bold tracking-tight">{pair.symbol1}</span>
-                                <span className="text-[12px] font-medium text-black italic">vs.</span>
+                                <span className="text-[12px] font-medium text-secondary italic">vs.</span>
                                 <span className="text-[14px] font-bold tracking-tight">{pair.symbol2}</span>
                             </button>
                         ))
                     ) : (
                         // Skeleton/Fallback if loading
                         [...Array(12)].map((_, i) => (
-                            <div key={i} className="h-14 bg-slate-200 animate-pulse rounded-lg" />
+                            <div key={i} className="h-14 bg-background-2 animate-pulse rounded-lg" />
                         ))
                     )}
                 </div>

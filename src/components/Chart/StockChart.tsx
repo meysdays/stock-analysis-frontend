@@ -104,10 +104,10 @@ const StockChart = ({ data }: ChartProps) => {
     };
 
     return (
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 h-full flex flex-col">
+        <div className="bg-surface-1 p-8 rounded-3xl shadow-sm border border-gray-100 h-full flex flex-col">
             <div className="flex items-center justify-between mb-8">
-                <h3 className="text-xl font-bold text-gray-900">Growth</h3>
-                <select className="text-sm text-gray-500 bg-transparent border-none focus:ring-0 cursor-pointer">
+                <h3 className="text-xl font-bold text-primary">Growth</h3>
+                <select className="text-sm text-secondary bg-transparent border-none focus:ring-0 cursor-pointer">
                     <option>Yearly</option>
                     <option>Monthly</option>
                     <option>Weekly</option>

@@ -1,14 +1,105 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* Base Colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  
+  /* Gray Scale */
+  --color-gray-100: #f8fafd;
+  --color-gray-200: #eff2f5;
+  --color-gray-300: #e5e8eb;
+  --color-gray-400: #cfd6e4;
+  --color-gray-500: #a1a7bb;
+  --color-gray-600: #58667e;
+
+  /* Theme Semantic Colors - Light Default */
+  --color-background-1: #ffffff;
+  --color-background-2: #f8fafd;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #eff2f5;
+  
+  --color-primary: #171924;
+  --color-secondary: #58667e;
+  --color-caption: #a1a7bb;
+  --color-link: #3861fb;
+  
+  --color-negative: #ea3943;
+  --color-negative-bg: #fff5f5;
+  --color-positive: #16c784;
+  --color-positive-bg: #f6ffed;
+  
+  --color-blue-400: #3861fb;
+  --color-blue-300: #6188ff;
+  
+  --color-focus-ring: rgba(56, 97, 251, 0.2);
+  --color-overlay-bg: rgba(0, 0, 0, 0.4);
+
+  /* Shadows */
+  --shadow-tiny: 0px 1px 2px 0px rgba(13, 20, 33, .24), 0px 4px 24px 0px rgba(13, 20, 33, .12);
+}
+
+/* Dark Theme Overrides */
+/* This selector works if .dark/.NIGHT is on html OR body */
+:root:has(.dark), :root.dark, .dark, :root:has(.NIGHT), :root.NIGHT, .NIGHT {
+    --color-gray-100: #171924;
+    --color-gray-200: #222531;
+    --color-gray-300: #2b2e3d;
+    --color-gray-400: #323546;
+    --color-gray-500: #646b80;
+    --color-gray-600: #858ca2;
+
+    --color-background-1: #171924;
+    --color-background-2: #0D1421;
+    --color-surface-1: #222531;
+    --color-surface-2: #2B2E3D;
+    
+    --color-primary: #ffffff;
+    --color-secondary: #A1A7BB;
+    --color-caption: #646B80;
+    --color-link: #3861fb;
+    
+    --color-negative: #ea3943;
+    --color-negative-bg: #42161a;
+    --color-positive: #16c784;
+    --color-positive-bg: #0b3425;
+    
+    --color-overlay-bg: rgba(23, 25, 36, .6);
+    --color-focus-ring: #6188ff;
+}
 
 @theme {
   --font-sans: "Poppins", sans-serif;
+  --color-background-1: var(--c-colors-background-1);
+  --color-background-2: var(--c-colors-background-2);
+  --color-surface-1: var(--c-colors-surface-1);
+  --color-surface-2: var(--c-colors-surface-2);
+  --color-primary: var(--c-colors-primary);
+  --color-secondary: var(--c-colors-secondary);
+  --color-caption: var(--c-colors-caption);
+  --color-link: var(--c-colors-link);
+  --color-negative: var(--c-colors-negative);
+  --color-negative-bg: var(--c-colors-negative-bg);
+  --color-positive: var(--c-colors-positive);
+  --color-positive-bg: var(--c-colors-positive-bg);
+  --color-blue-400: var(--c-colors-blue-400);
+  --color-blue-300: var(--c-colors-blue-300);
+  --color-focus-ring: var(--c-colors-focus-ring);
+  --color-overlay-bg: var(--c-colors-overlay-bg);
+  --color-gray-100: var(--c-colors-gray-100);
+  --color-gray-200: var(--c-colors-gray-200);
+  --color-gray-300: var(--c-colors-gray-300);
+  --color-gray-400: var(--c-colors-gray-400);
+  --color-gray-500: var(--c-colors-gray-500);
+  --color-gray-600: var(--c-colors-gray-600);
 }
 
 @layer base {
   html, body {
-    @apply h-full bg-[#fdfdfd] text-slate-900;
+    @apply h-full bg-background-1 text-primary;
     font-family: 'Poppins', sans-serif;
+    transition: background-color 0.2s, color 0.2s;
   }
 }
 
@@ -23,11 +114,11 @@
     }
     
     .custom-scrollbar::-webkit-scrollbar-thumb {
-        @apply bg-slate-700/50 rounded-full hover:bg-slate-600/80 transition-colors;
+        @apply bg-gray-500/50 rounded-full hover:bg-gray-600/80 transition-colors;
     }
 
     .glass-panel {
-        @apply bg-slate-800/40 backdrop-blur-xl border border-white/10 shadow-xl;
+        @apply bg-surface-1/40 backdrop-blur-xl border border-gray-200/10 shadow-xl;
     }
     
     .text-glow {
