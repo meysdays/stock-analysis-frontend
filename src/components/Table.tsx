@@ -59,27 +59,39 @@ export default function Table<T extends Record<string, any>>({
       <table className={twMerge("w-full border-collapse", className)}>
         <thead>
           <tr>
-            {headers.map((h) => (
-              <th
-                key={h.key}
-                onClick={() => {
-                  if (sortKey === h.key) {
-                    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-                  } else {
-                    setSortKey(h.key);
-                    setSortOrder("asc");
-                  }
-                }}
-                className={twMerge(`px-2 py-2 text-sm font-semibold hover:cursor-pointer text-caption ${h.align === "right"
-                  ? "text-right"
-                  : h.align === "center"
-                    ? "text-center"
-                    : "text-left"
-                  }`)}
-              >
-                {h.label}
-              </th>
-            ))}
+            {headers.map((h) => {
+              const isSorted = sortKey === h.key;
+              return (
+                <th
+                  key={h.key}
+                  onClick={() => {
+                    if (sortKey === h.key) {
+                      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+                    } else {
+                      setSortKey(h.key);
+                      setSortOrder("asc");
+                    }
+                  }}
+                  className={twMerge(`px-2 py-2 text-sm font-semibold hover:cursor-pointer text-caption ${h.align === "right"
+                    ? "text-right"
+                    : h.align === "center"
+                      ? "text-center"
+                      : "text-left"
+                    }`)}
+                >
+                  <span className="flex items-center gap-1">
+                    {h.label}
+                    {isSorted && (
+                      sortOrder === "asc" ? (
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3L10 9H2L6 3Z" fill="currentColor"/></svg>
+                      ) : (
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L2 3H10L6 9Z" fill="currentColor"/></svg>
+                      )
+                    )}
+                  </span>
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
@@ -92,7 +104,7 @@ export default function Table<T extends Record<string, any>>({
                 <td
                   key={h.key}
                   className={twMerge(
-                    `px-2 py-2 text-sm ${h.align === "right"
+                    `px-2 text-sm ${h.align === "right"
                       ? "text-right"
                       : h.align === "center"
                         ? "text-center"

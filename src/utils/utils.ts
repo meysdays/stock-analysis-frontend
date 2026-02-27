@@ -285,9 +285,10 @@ export const navItems: NavItemType[] = [
 ];
 
 export const Tabs = (id: number) => [
-  { label: "Overview", href: `/stock/${id}/summary` },
+  { label: "Overview", id: "overview", href: `/stock/${id}/summary` },
   {
     label: "Financials",
+    id: "financials",
     href: `/stock/${id}/financials`,
     children: [
       {
@@ -300,9 +301,10 @@ export const Tabs = (id: number) => [
       { label: "KPIs", href: `/stock/${id}/financials/kpis` },
     ],
   },
-  { label: "Forecast", href: `/stock/${id}/forecast` },
+  { label: "Forecast", id: "forecast", href: `/stock/${id}/forecast` },
   {
     label: "Statistics",
+    id: "statistics",
     href: `/stock/${id}/statistics`,
     children: [
       { label: "Statistics", href: `/stock/${id}/statistics` },
@@ -310,8 +312,8 @@ export const Tabs = (id: number) => [
       { label: "Revenue", href: `/stock/${id}/statistics/revenue` },
     ],
   },
-  { label: "Dividends", href: `/stock/${id}/dividends` },
-  { label: "History", href: `/stock/${id}/history` },
-  { label: "Profile", href: `/stock/${id}/profile` },
-  { label: "Chart →", href: `/stock/${id}/chart` },
+  { label: "Dividends", id: "dividends", href: `/stock/${id}/dividends` },
+  { label: "History", id: "history", href: `/stock/${id}/history` },
+  { label: "Profile", id: "profile", href: `/stock/${id}/profile` },
+  { label: "Chart →", id: "chart", href: `/stock/${id}/chart` },
 ];

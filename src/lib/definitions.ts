@@ -459,3 +459,8 @@ export type TableHeader<T> = {
     align?: "left" | "right" | "center";
     render?: (item: T) => React.ReactNode;
 };
+
+export interface AIChatResponse {
+  answer: string;
+  disclaimer: string | null;
+}

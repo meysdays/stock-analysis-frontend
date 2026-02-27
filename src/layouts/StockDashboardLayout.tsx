@@ -1,9 +1,14 @@
 import type { ReactNode } from "react";
 import { useState, useEffect } from "react";
+import ChatModal from "../components/ChatModal";
 import { Link, useParams } from "react-router-dom";
 import TabNavigator from "../components/Navigation/TabNavigator";
 import { getStockInfo } from "../lib/data";
 import type { StockInfoResponse } from "../lib/definitions";
+import Summary from "../pages/dashboard/stock/Summary";
+import Financials from "../pages/dashboard/stock/Financials";
+import StatisticsMain from "../pages/dashboard/stock/StatisticsMain";
+import ChatModalV2 from "../components/ChatModalV2";
 
 interface StockDashboardLayoutProps {
     children: ReactNode;
@@ -15,6 +20,7 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
     const { id } = useParams<{ id: string }>();
     const [stockInfo, setStockInfo] = useState<StockInfoResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [chatOpen, setChatOpen] = useState(false);
 
     useEffect(() => {
 
@@ -60,7 +66,6 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
         <div className="min-h-screen bg-background-1 text-primary flex font-sans selection:bg-blue-400/20">
             {/* Sidebar */}
             {/* Sidebar implementation details... */}
-            { }
             {/* Main Content */}
             <div className="flex-1 flex flex-col min-w-0 ">
                 {/* Header */}
@@ -160,9 +165,24 @@ const StockDashboardLayout = ({ children, tabs }: StockDashboardLayoutProps) => 
                 {/* Content */}
                 <main className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
                     <div className="mx-auto space-y-8">
-                        {children}
+                        {/* {children} */}
+                        <Summary/>
+                        <Financials/>
+                        <StatisticsMain/>
                     </div>
                 </main>
+
+                {/* Floating Chat Button */}
+                {/* <button
+                  className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg p-4 flex items-center justify-center text-2xl focus:outline-none focus:ring"
+                  onClick={() => setChatOpen(true)}
+                  title="Ask Stock AI"
+                >
+                  <span className="material-symbols-outlined">chat</span>
+                </button>
+
+                {/* Chat Modal */}
+                {/* <ChatModalV2 open={chatOpen} onClose={() => setChatOpen(false)} stockId={id || ""} /> */} 
             </div>
         </div>
     );

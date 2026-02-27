@@ -87,12 +87,14 @@ const Financials = () => {
   return (
     // <div>here</div>
 
-    <Table
-      headers={headers}
-      data={pivotedRows}
-      rowKey={(r, idx) => r.id ?? `${r.FiscalYear}${idx}`}
-      className="border-gray-100"
-    />
+    <section id="financials">
+      <Table
+        headers={headers}
+        data={pivotedRows}
+        rowKey={(r, idx) => r.id ?? `${r.FiscalYear}${idx}`}
+        className="py-2.5"
+      />
+    </section>
   );
 };
 

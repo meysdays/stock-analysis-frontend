@@ -9,15 +9,18 @@ import { homeHeaders } from "../components/MarketTable/DefaultHeaders";
 import { getDashboardStocks } from "../lib/data";
 
 import MeterCard from "../components/MeterCard";
+import ChatModalV2 from "../components/ChatModalV2";
+import { useState } from "react";
 
 const Home = () => {
+  const [chatOpen, setChatOpen] = useState(false);
   const sampleData = [
     { stock: "AAPL", price: 150, change: "+1.5%", title: 'No of Stocks' },
     { stock: "GOOGL", price: 2800, change: "-0.5%", title: 'Market Cap' },
   ];
 
   return (
-    <div className="px-10 py-10">
+    <div className="px-10 py-14">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-primary tracking-tight">
           Market Overview
@@ -74,6 +77,17 @@ const Home = () => {
       <div className="overflow-hidden">
         <MarketTable headers={homeHeaders} fetcher={getDashboardStocks} />
       </div>
+
+      <button
+                  className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg p-4 flex items-center justify-center text-2xl focus:outline-none focus:ring"
+                  onClick={() => setChatOpen(true)}
+                  title="Ask Stock AI"
+                >
+                  <span className="material-symbols-outlined">chat</span>
+                </button>
+
+                {/* Chat Modal */}
+                <ChatModalV2 open={chatOpen} onClose={() => setChatOpen(false)}  />
     </div>
   );
 };
